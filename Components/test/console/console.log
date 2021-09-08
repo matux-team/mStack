@@ -1,0 +1,406 @@
+11:35:02:SerialPort Connected
+11:35:05:SerialPort Disconnected
+11:35:05:SerialPort Connected
+11:35:34:SerialPort Disconnected
+11:35:35:SerialPort Connected
+11:36:10:SerialPort Disconnected
+11:36:10:SerialPort Connected
+11:40:31:SerialPort Disconnected
+11:40:31:SerialPort Connected
+11:40:46:SerialPort Disconnected
+11:40:47:SerialPort Connected
+12:33:08:Hello 
+12:33:10:Blink Started
+12:33:11:Blink Stopped
+12:33:12:Blink Started
+12:33:16:Hello 
+12:33:16:Hello 
+12:33:17:Blink Stopped
+12:33:17:Blink Started
+12:33:19:Hello 
+12:33:19:Blink Stopped
+12:33:20:Blink Started
+12:33:21:Hello 
+12:33:22:Blink Stopped
+12:33:23:Blink Started
+12:33:54:SerialPort Disconnected
+12:34:03: SerialPort Connected
+12:34:05: Hello 
+12:34:05: Hello 
+12:34:06: Hello 
+12:34:06: Hello 
+12:34:06: Hello 
+12:34:08: Name=fsf sdf
+12:34:10: Hello fsf sdf
+12:34:11: Hello fsf sdf
+12:34:11: Hello fsf sdf
+12:34:11: Hello fsf sdf
+12:34:11: Hello fsf sdf
+12:34:13: Blink Stopped
+12:34:14: Blink Started
+12:34:14: Blink Stopped
+12:34:15: Hello fsf sdf
+12:34:16: Hello fsf sdf
+10:37:17: SerialPort Connected
+10:40:20: SerialPort Disconnected
+09:36:51: SerialPort Connected
+09:36:58: Blink Started
+09:36:59: Blink Stopped
+09:38:34: Auto detect threshold:516
+09:38:34: Auto detect threshold:516
+09:38:59: Auto detect threshold:516
+09:38:59: Auto detect threshold:516
+09:39:43: Auto detect threshold:516
+09:39:43: Auto detect threshold:516
+09:43:43: Auto detect threshold:516
+09:46:41: Auto detect threshold:516
+09:52:32: Auto detect threshold:516
+10:19:49: Auto detect threshold:516
+10:51:59: Auto detect threshold:517
+10:52:19: Auto detect threshold:517
+10:53:34: Auto detect threshold:516
+10:54:25: Auto detect threshold:516
+10:54:42: Auto detect threshold:517
+10:55:34: Auto detect threshold:517
+10:57:14: SerialPort Connected
+10:57:41: Auto detect threshold:517
+10:58:17: SerialPort Connected
+10:58:42: Auto detect threshold:516
+10:59:17: Auto detect threshold:516
+11:15:16: Auto detect threshold:516
+11:16:11: Auto detect threshold:516
+11:17:02: Auto detect threshold:517
+11:31:35: Auto detect threshold:517
+11:37:05: Auto detect threshold:517
+12:32:36: SerialPort Connected
+12:36:16: Auto detect threshold:517
+12:42:46: SerialPort Connected
+12:56:14: Auto detect threshold:516
+12:57:25: Auto detect threshold:517
+12:57:55: Auto detect threshold:516
+13:02:35: Auto detect threshold:516
+13:02:52: SerialPort Connected
+13:03:46: SerialPort Connected
+13:08:40: SerialPort Connected
+13:11:12: Auto detect threshold:516
+13:12:40: SerialPort Connected
+13:13:34: Blink Started
+13:13:35: Blink Stopped
+13:13:35: Blink Stopped
+13:13:37: Hello 
+13:13:41: Name=mcud
+13:13:43: Hello mcud
+13:13:43: Hello mcud
+13:13:44: Hello mcud
+13:13:46: Blink Stopped
+13:13:46: Blink Started
+13:13:50: Interval=1000
+13:13:52: Blink Stopped
+13:13:53: Blink Started
+13:13:54: Blink Stopped
+13:13:54: Blink Started
+13:13:55: Blink Stopped
+13:16:02: SerialPort Connected
+13:16:30: Hello mcud
+13:16:32: Hello mcud
+13:16:35: Hello mcud
+13:16:35: Blink Stopped
+13:16:36: Blink Started
+13:16:37: Blink Stopped
+13:16:37: Blink Started
+13:16:38: Blink Stopped
+13:16:38: Blink Stopped
+13:16:39: Blink Stopped
+13:16:40: Blink Started
+13:16:40: Blink Started
+13:16:41: Blink Started
+13:16:42: Blink Stopped
+13:16:43: Hello mcud
+13:16:44: Hello mcud
+13:16:45: Blink Stopped
+13:16:46: Blink Started
+13:39:01: SerialPort Connected
+08:16:04: Can not connect to SerialPort
+08:16:07: Can not connect to SerialPort
+08:16:11: Can not connect to SerialPort
+08:17:16: SerialPort Connected
+14:31:30: SerialPort Connected
+14:31:33: Blink Started
+14:31:34: Blink Stopped
+14:31:37: Interval=1000
+14:31:43: Name=mStack
+14:31:45: Hello mStack
+14:31:45: Hello mStack
+14:31:50: Hello mStack
+14:31:50: Hello mStack
+14:32:02: Blink Started
+14:32:03: Blink Stopped
+14:32:05: Blink Started
+14:32:05: Blink Started
+14:32:06: Blink Stopped
+14:32:11: Interval=500
+09:54:22: Can not connect to SerialPort
+09:54:25: SerialPort Connected
+09:56:21: Auto detect threshold:516
+09:56:45: Auto detect threshold:516
+10:26:26: Auto detect threshold:516
+10:32:40: Auto detect threshold:516
+12:31:48: Auto detect threshold:516
+12:33:13: Auto detect threshold:516
+12:35:09: SerialPort Disconnected
+12:35:11: SerialPort Connected
+12:35:15: SerialPort Disconnected
+12:35:16: SerialPort Connected
+12:35:17: SerialPort Disconnected
+12:35:19: SerialPort Connected
+12:36:12: Auto detect threshold:516
+12:36:31: Auto detect threshold:516
+12:39:30: Auto detect threshold:516
+12:39:45: SerialPort Disconnected
+12:39:46: SerialPort Connected
+12:40:05: Auto detect threshold:516
+12:42:02: Auto detect threshold:516
+12:43:07: Auto detect threshold:516
+12:44:17: Auto detect threshold:516
+12:47:11: Auto detect threshold:516
+12:47:34: Auto detect threshold:516
+12:51:03: Auto detect threshold:516
+12:51:05: Interval=200
+12:51:05: Interval=200
+12:51:05: Interval=200
+12:51:09: Interval=200
+12:51:09: Interval=200
+12:51:10: Blink Stopped
+12:51:10: 0
+12:51:10: 1
+12:51:10: 2
+12:51:10: 3
+12:51:10: 0
+12:51:10: 1
+12:51:10: 2
+12:51:10: 3
+12:51:15: Blink Started
+12:51:24: Blink Stopped
+12:51:24: 0
+12:51:24: 1
+12:51:24: 2
+12:51:24: 3
+12:51:24: 0
+12:51:24: 1
+12:51:24: 2
+12:51:24: 3
+12:51:27: Blink Started
+12:51:45: Blink Stopped
+12:51:45: 0
+12:51:45: 1
+12:51:45: 2
+12:51:45: 3
+12:51:45: 0
+12:51:45: 1
+12:51:45: 2
+12:51:45: 3
+12:51:52: Blink Started
+12:56:25: Blink Stopped
+12:56:25: 0
+12:56:25: 1
+12:56:25: 2
+12:56:25: 3
+12:56:25: 0
+12:56:25: 1
+12:56:25: 2
+12:56:25: 3
+12:56:28: Blink Started
+12:57:42: Auto detect threshold:516
+12:59:20: Auto detect threshold:516
+12:59:21: Blink Stopped
+12:59:23: Blink Started
+12:59:27: Blink Stopped
+12:59:30: Blink Stopped
+12:59:31: Blink Stopped
+12:59:32: Blink Stopped
+12:59:34: Blink Started
+12:59:39: Blink Started
+12:59:40: Blink Started
+12:59:40: Blink Started
+12:59:41: Blink Started
+12:59:42: Blink Stopped
+12:59:44: Blink Stopped
+12:59:44: Blink Stopped
+12:59:44: Blink Stopped
+12:59:44: Blink Stopped
+12:59:44: Blink Stopped
+12:59:44: Blink Stopped
+12:59:45: Blink Stopped
+12:59:45: Blink Stopped
+12:59:45: Blink Stopped
+12:59:45: Blink Stopped
+12:59:46: Blink Stopped
+12:59:46: Blink Stopped
+12:59:46: Blink Stopped
+12:59:47: Blink Started
+12:59:48: Blink Started
+12:59:48: Blink Started
+12:59:48: Blink Started
+12:59:48: Blink Started
+13:01:53: Auto detect threshold:516
+13:01:53: Blink Stopped
+13:01:55: Blink Started
+13:01:57: Blink Stopped
+13:01:59: Blink Stopped
+13:01:59: Blink Stopped
+13:01:59: Blink Stopped
+13:01:59: Blink Stopped
+13:02:01: Blink Started
+13:02:03: Blink Started
+13:02:03: Blink Started
+13:02:03: Blink Started
+13:02:03: Blink Started
+13:02:03: Blink Started
+13:02:05: Blink Stopped
+13:02:07: Blink Stopped
+13:02:07: Blink Stopped
+13:02:07: Blink Stopped
+13:02:07: Blink Stopped
+13:02:08: Blink Started
+13:02:10: Blink Started
+13:02:11: Blink Started
+13:02:11: Blink Started
+13:02:11: Blink Started
+13:02:11: Blink Started
+13:02:11: Blink Started
+13:02:12: Blink Stopped
+13:02:14: Blink Stopped
+13:02:14: Blink Stopped
+13:02:14: Blink Stopped
+13:02:15: Blink Stopped
+13:02:16: Blink Started
+13:02:18: Blink Started
+13:02:18: Blink Started
+13:02:18: Blink Started
+13:02:18: Blink Started
+13:02:20: Blink Stopped
+13:02:21: Blink Stopped
+13:02:22: Blink Stopped
+13:02:22: Blink Stopped
+13:02:22: Blink Stopped
+13:02:23: Blink Started
+13:02:24: Blink Started
+13:02:24: Blink Started
+13:02:24: Blink Started
+13:02:25: Blink Started
+13:02:25: Blink Stopped
+13:02:26: Blink Stopped
+13:02:35: Blink Started
+15:14:09: SerialPort Connected
+15:17:55: Auto detect threshold:516
+15:18:54: Auto detect threshold:516
+15:19:00: Auto detect threshold:516
+15:23:12: Auto detect threshold:516
+15:24:47: Auto detect threshold:516
+16:33:55: Auto detect threshold:516
+16:50:37: Auto detect threshold:516
+21:46:29: Can not connect to SerialPort
+21:46:31: SerialPort Connected
+21:46:55: Auto detect threshold:516
+21:50:57: Auto detect threshold:516
+07:59:09: SerialPort Connected
+07:59:30: Auto detect threshold:516
+08:01:18: Auto detect threshold:516
+08:04:37: Auto detect threshold:516
+08:04:39: Blink Stopped
+08:04:41: Blink Stopped
+08:05:12: Auto detect threshold:516
+08:05:16: Blink Stopped
+08:05:19: Blink Stopped
+08:05:21: Blink Stopped
+08:06:10: Auto detect threshold:516
+08:06:13: Blink Stopped
+08:06:18: Blink Stopped
+08:08:56: Auto detect threshold:516
+08:08:58: Blink Stopped
+08:08:59: Blink Started
+08:09:00: Blink Stopped
+08:09:02: Blink Started
+08:09:03: Blink Stopped
+08:09:04: Blink Started
+08:09:06: Blink Stopped
+08:09:06: Blink Started
+08:09:07: Blink Stopped
+08:09:07: Blink Started
+08:09:07: Blink Stopped
+08:09:08: Blink Started
+08:09:08: Blink Stopped
+08:09:08: Blink Started
+08:09:09: Blink Stopped
+08:09:09: Blink Started
+08:09:09: Blink Stopped
+08:09:10: Blink Started
+08:09:10: Blink Stopped
+08:09:10: Blink Started
+08:09:11: Blink Stopped
+08:09:11: Blink Started
+08:09:11: Blink Stopped
+08:09:12: Blink Started
+08:09:12: Blink Stopped
+08:11:14: Auto detect threshold:516
+08:15:22: Auto detect threshold:516
+08:57:31: Auto detect threshold:516
+08:58:04: Blink Stopped
+08:58:06: Blink Started
+08:58:07: Blink Stopped
+08:58:08: Blink Started
+08:58:09: Blink Stopped
+08:58:10: Blink Started
+08:58:10: Blink Stopped
+09:04:11: Blink Started
+09:04:14: Blink Stopped
+09:04:16: Blink Started
+09:04:18: Blink Stopped
+09:04:22: Blink Started
+09:04:23: Blink Stopped
+09:04:24: Blink Started
+09:04:26: Blink Stopped
+09:04:27: Blink Started
+09:04:29: Blink Stopped
+09:04:30: Blink Started
+09:04:32: Blink Stopped
+09:04:33: Blink Started
+09:04:34: Blink Stopped
+09:09:20: Auto detect threshold:516
+09:10:00: Auto detect threshold:516
+09:11:33: Auto detect threshold:516
+09:11:37: Blink Stopped
+09:11:38: Blink Started
+09:11:39: Blink Stopped
+09:12:21: Auto detect threshold:516
+09:21:38: Auto detect threshold:516
+09:21:39: Blink Stopped
+09:21:40: Blink Started
+09:21:41: Blink Stopped
+09:21:43: Blink Started
+09:21:45: Blink Stopped
+09:21:47: Blink Started
+09:30:00: Blink Started
+09:30:02: Blink Started
+09:30:05: Blink Started
+09:30:06: Blink Started
+09:30:06: Blink Started
+09:30:07: Blink Started
+09:30:07: Blink Started
+09:30:07: Blink Started
+09:30:08: Blink Started
+09:30:08: Blink Started
+09:30:08: Blink Started
+09:30:09: Blink Started
+09:30:09: Blink Started
+09:30:09: Blink Started
+09:30:10: Blink Started
+09:30:10: Blink Started
+09:30:10: Blink Started
+09:30:11: Blink Started
+09:30:11: Blink Started
+09:30:12: Blink Started
+09:30:14: Blink Stopped
+09:30:15: Blink Started
+09:30:17: Blink Stopped
+09:30:17: Blink Started
