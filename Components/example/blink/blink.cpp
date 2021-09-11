@@ -1,5 +1,6 @@
 #include <console/log.h>
 #include <example/blink/blink.h>
+#include "gpio.h"
 
 U_ACTION_HANDLER(ex::Blink, start)
 {
@@ -49,6 +50,7 @@ void ex::Blink::ledOn_()
 	LOG_PRINT("LED is on");
 	on_ = true;
 	/*TODO: write pin here*/
+	LL_GPIO_SetOutputPin(LED_GPIO_Port, LED_Pin);
 }
 
 void ex::Blink::ledOff_()
@@ -56,4 +58,5 @@ void ex::Blink::ledOff_()
 	LOG_PRINT("LED is off");
 	on_ = false;
 	/*TODO: write pin here*/
+	LL_GPIO_ResetOutputPin(LED_GPIO_Port, LED_Pin);
 }

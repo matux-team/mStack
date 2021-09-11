@@ -42,17 +42,3 @@ private:\
 #define M_TASK_HANDLER(cls,name) void cls::name##Handler##_()
 
 #endif // TASK_H
-
-/* Cơ chế hoạt động của Task
- * (1) Tạo ra 2 linklist gồm Task và activeTask
- * (2) Mỗi khi tạo task thì task mới được thêm vào Task
- * (3) Khi start 1 task nào thì task đó được gỡ ra khỏi Task và add vào activeTask
- * (4) Khi stop 1 task nào thì task đó được gỡ ra khỏi activeTask và add lại vào Task
- * (5) Hàm tick trong engine lợi dụng ngắt systick -> gọi 1ms 1 lần
- * (6) Mỗi khi Task xảy ra tick sẽ so sánh với tickCount_ với nextick_ của task gần nhất
- * (7) Khi thỏa mãn điều kiện -> post event -> gọi đến hàm execute trong engine
- * (8) Trong execute sẽ duyệt hết activeTask để tìm đến các task đã đến giờ thực thi
- * (9) Task nào đã đến giờ thực thi sẽ được gọi đến Handler tương ứng
- * (10) Đồng thời tìm nextTick nhỏ nhất để so sánh tiếp trong các chu kỳ sau như (6)
- */
-

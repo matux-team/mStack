@@ -26,7 +26,7 @@ COMPONENT(test, Console)
 
 	M_TASK(strand)
 	M_EVENT(testStrand)
-	M_FIXED_EVENT(finished, uint8_t)
+	M_EVENT(finished, uint8_t)
 	M_STRAND(myStrand, 64);
 public:
     void init() override;

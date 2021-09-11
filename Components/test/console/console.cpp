@@ -33,7 +33,7 @@ M_TASK_HANDLER(test::Console, strand)
 	myStrandStrand.post(&testStrandEvent, &finishedEvent);
 }
 
-M_FIXED_EVENT_HANDLER(test::Console, finished, uint8_t)
+M_EVENT_HANDLER(test::Console, finished, uint8_t)
 {
 	LOG_PRINT("Event Finished");
 }
