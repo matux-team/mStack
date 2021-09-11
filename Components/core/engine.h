@@ -5,7 +5,6 @@
 #include <core/utils.h>
 #include <core/task.h>
 
-#define TMP_BUF_SIZE    256
 #define LAST_TICK       0xFFFFFFFFFFFFFFFF
 
 namespace core
@@ -28,7 +27,6 @@ public:
         return engine;
     }
 
-    static uint8_t temporaryBuffer[TMP_BUF_SIZE];
 private:
     void execute(core::AbstractEventQueue* queue) override;
     Engine();

@@ -2,7 +2,6 @@
 #define OSC_SINGLE_H
 #include <core/engine.h>
 #include <core/event.h>
-#include <oscilloscope/data.h>
 
 namespace osc
 {
@@ -15,7 +14,7 @@ public:
     inline void plot(uint16_t val)
     {
         (this->*state_)(val);
-        c_.lastVal = val;
+        lastVal_ = val;
     }
 private:
     void idle_(uint16_t){}
@@ -24,13 +23,16 @@ private:
     void first_(uint16_t v);
     void adding_(uint16_t v);
 private:
+    uint8_t data_[1200];
     State state_ = &osc::Single::thresholding_;
-    uint16_t min_ = MAX_THRESHOLD;
-    uint16_t max_ = MIN_THRESHOLD;
+    uint16_t min_ = 65535;
+    uint16_t max_ = 0;
     int16_t threshold_ = -1;
-
-    Data c_;
-    uint16_t total_ = 0;
+    uint16_t index_ = 0;
+    uint16_t lastVal_;
+    uint16_t countIndex_ = 0;
+    uint16_t total_;
+    uint8_t channel_;
 private:
     void flush_();
     core::EmptyEvent flushEvent_ = core::EmptyEvent(this, (core::EmptyEvent::Handler)&Single::flush_);

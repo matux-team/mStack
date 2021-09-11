@@ -100,20 +100,22 @@ typedef FixedEvent<uint8_t> ByteEvent;
 
 }
 
-#define M_EVENT(name)\
+#define M_EVENT(...) _M_MACRO_2(__VA_ARGS__, _M_FIXED_EVENT, _M_EVENT)(__VA_ARGS__)
+#define M_EVENT_HANDLER(...) _M_MACRO_3(__VA_ARGS__, _M_FIXED_EVENT_HANDLER, _M_EVENT_HANDLER)(__VA_ARGS__)
+
+#define _M_EVENT(name)\
 public:\
     core::EmptyEvent name##Event = core::EmptyEvent(this, (core::EmptyEvent::Handler)&CLASS::name##Handler##_);\
 private:\
     void name##Handler##_();
 
-#define M_EVENT_HANDLER(cls,name) void cls::name##Handler##_()
-
-#define M_FIXED_EVENT(name, type)\
+#define _M_FIXED_EVENT(name, type)\
 public:\
     core::FixedEvent<type> name##Event = core::FixedEvent<type>(this, (core::FixedEvent<type>::Handler)&CLASS::name##Handler##_);\
 private:\
     void name##Handler##_(const type& event);
 
-#define M_FIXED_EVENT_HANDLER(cls, name, type) void cls::name##Handler##_(const type& event)
+#define _M_EVENT_HANDLER(cls,name) void cls::name##Handler##_()
+#define _M_FIXED_EVENT_HANDLER(cls, name, type) void cls::name##Handler##_(const type& event)
 
 #endif // MODEL_H

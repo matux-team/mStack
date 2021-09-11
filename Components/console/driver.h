@@ -7,12 +7,13 @@
 #define FOOTER_INDICATOR	0xFD
 #define MAX_PACKET_LENGTH	250
 
-SM_BYTE(console, Driver)
+MACHINE(console, Driver, uint8_t)
     M_EVENT(send);
 public:
 	void init();
 	bool sendPacket(uint16_t type, uint8_t length, const uint8_t* data);
     bool checkBeforeSend(uint8_t lenth){return (txQueue_.available()>lenth);}
+
 private:
 	STATE_DEF(ReceiveHeader)
 	STATE_DEF(ReceiveLength)
@@ -31,6 +32,6 @@ private:
     uint8_t rxLength_, checksum_;
     uint8_t rxIndex_;
     uint16_t rxType_;
-SM_END
+MACHINE_END
 
 #endif

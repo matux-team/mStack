@@ -14,6 +14,7 @@ class Strand: public core::Component, public AbstractEventQueue
 {
 public:
     Strand(core::Queue& queue): queue_(queue){}
+
     void post(EmptyEvent* event, ByteEvent* finished = nullptr)
     {
         if (queue_.available() < 3) return;
@@ -43,7 +44,7 @@ public:
         else queue_.push(VOID);
         queue_.push(event->index_);
         uint8_t* ptr = (uint8_t*)&e;
-        for (int i=0; i<sizeof(E); i++)
+        for (size_t i=0; i<sizeof(E); i++)
         {
             queue_.push(ptr[i]);
         }

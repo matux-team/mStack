@@ -3,8 +3,6 @@
 #include <core/event.h>
 #include <console/log.h>
 
-uint8_t core::Engine::temporaryBuffer[TMP_BUF_SIZE];
-
 core::Event::Event()
 {
     index_ = core::Engine::instance().events().registerEvent_(this);

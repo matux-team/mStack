@@ -30,8 +30,8 @@ private:
     void adding_(uint16_t v1, uint16_t v2, uint16_t v3);
 private:
     State state_ = & osc::Triple::thresholding_;
-    uint16_t min_ = MAX_THRESHOLD;
-    uint16_t max_ = MIN_THRESHOLD;
+    uint16_t min_ = 65535;
+    uint16_t max_ = 0;
     int16_t threshold_ = -1;
 
     Data c1_;

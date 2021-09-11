@@ -2,21 +2,13 @@
 #define OSC_DATA_H
 #include <console/controller.h>
 
-#define MAX_BUFFER_SIZE         1200
-#define MAX_COUNT_INDEX_SIZE    80
-#define MAX_DELTA_POINT         127
-#define MARGIN_BUFFER_INDEX     1196 // less than 1200 - 3
-#define MARGIN_TOTAL_SIZE       999
-#define MIN_THRESHOLD           0
-#define MAX_THRESHOLD           65535
-
 namespace osc {
 
 struct Data
 {
     uint8_t channel;
     uint16_t lastVal;
-    uint8_t buffer[MAX_BUFFER_SIZE];
+    uint8_t buffer[1200];
     uint16_t index;
     uint16_t countIndex;
 
@@ -32,8 +24,7 @@ struct Data
     void add(uint16_t v)
     {
         int16_t d = v - lastVal;
-        if ((d > MAX_DELTA_POINT) || (d < -MAX_DELTA_POINT)
-                || (buffer[countIndex] > MAX_COUNT_INDEX_SIZE))
+        if ((d > 127) || (d < -127) || (buffer[countIndex] > 80))
         {
             countIndex = index;
             buffer[index++] = 1;
@@ -54,7 +45,7 @@ struct Data
         {
             countIndex += count;
             index += count+2;
-            if ((countIndex > MARGIN_TOTAL_SIZE) || (index > MARGIN_BUFFER_INDEX))
+            if ((countIndex > 999) || (index > 1198))
             {
                 index = 0;
                 countIndex = 0;

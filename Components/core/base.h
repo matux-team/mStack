@@ -2,6 +2,9 @@
 #define CORE_BASE_H
 #include <stdint.h>
 
+#define _M_MACRO_2(_1,_2,NAME,...) NAME
+#define _M_MACRO_3(_1,_2,_3,NAME,...) NAME
+
 namespace core
 {
 
@@ -54,6 +57,5 @@ class HAL{\
 public:
 
 #define HAL_END };}
-
 
 #endif // COMPONENT_H

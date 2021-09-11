@@ -23,8 +23,6 @@ void core::Task::stop()
 
 void core::Task::run_()
 {
-    (component_->*handler_)();
-
     if (--loop_ == 0)
     {
         core::Engine::instance().stopTask_(this);
@@ -34,5 +32,7 @@ void core::Task::run_()
         nextTick_ += interval_;
         if (loop_ < 0) loop_ = -1;
     }
+
+    (component_->*handler_)();
 }
 

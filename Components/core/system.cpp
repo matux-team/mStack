@@ -11,9 +11,8 @@ extern "C" void SysTick_Handler(void)
 
 void systemInit()
 {
+	HAL_Init();
 	SystemClock_Config();
 	MX_GPIO_Init();
-	LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_AFIO);
 	LL_SYSTICK_EnableIT();
-	//MX_IWDG_Init();
 }

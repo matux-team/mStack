@@ -18,11 +18,11 @@ void osc::Dual::thresholding_(uint16_t v1, uint16_t v2)
 
     if (v1 < min_) min_ = v1;
     if (v1 > max_) max_ = v1;
-    if (total_++ > MARGIN_TOTAL_SIZE)
+    if (total_++ > 1000)
     {
         threshold_ = (min_+max_)/2;
-        min_ = MAX_THRESHOLD;
-        max_ = MIN_THRESHOLD;
+        min_ = 65535;
+        max_ = 0;
         total_ = 0;
         console::Controller::instance().printf("Auto detect threshold:%d", threshold_);
         state_ = &osc::Dual::probing_;
@@ -31,7 +31,7 @@ void osc::Dual::thresholding_(uint16_t v1, uint16_t v2)
 
 void osc::Dual::probing_(uint16_t v1, uint16_t v2)
 {
-    if (++total_ > MARGIN_TOTAL_SIZE)
+    if (++total_ > 1000)
     {
         total_ = 0;
         threshold_ = -1;
@@ -58,8 +58,7 @@ void osc::Dual::adding_(uint16_t v1, uint16_t v2)
     c2_.add(v2);
 
     total_++;
-    if ((total_ > MARGIN_TOTAL_SIZE) || (c1_.index > MARGIN_BUFFER_INDEX)
-            || (c2_.index > MARGIN_BUFFER_INDEX))
+    if ((total_ > 1000) || (c1_.index > 1199) || (c2_.index > 1199))
     {
         state_ = &osc::Dual::idle_;
         total_ = 0;

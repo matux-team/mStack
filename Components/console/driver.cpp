@@ -5,7 +5,7 @@
 void console::Driver::init()
 {
     console::HAL::init();
-    SM_START(console::Driver::ReceiveHeader);
+    SM_START(ReceiveHeader);
 }
 
 STATE_BODY(console::Driver::ReceiveHeader)
@@ -21,9 +21,9 @@ STATE_BODY(console::Driver::ReceiveLength)
         rxIndex_ = 2;
         rxType_ = 0;
         checksum_ = HEADER_INDICATOR + rxLength_;
-        SM_SWITCH(console::Driver::ReceiveType);
+        SM_SWITCH(ReceiveType);
     }
-    else SM_SWITCH(console::Driver::ReceiveHeader);
+    else SM_SWITCH(ReceiveHeader);
 }
 
 STATE_BODY(console::Driver::ReceiveType)
@@ -33,8 +33,8 @@ STATE_BODY(console::Driver::ReceiveType)
     rxType_+= data_;
     if (--rxIndex_ == 0)
     {
-        if (rxLength_ > 0) SM_SWITCH(console::Driver::ReceiveData);
-        else SM_SWITCH(console::Driver::ReceiveChecksum);
+        if (rxLength_ > 0) SM_SWITCH(ReceiveData);
+        else SM_SWITCH(ReceiveChecksum);
     }
 }
 
@@ -42,12 +42,12 @@ STATE_BODY(console::Driver::ReceiveData)
 {
     checksum_ += data_;
     rxBuffer_[rxIndex_++] = data_;
-    if (rxIndex_==rxLength_) SM_SWITCH(console::Driver::ReceiveChecksum);
+    if (rxIndex_==rxLength_) SM_SWITCH(ReceiveChecksum);
 }
 STATE_BODY(console::Driver::ReceiveChecksum)
 {
-    if (data_ == checksum_) SM_SWITCH(console::Driver::ReceiveFooter);
-    else SM_SWITCH(console::Driver::ReceiveHeader);
+    if (data_ == checksum_) SM_SWITCH(ReceiveFooter);
+    else SM_SWITCH(ReceiveHeader);
 }
 
 STATE_BODY(console::Driver::ReceiveFooter)
@@ -56,7 +56,7 @@ STATE_BODY(console::Driver::ReceiveFooter)
     {
         Controller::instance().processCommand(rxType_, rxLength_, rxBuffer_);
     }
-    SM_SWITCH(console::Driver::ReceiveHeader);
+    SM_SWITCH(ReceiveHeader);
 }
 
 bool console::Driver::sendPacket(uint16_t type, uint8_t length, const uint8_t* data)

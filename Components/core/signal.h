@@ -1,6 +1,7 @@
 #ifndef CORE_SIGNAL_H
 #define CORE_SIGNAL_H
 #include <core/event.h>
+#include <core/base.h>
 
 namespace core
 {
@@ -94,28 +95,23 @@ public:
 
 }
 
-#define M_SIGNAL_ONE(name)\
+#define M_SIGNAL(...) _M_MACRO_2(__VA_ARGS__,_M_FIXED_SIGNAL_ONE, _M_SIGNAL_ONE)(__VA_ARGS__)
+#define M_SIGNAL_MANY(...) _M_MACRO_2(__VA_ARGS__,_M_FIXED_SIGNAL_MANY, _M_SIGNAL_MANY)(__VA_ARGS__)
+
+#define _M_SIGNAL_ONE(name)\
 public:\
     core::EmptySignalOne name##Signal;
 
-#define M_SIGNAL_MANY(name)\
-public:\
-    core::EmptySignalMany name##Signal;
-
-#define M_FIXED_SIGNAL_ONE(type, name)\
+#define _M_FIXED_SIGNAL_ONE(name,type)\
 public:\
     core::SignalOne<core::FixedEvent<type>, type> name##Signal;
 
-#define M_FIXED_SIGNAL_MANY(type, name)\
+#define _M_SIGNAL_MANY(name)\
+public:\
+    core::EmptySignalMany name##Signal;
+
+#define _M_FIXED_SIGNAL_MANY(name,type)\
 public:\
     core::SignalMany<core::FixedEvent<type>, type> name##Signal;
-
-#define M_OBJECT_SIGNAL_ONE(type, name)\
-public:\
-    core::SignalOne<core::ObjectEvent<type>, type> name##Signal;
-
-#define M_OBJECT_SIGNAL_MANY(type, name)\
-public:\
-    core::SignalMany<core::ObjectEvent<type>, type> name##Signal;
 
 #endif // SIGNAL_H
