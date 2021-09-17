@@ -11,8 +11,8 @@ extern "C" void SysTick_Handler(void)
 
 void systemInit()
 {
+	HAL_Init();
 	SystemClock_Config();
 	MX_GPIO_Init();
 	LL_SYSTICK_EnableIT();
-	//MX_IWDG_Init();
 }
