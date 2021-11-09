@@ -78,8 +78,8 @@ void core::Engine::execute(core::AbstractEventQueue* queue)
     while (it!=nullptr)
     {
         next = it->next_;
-        if (min > it->nextTick_) min = it->nextTick_;
         if (tickCount_ >= it->nextTick_) it->run_();
+        if (min > it->nextTick_) min = it->nextTick_;
         it = next;
     }
     nextTick_ = min;

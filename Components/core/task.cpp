@@ -19,6 +19,7 @@ void core::Task::stop()
 {
 	loop_ = 0;
     core::Engine::instance().stopTask_(this);
+    this->nextTick_ = LAST_TICK - 1;
 }
 
 void core::Task::run_()
@@ -26,6 +27,7 @@ void core::Task::run_()
     if (--loop_ == 0)
     {
         core::Engine::instance().stopTask_(this);
+        this->nextTick_ = LAST_TICK - 1;
     }
     else
     {
