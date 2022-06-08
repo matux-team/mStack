@@ -32,7 +32,7 @@ public:
     }
 
     template<typename E>
-    void post(FixedEvent<E>* event, E e, ByteEvent* finished = nullptr)
+    void post(FixedEvent<E>* event, const E& e, ByteEvent* finished = nullptr)
     {
         if (queue_.available() < sizeof(E) + 3) return;
         DISABLE_INTERRUPT;
@@ -53,7 +53,7 @@ public:
     }
 
     template<typename E>
-    void post(ObjectEvent<E>* event, E e, ByteEvent* finished = nullptr)
+    void post(ObjectEvent<E>* event, const E& e, ByteEvent* finished = nullptr)
     {
         if (queue_.available() < 3) return;
         DISABLE_INTERRUPT;
