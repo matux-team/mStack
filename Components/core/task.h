@@ -22,7 +22,6 @@ private:
     Component *component_ = nullptr;
     Handler handler_;
     friend class Engine;
-    friend class TickEvent;
 };
 
 }

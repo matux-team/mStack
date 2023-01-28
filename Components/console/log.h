@@ -1,8 +1,6 @@
 #ifndef CONSOLE_LOG_H_
 #define CONSOLE_LOG_H_
 
-#define DEBUG
-
 #ifdef DEBUG
 #include <console/controller.h>
 
