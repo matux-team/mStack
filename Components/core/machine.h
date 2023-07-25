@@ -33,10 +33,10 @@ public:
 		}
 		void post()
 		{
-			core::Engine::instance().events().post(index_);
+			core::Engine::instance().events().post(container_);
 		}
 	private:
-		void execute(core::AbstractEventQueue* queue) override
+		void execute() override
 		{
 			machine_->postEvent(event_);
 		}
@@ -73,7 +73,7 @@ public:
 protected:
     uint8_t nextEvent_ = 0;
 protected:
-    core::ByteEvent postEvent_ = core::ByteEvent(this, (core::ByteEvent::Handler)&SimpleMachine::execute);
+    core::FixedEvent<uint8_t> postEvent_ = core::FixedEvent<uint8_t>(this, (core::FixedEvent<uint8_t>::Handler)&SimpleMachine::execute);
 
     bool check_(uint8_t input, State state) override
     {
@@ -152,10 +152,10 @@ private:\
 
 #define MACHINE_END };}
 
-#define SM_SIGNAL(name)\
-public:\
-	core::SimpleMachine::SignalOne name##Signal;
-
-#define SM_BIND(signal, event) new core::SimpleMachine::Event((core::SimpleMachine*)this, &signal, (uint8_t)event);
+//#define SM_SIGNAL(name)\
+//public:\
+//	core::SimpleMachine::SignalOne name##Signal;
+//
+//#define SM_BIND(signal, event) new core::SimpleMachine::Event((core::SimpleMachine*)this, &signal, (uint8_t)event);
 
 #endif // CORE_MACHINE_H

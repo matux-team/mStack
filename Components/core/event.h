@@ -4,6 +4,7 @@
 #include <core/queue.h>
 #include <core/base.h>
 #include <core/engine.h>
+#include <core/mem-pool.h>
 
 namespace core
 {
@@ -20,7 +21,7 @@ public:
         return &event;
     }
 private:
-    virtual void execute(core::AbstractEventQueue* queue){/*empty*/}
+    void execute(){/*empty*/}
     NullEvent(){};
 };
 
@@ -31,10 +32,10 @@ public:
     EmptyEvent(Component* component, Handler handler):component_(component), handler_(handler){}
     void post()
     {
-        core::Engine::instance().events().post(index_);
+        core::Engine::instance().events().post(container_);
     }
 private:
-    void execute(core::AbstractEventQueue* queue) override
+    void execute() override
     {
         (component_->*handler_)();
     }
@@ -50,54 +51,61 @@ class FixedEvent: public Event
 {
 public:
     typedef void (Component::*Handler) (const E&);
-    FixedEvent(Component* component, Handler handler): component_(component), handler_(handler){}
+    FixedEvent(Component* component, Handler handler)
+    {
+    	component_ = component;
+    	handler_ = handler;
+//    	Declare MemPool with correspond type here
+    	pool_ = new MemPool<E>(3);	//FIXME: 3 is constant
+    }
     void post(const E& e)
     {
-        uint8_t* ptr = (uint8_t*)&e;
-        core::Engine::instance().events().pushFixed(index_,ptr,sizeof (E));
+    	container_.payload_ = pool_->Alloc();
+    	memcpy(container_.payload_, &e, sizeof(E));
+
+    	core::Engine::instance().events().post(container_);
     }
 protected:
-    void execute(core::AbstractEventQueue* queue) override
+    void execute() override
     {
-        E e;
-        uint8_t* ptr = (uint8_t*)&e;
-        queue->popFixed(ptr, sizeof (E));
-        (component_->*handler_)(e);
+    	E* e = (E*)container_.payload_;
+        (component_->*handler_)(*e);
     }
 
     inline void execute_(E* e){(component_->*handler_)(*e);}
     Component *component_ = nullptr;
     Handler handler_;
+    MemPool<E>* pool_;
     friend class Strand;
 };
 
-template<typename E>
-class ObjectEvent: public Event
-{
-public:
-    typedef void (Component::*Handler) (const E&);
-    ObjectEvent(Component* component, Handler handler): component_(component), handler_(handler){}
-    void post(const E& e)
-    {
-        e.push(core::Engine::instance().events());
-    }
-protected:
-    void execute(core::AbstractEventQueue* queue) override
-    {
-        E e;
-        if (e.pop(core::Engine::instance().events()))
-        {
-            (component_->*handler_)(e);
-        }
-    }
+//template<typename E>
+//class ObjectEvent: public Event
+//{
+//public:
+//    typedef void (Component::*Handler) (const E&);
+//    ObjectEvent(Component* component, Handler handler): component_(component), handler_(handler){}
+//    void post(const E& e)
+//    {
+//        e.push(core::Engine::instance().events());
+//    }
+//protected:
+//    void execute(core::AbstractEventQueue* queue) override
+//    {
+//        E e;
+//        if (e.pop(core::Engine::instance().events()))
+//        {
+//            (component_->*handler_)(e);
+//        }
+//    }
+//
+//    Component *component_ = nullptr;
+//    Handler handler_;
+//    friend class Strand;
+//};
 
-    Component *component_ = nullptr;
-    Handler handler_;
-    friend class Strand;
-};
-
-typedef FixedEvent<uint8_t> ByteEvent;
-
+//typedef FixedEvent<uint8_t> ByteEvent;
+//
 }
 
 #define M_EVENT(...) _M_MACRO_2(__VA_ARGS__, _M_FIXED_EVENT, _M_EVENT)(__VA_ARGS__)

@@ -5,7 +5,7 @@
 
 core::Event::Event()
 {
-    index_ = core::Engine::instance().events().registerEvent_(this);
+    container_.index_ = core::Engine::instance().events().registerEvent_(this);
 }
 
 core::Engine::Engine(): Event(0)
@@ -70,7 +70,7 @@ void core::Engine::delay(uint32_t t)
     while (tickCount_ < timeout){NO_OPERATION;}
 }
 
-void core::Engine::execute(core::AbstractEventQueue* queue)
+void core::Engine::execute()
 {
     uint64_t min = LAST_TICK;
     Task* it = activeTasks_;

@@ -28,7 +28,7 @@ public:
     }
 
 private:
-    void execute(core::AbstractEventQueue* queue) override;
+    void execute() override;
     Engine();
     EventQueue events_;
     Task* tasks_ = nullptr;
@@ -45,7 +45,7 @@ private:
 
 inline void core::Engine::tick()
 {
-    if (++tickCount_ >= nextTick_) events_.post(index_);
+    if (++tickCount_ >= nextTick_) events_.post(container_);
 }
 
 }
