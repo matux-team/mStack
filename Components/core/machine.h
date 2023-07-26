@@ -94,14 +94,14 @@ template <typename T>
 class ByteMachine: public core::Machine
 {
 public:
-    void post(T c)
+    EventStatus post(T c)
     {
-        postEvent_.post(c);
+        return postEvent_.post(c);
     }
 protected:
     T data_;
     typedef void (Component::*Handler) (const T&);
-    core::FixedEvent<T> postEvent_ = core::FixedEvent<T>(this, (Handler)&ByteMachine<T>::execute_);
+    core::FixedEvent<T> postEvent_ = core::FixedEvent<T>(this, (Handler)&ByteMachine<T>::execute_, 5);
 
     void execute_(const T& c)
     {

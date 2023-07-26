@@ -9,7 +9,7 @@
 namespace core
 {
 
-class EventQueue//: public AbstractEventQueue
+class EventQueue
 {
 public:
 	virtual ~EventQueue(){}
@@ -30,37 +30,27 @@ public:
 		return true;
 	}
 
-    inline void post(container_t container)
+    inline EventStatus post(container_t container)
     {
-//        uint16_t avail = size_ + outPtr_ - inPtr_;
-//        if (avail > size_) avail -= (size_-1);
-//        if (avail < 2)
-//        {
-//        	Error_Handler();
-//        }
+        uint16_t avail = size_ + outPtr_ - inPtr_; // maximum avail = size_ - 1;
+        if (avail > size_) avail -= (size_);	// here we have to subtract 1 but we don't do that
+        if (avail < 2)							// and here we compare with 2 instead of 1.
+        {
+        	return EventStatus::POST_FAILED;
+        }
 
         DISABLE_INTERRUPT;
         push_(container);
         ENABLE_INTERRUPT;
+        return EventStatus::POST_SUCCESS;
     }
 
 private:
     inline void push_(container_t val)
     {
-    	container_t* next = inPtr_ + 1;
-    	if (next == last_) next = first_;
-		if (next!=outPtr_) //Queue not Full
-		{
-			*inPtr_ = val;
-			inPtr_ = next;
-		}
-		else	// Queue Full
-		{
-			Error_Handler();
-		}
-//        *(inPtr_) = val;
-//        inPtr_++;
-//        if (inPtr_ == last_) inPtr_ = first_;
+        *(inPtr_) = val;
+        inPtr_++;
+        if (inPtr_ == last_) inPtr_ = first_;
     }
 
     inline container_t pop_()

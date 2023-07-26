@@ -15,11 +15,6 @@ void console::Controller::print(const char* text)
 {
     int l = strlen(text) + 1;
     console::Driver::instance().sendPacket(console::Controller::MessageReceived, l, (uint8_t*)text);
-//    bool ret = console::Driver::instance().sendPacket(console::Controller::MessageReceived, l, (uint8_t*)text);
-//    if(!ret)
-//    {
-//    	Error_Handler();
-//    }
 }
 
 bool console::Controller::sendOSC(uint8_t channel, uint8_t length, uint16_t index, const uint8_t* data)
@@ -35,11 +30,6 @@ bool console::Controller::sendOSC(uint8_t channel, uint8_t length, uint16_t inde
         buf[i+3] = data[i];
     }
     console::Driver::instance().sendPacket(console::Controller::Oscilloscope, length+3, buf);
-//    bool ret = console::Driver::instance().sendPacket(console::Controller::Oscilloscope, length+3, buf);
-//    if(!ret)
-//    {
-//    	Error_Handler();
-//    }
 
     return true;
 }
@@ -52,11 +42,6 @@ void console::Controller::printf(const char* format, ...)
     int l = vsprintf(buf, format ,args) + 1;
     va_end(args);
     console::Driver::instance().sendPacket(console::Controller::MessageReceived, l, (uint8_t*)buf);
-//    bool ret = console::Driver::instance().sendPacket(console::Controller::MessageReceived, l, (uint8_t*)buf);
-//    if(!ret)
-//    {
-//    	Error_Handler();
-//    }
 }
 
 console::Command* console::Controller::registerCommand(uint16_t type, Handler handler)
@@ -75,11 +60,6 @@ void console::Controller::updateIntField(uint16_t command, int32_t value)
     ENCODE_16(command,buf,0);
     ENCODE_32(value,buf,2);
     console::Driver::instance().sendPacket(console::Controller::IntFieldReceived, 6, buf);
-//    bool ret = console::Driver::instance().sendPacket(console::Controller::IntFieldReceived, 6, buf);
-//    if(!ret)
-//    {
-//    	Error_Handler();
-//    }
 }
 
 void console::Controller::processCommand(uint16_t type, uint8_t length, uint8_t* data)
@@ -109,9 +89,4 @@ void console::Controller::updateTextField(uint16_t command, uint8_t length, uint
     ENCODE_16(command,buf,0);
     for (int i=0;i<length;i++) buf[i+2] = data[i];
     console::Driver::instance().sendPacket(console::Controller::TextFieldReceived, length+2, buf);
-//    bool ret = console::Driver::instance().sendPacket(console::Controller::TextFieldReceived, length+2, buf);
-//    if(!ret)
-//    {
-//    	Error_Handler();
-//    }
 }

@@ -2,7 +2,7 @@
 #include "gpio.h"
 
 #include <math.h>
-#include <test/example/example.h>
+#include "example.h"
 #define PI 3.14159265358979323846
 
 void ex::Test::init()
@@ -16,20 +16,31 @@ void ex::Test::init()
         cosine_[i] = cosine + 512;
     }
 
-    plotTask_.start(2); //100Hz
+    plotTask_.start(1); //100Hz
     oscilloscopeTask_.start(1);
 
     emptySignal.connect(&emptySignalReceivedEvent);
     fixedSignal.connect(&fixedSignalReceivedEvent);
 
-	timeoutTask_.start(10);
+	timeoutTask_.start(100);
 	SM_START(StartUp);
 }
 
 M_TASK_HANDLER(ex::Test, plot)
 {
-	emptySignal.emit();
-	fixedSignal.emit(cosine_[angle_]);
+	EventStatus a;
+	a = emptySignal.emit();
+	if(a != EventStatus::POST_SUCCESS)
+	{
+		LOG_PRINTF("WRONG");
+	}
+
+	a = fixedSignal.emit(cosine_[angle_]);
+	if(a != EventStatus::POST_SUCCESS)
+	{
+		LOG_PRINTF("WRONG");
+	}
+
 	if (++angle_>=400) angle_=0;
 }
 
@@ -45,8 +56,17 @@ M_TASK_HANDLER(ex::Test, oscilloscope)
 
 M_TASK_HANDLER(ex::Test, timeout)
 {
-	emptyEventEvent.post();
-	fixedEventEvent.post(count_++);
+	EventStatus a;
+	a = emptyEventEvent.post();
+	if(a != EventStatus::POST_SUCCESS)
+	{
+		LOG_PRINTF("WRONG");
+	}
+	a = fixedEventEvent.post(count_++);
+	if(a != EventStatus::POST_SUCCESS)
+	{
+		LOG_PRINTF("WRONG");
+	}
 
 	SM_POST(Event::TIMEOUT);
 }

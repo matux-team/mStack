@@ -15,7 +15,7 @@ MACHINE(ex, Test)
 	M_TASK(plot)
 	M_TASK(oscilloscope)
 	M_EVENT(emptyEvent)
-	M_EVENT(fixedEvent, uint32_t)
+	M_EVENT(fixedEvent, uint32_t, 1)
 
 	O_QUAD(quad, 2,3,4,5)
 

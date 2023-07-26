@@ -1,9 +1,9 @@
-base.h:15:18:virtual void core::Component::init()	16	static
-base.h:16:13:core::Component::~Component()	16	static
-base.h:16:13:virtual core::Component::~Component()	16	static
-base.h:29:13:core::Event::~Event()	16	static
-base.h:29:13:virtual core::Event::~Event()	16	static
-base.h:32:18:virtual void core::Event::execute()	16	static
+base.h:18:18:virtual void core::Component::init()	16	static
+base.h:19:13:core::Component::~Component()	16	static
+base.h:19:13:virtual core::Component::~Component()	16	static
+base.h:32:13:core::Event::~Event()	16	static
+base.h:32:13:virtual core::Event::~Event()	16	static
+base.h:35:18:virtual void core::Event::execute()	16	static
 event-queue.h:15:10:core::EventQueue::~EventQueue()	16	static
 event-queue.h:15:10:virtual core::EventQueue::~EventQueue()	16	static
 engine.h:18:5:core::Engine::~Engine()	16	static
@@ -14,7 +14,7 @@ controller.h:9:1:void __tcf_1()	8	static
 controller.h:9:1:static console::Controller& console::Controller::instance()	8	static
 controller.h:9:1:console::Controller::~Controller()	16	static
 controller.h:9:1:virtual console::Controller::~Controller()	16	static
-base.h:12:7:constexpr core::Component::Component()	16	static
+base.h:15:7:constexpr core::Component::Component()	16	static
 controller.h:9:1:console::Controller::Controller()	24	static
 event.h:32:5:core::EmptyEvent::EmptyEvent(core::Component*, core::EmptyEvent::Handler)	24	static
 event.h:38:10:virtual void core::EmptyEvent::execute()	16	static
@@ -33,18 +33,18 @@ machine.h:23:7:virtual core::SimpleMachine::~SimpleMachine()	16	static
 example.h:12:1:ex::Test::~Test()	16	static
 example.h:12:1:virtual ex::Test::~Test()	16	static
 machine.h:8:7:constexpr core::Machine::Machine()	16	static
-machine.h:23:7:constexpr core::SimpleMachine::SimpleMachine()	24	static
+machine.h:23:7:constexpr core::SimpleMachine::SimpleMachine()	32	static
 signal.h:9:7:constexpr core::EmptySignalOne::EmptySignalOne()	16	static
-signal.h:20:7:constexpr core::SignalOne<core::FixedEvent<short unsigned int>, short unsigned int>::SignalOne()	16	static
+signal.h:24:7:constexpr core::SignalOne<core::FixedEvent<short unsigned int>, short unsigned int>::SignalOne()	16	static
 example.h:12:1:ex::Test::Test()	80	static
 example.h:28:2:static void ex::Test::startCommand(uint16_t, uint8_t, uint8_t*)	16	static
 example.h:29:2:static void ex::Test::stopCommand(uint16_t, uint8_t, uint8_t*)	16	static
 example.h:30:2:static void ex::Test::integerCommand(uint16_t, uint8_t, uint8_t*)	24	static
 example.h:31:2:static void ex::Test::nameCommand(uint16_t, uint8_t, uint8_t*)	16	static
 main.cpp:4:5:int main()	8	static
-event.h:54:5:core::FixedEvent<E>::FixedEvent(core::Component*, core::FixedEvent<E>::Handler) [with E = unsigned char]	32	static
-event.h:54:5:core::FixedEvent<E>::FixedEvent(core::Component*, core::FixedEvent<E>::Handler) [with E = long unsigned int]	32	static
-event.h:54:5:core::FixedEvent<E>::FixedEvent(core::Component*, core::FixedEvent<E>::Handler) [with E = short unsigned int]	32	static
+event.h:54:5:core::FixedEvent<E>::FixedEvent(core::Component*, core::FixedEvent<E>::Handler, uint8_t) [with E = unsigned char]	32	static
+event.h:54:5:core::FixedEvent<E>::FixedEvent(core::Component*, core::FixedEvent<E>::Handler, uint8_t) [with E = long unsigned int]	32	static
+event.h:54:5:core::FixedEvent<E>::FixedEvent(core::Component*, core::FixedEvent<E>::Handler, uint8_t) [with E = short unsigned int]	32	static
 mem-pool.h:33:5:MemPool<T>::MemPool(long unsigned int) [with T = unsigned char]	24	static
 mem-pool.h:33:5:MemPool<T>::MemPool(long unsigned int) [with T = long unsigned int]	24	static
 mem-pool.h:33:5:MemPool<T>::MemPool(long unsigned int) [with T = short unsigned int]	24	static
@@ -58,9 +58,9 @@ event.h:50:7:core::FixedEvent<unsigned char>::~FixedEvent()	16	static
 event.h:50:7:virtual core::FixedEvent<unsigned char>::~FixedEvent()	16	static
 event.h:28:7:core::EmptyEvent::~EmptyEvent()	16	static
 event.h:28:7:virtual core::EmptyEvent::~EmptyEvent()	16	static
-event.h:77:10:void core::FixedEvent<E>::execute() [with E = short unsigned int]	24	static
-event.h:77:10:void core::FixedEvent<E>::execute() [with E = long unsigned int]	24	static
-event.h:77:10:void core::FixedEvent<E>::execute() [with E = unsigned char]	24	static
+event.h:75:10:void core::FixedEvent<E>::execute() [with E = short unsigned int]	24	static
+event.h:75:10:void core::FixedEvent<E>::execute() [with E = long unsigned int]	24	static
+event.h:75:10:void core::FixedEvent<E>::execute() [with E = unsigned char]	24	static
 mem-pool.h:78:10:void MemPool<T>::Free(T*) [with T = short unsigned int]	32	static
 mem-pool.h:78:10:void MemPool<T>::Free(T*) [with T = long unsigned int]	32	static
 mem-pool.h:78:10:void MemPool<T>::Free(T*) [with T = unsigned char]	32	static

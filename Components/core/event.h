@@ -30,9 +30,9 @@ class EmptyEvent: public Event
 public:
     typedef void (Component::*Handler) ();
     EmptyEvent(Component* component, Handler handler):component_(component), handler_(handler){}
-    void post()
+    EventStatus post()
     {
-        core::Engine::instance().events().post(container_);
+    	return core::Engine::instance().events().post(container_);
     }
 private:
     void execute() override
@@ -51,27 +51,25 @@ class FixedEvent: public Event
 {
 public:
     typedef void (Component::*Handler) (const E&);
-    FixedEvent(Component* component, Handler handler)
+    FixedEvent(Component* component, Handler handler, uint8_t numOfMem = 3)	// 3 is just default value
     {
     	component_ = component;
     	handler_ = handler;
-//    	Declare MemPool with correspond type here
-    	pool_ = new MemPool<E>(3);	//FIXME: 2 is constant
+    	//Declare MemPool with correspond type here
+    	pool_ = new MemPool<E>(numOfMem);
     }
-    void post(const E& e)
+    EventStatus post(const E& e)
     {
     	void* p = pool_->Alloc();
-    	if(p  == nullptr)
+    	if(p  == nullptr)	// Cannot Allocate, Pool Over
     	{
-    		//TODO: Warning here
-//    		Error_Handler();
-    		return;
+    		return EventStatus::ALLOCATION_FAILED;
     	}
     	container_.payload_ = p;
 
     	memcpy(container_.payload_, &e, sizeof(E));
 
-    	core::Engine::instance().events().post(container_);
+    	return core::Engine::instance().events().post(container_);
     }
 protected:
     void execute() override
@@ -92,8 +90,8 @@ typedef FixedEvent<uint8_t> ByteEvent;
 
 }
 
-#define M_EVENT(...) _M_MACRO_2(__VA_ARGS__, _M_FIXED_EVENT, _M_EVENT)(__VA_ARGS__)
-#define M_EVENT_HANDLER(...) _M_MACRO_3(__VA_ARGS__, _M_FIXED_EVENT_HANDLER, _M_EVENT_HANDLER)(__VA_ARGS__)
+#define M_EVENT(...) _M_MACRO_3(__VA_ARGS__,_M_FIXED_NUM_EVENT, _M_FIXED_EVENT, _M_EVENT)(__VA_ARGS__)
+#define M_EVENT_HANDLER(...) _M_MACRO_4(__VA_ARGS__, _M_FIXED_NUM_EVENT, _M_FIXED_EVENT_HANDLER, _M_EVENT_HANDLER)(__VA_ARGS__)
 
 #define _M_EVENT(name)\
 public:\
@@ -104,6 +102,12 @@ private:\
 #define _M_FIXED_EVENT(name, type)\
 public:\
     core::FixedEvent<type> name##Event = core::FixedEvent<type>(this, (core::FixedEvent<type>::Handler)&CLASS::name##Handler##_);\
+private:\
+    void name##Handler##_(const type& event);
+
+#define _M_FIXED_NUM_EVENT(name, type, num)\
+public:\
+    core::FixedEvent<type> name##Event = core::FixedEvent<type>(this, (core::FixedEvent<type>::Handler)&CLASS::name##Handler##_, num);\
 private:\
     void name##Handler##_(const type& event);
 

@@ -45,7 +45,7 @@ Components/test/example/example.o: ../Components/test/example/example.cpp \
  D:/CubeIDE/workspace/mStack/Components/core/task.h \
  D:/CubeIDE/workspace/mStack/Components/console/command.h \
  ../Core/Inc/gpio.h ../Core/Inc/main.h \
- D:/CubeIDE/workspace/mStack/Components/test/example/example.h \
+ ../Components/test/example/example.h \
  D:/CubeIDE/workspace/mStack/Components/core/event.h \
  D:/CubeIDE/workspace/mStack/Components/core/mem-pool.h \
  D:/CubeIDE/workspace/mStack/Components/core/machine.h \
@@ -149,7 +149,7 @@ D:/CubeIDE/workspace/mStack/Components/console/command.h:
 
 ../Core/Inc/main.h:
 
-D:/CubeIDE/workspace/mStack/Components/test/example/example.h:
+../Components/test/example/example.h:
 
 D:/CubeIDE/workspace/mStack/Components/core/event.h:
 

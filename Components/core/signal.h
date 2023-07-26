@@ -11,7 +11,11 @@ class EmptySignalOne
 public:
     void connect(EmptyEvent* event){this->event_ = event;}
     void disconnect(){event_ = nullptr;}
-    inline void emit(){if (event_ != nullptr) event_->post();}
+    inline EventStatus emit()
+    {
+    	if (event_ != nullptr) return event_->post();
+    	return EventStatus::POST_FAILED;
+    }
 private:
     EmptyEvent* event_ = nullptr;
 };
@@ -22,7 +26,11 @@ class SignalOne
 public:
     void connect(EV* event){this->event_ = event;}
     void disconnect(){event_ = nullptr;}
-    inline void emit(E& e){if (event_ != nullptr) event_->post(e);}
+    inline EventStatus emit(E& e)
+    {
+    	if (event_ != nullptr) return event_->post(e);
+    	return EventStatus::POST_FAILED;
+    }
 private:
     EV* event_ = nullptr;
 };
@@ -71,12 +79,13 @@ protected:
 class EmptySignalMany: public BaseSignalMany<EmptyEvent>
 {
 public:
-    inline void emit()
+    inline EventStatus emit()
     {
         for (Connection* it = connections_; it!=nullptr; it=it->next)
         {
-            it->event->post();
+        	if( it->event->post() != EventStatus::POST_SUCCESS) return EventStatus::POST_FAILED;
         }
+        return EventStatus::POST_SUCCESS;
     }
 };
 
@@ -84,12 +93,15 @@ template <typename EV, typename E>
 class SignalMany: public BaseSignalMany<EV>
 {
 public:
-    inline void emit(E e)
+    inline EventStatus emit(E e)
     {
         for (auto it = this->connections_; it!=nullptr; it=it->next)
         {
-            it->event->post(e);
+			EventStatus status;
+			status = it->event->post(e);;
+			if( status != EventStatus::POST_SUCCESS) return status;
         }
+        return EventStatus::POST_SUCCESS;
     }
 };
 
