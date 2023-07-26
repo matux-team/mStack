@@ -4,7 +4,7 @@
 #include <core/system.h>
 
 #define EVENT_POOL_SIZE     128
-#define EVENT_QUEUE_SIZE	1024
+#define EVENT_QUEUE_SIZE	128
 
 namespace core
 {
