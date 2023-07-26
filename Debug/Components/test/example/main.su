@@ -24,23 +24,23 @@ machine.h:17:18:virtual void core::Machine::start_(core::Machine::State)	24	stat
 machine.h:62:10:void core::SimpleMachine::execute(uint8_t&)	16	static
 machine.h:78:10:virtual bool core::SimpleMachine::check_(uint8_t, core::Machine::State)	24	static
 machine.h:85:10:virtual void core::SimpleMachine::start_(core::Machine::State)	24	static
-example.h:13:1:void __tcf_3()	8	static
-example.h:13:1:static ex::Test& ex::Test::instance()	8	static
+example.h:12:1:void __tcf_3()	8	static
+example.h:12:1:static ex::Test& ex::Test::instance()	8	static
 machine.h:8:7:core::Machine::~Machine()	16	static
 machine.h:8:7:virtual core::Machine::~Machine()	16	static
 machine.h:23:7:core::SimpleMachine::~SimpleMachine()	16	static
 machine.h:23:7:virtual core::SimpleMachine::~SimpleMachine()	16	static
-example.h:13:1:ex::Test::~Test()	16	static
-example.h:13:1:virtual ex::Test::~Test()	16	static
+example.h:12:1:ex::Test::~Test()	16	static
+example.h:12:1:virtual ex::Test::~Test()	16	static
 machine.h:8:7:constexpr core::Machine::Machine()	16	static
 machine.h:23:7:constexpr core::SimpleMachine::SimpleMachine()	24	static
 signal.h:9:7:constexpr core::EmptySignalOne::EmptySignalOne()	16	static
 signal.h:20:7:constexpr core::SignalOne<core::FixedEvent<short unsigned int>, short unsigned int>::SignalOne()	16	static
-example.h:13:1:ex::Test::Test()	72	static
-example.h:30:2:static void ex::Test::startCommand(uint16_t, uint8_t, uint8_t*)	16	static
-example.h:31:2:static void ex::Test::stopCommand(uint16_t, uint8_t, uint8_t*)	16	static
-example.h:32:2:static void ex::Test::integerCommand(uint16_t, uint8_t, uint8_t*)	24	static
-example.h:33:2:static void ex::Test::nameCommand(uint16_t, uint8_t, uint8_t*)	16	static
+example.h:12:1:ex::Test::Test()	80	static
+example.h:28:2:static void ex::Test::startCommand(uint16_t, uint8_t, uint8_t*)	16	static
+example.h:29:2:static void ex::Test::stopCommand(uint16_t, uint8_t, uint8_t*)	16	static
+example.h:30:2:static void ex::Test::integerCommand(uint16_t, uint8_t, uint8_t*)	24	static
+example.h:31:2:static void ex::Test::nameCommand(uint16_t, uint8_t, uint8_t*)	16	static
 main.cpp:4:5:int main()	8	static
 event.h:54:5:core::FixedEvent<E>::FixedEvent(core::Component*, core::FixedEvent<E>::Handler) [with E = unsigned char]	32	static
 event.h:54:5:core::FixedEvent<E>::FixedEvent(core::Component*, core::FixedEvent<E>::Handler) [with E = long unsigned int]	32	static
@@ -52,13 +52,15 @@ event.h:50:7:core::FixedEvent<short unsigned int>::~FixedEvent()	16	static
 event.h:50:7:virtual core::FixedEvent<short unsigned int>::~FixedEvent()	16	static
 event.h:50:7:core::FixedEvent<long unsigned int>::~FixedEvent()	16	static
 event.h:50:7:virtual core::FixedEvent<long unsigned int>::~FixedEvent()	16	static
+quad.h:12:7:osc::Quad::~Quad()	16	static
+quad.h:12:7:virtual osc::Quad::~Quad()	16	static
 event.h:50:7:core::FixedEvent<unsigned char>::~FixedEvent()	16	static
 event.h:50:7:virtual core::FixedEvent<unsigned char>::~FixedEvent()	16	static
 event.h:28:7:core::EmptyEvent::~EmptyEvent()	16	static
 event.h:28:7:virtual core::EmptyEvent::~EmptyEvent()	16	static
-event.h:77:10:void core::FixedEvent<E>::execute() [with E = short unsigned int]	24	static
-event.h:77:10:void core::FixedEvent<E>::execute() [with E = long unsigned int]	24	static
-event.h:77:10:void core::FixedEvent<E>::execute() [with E = unsigned char]	24	static
+event.h:78:10:void core::FixedEvent<E>::execute() [with E = short unsigned int]	24	static
+event.h:78:10:void core::FixedEvent<E>::execute() [with E = long unsigned int]	24	static
+event.h:78:10:void core::FixedEvent<E>::execute() [with E = unsigned char]	24	static
 mem-pool.h:78:10:void MemPool<T>::Free(T*) [with T = short unsigned int]	32	static
 mem-pool.h:78:10:void MemPool<T>::Free(T*) [with T = long unsigned int]	32	static
 mem-pool.h:78:10:void MemPool<T>::Free(T*) [with T = unsigned char]	32	static

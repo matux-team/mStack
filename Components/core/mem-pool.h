@@ -60,7 +60,7 @@ public:
 
      // Allocate memory unit If memory pool can`t provide proper memory unit,
      // It will call system function.
-    T* Alloc()
+    void* Alloc()
     {
         if(nullptr == m_pMemBlock   || nullptr == m_pFreeMemBlock)	// Pool Full
         {
@@ -72,7 +72,7 @@ public:
         pCurUnit->pNext = m_pAllocatedMemBlock;
         m_pAllocatedMemBlock = pCurUnit;
 
-        return (T *)((char *)pCurUnit + sizeof(struct _Unit) );
+        return (void *)((char *)pCurUnit + sizeof(struct _Unit) );
     }
 
     void Free(T* p)

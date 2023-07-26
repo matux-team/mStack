@@ -22,7 +22,7 @@ class SignalOne
 public:
     void connect(EV* event){this->event_ = event;}
     void disconnect(){event_ = nullptr;}
-    inline void emit(E e){if (event_ != nullptr) event_->post(e);}
+    inline void emit(E& e){if (event_ != nullptr) event_->post(e);}
 private:
     EV* event_ = nullptr;
 };

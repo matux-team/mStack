@@ -50,9 +50,8 @@ Components/test/example/example.o: ../Components/test/example/example.cpp \
  D:/CubeIDE/workspace/mStack/Components/core/mem-pool.h \
  D:/CubeIDE/workspace/mStack/Components/core/machine.h \
  D:/CubeIDE/workspace/mStack/Components/core/signal.h \
- D:/CubeIDE/workspace/mStack/Components/oscilloscope/dual.h \
- D:/CubeIDE/workspace/mStack/Components/oscilloscope/data.h \
- D:/CubeIDE/workspace/mStack/Components/oscilloscope/quad.h
+ D:/CubeIDE/workspace/mStack/Components/oscilloscope/quad.h \
+ D:/CubeIDE/workspace/mStack/Components/oscilloscope/data.h
 
 D:/CubeIDE/workspace/mStack/Components/console/log.h:
 
@@ -160,8 +159,6 @@ D:/CubeIDE/workspace/mStack/Components/core/machine.h:
 
 D:/CubeIDE/workspace/mStack/Components/core/signal.h:
 
-D:/CubeIDE/workspace/mStack/Components/oscilloscope/dual.h:
+D:/CubeIDE/workspace/mStack/Components/oscilloscope/quad.h:
 
 D:/CubeIDE/workspace/mStack/Components/oscilloscope/data.h:
-
-D:/CubeIDE/workspace/mStack/Components/oscilloscope/quad.h:

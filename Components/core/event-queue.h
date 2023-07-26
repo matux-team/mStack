@@ -34,13 +34,15 @@ public:
     {
         uint16_t avail = size_ + outPtr_ - inPtr_;
         if (avail > size_) avail -= size_;
-        if (avail < 1)
+        if (avail < 2)
         {
         	Error_Handler();
         	return;
         }
 
+        DISABLE_INTERRUPT;
         push_(container);
+        ENABLE_INTERRUPT;
     }
 
 private:

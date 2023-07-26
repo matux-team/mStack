@@ -13,6 +13,7 @@ RM := rm -rf
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
 -include Components/test/example/subdir.mk
+-include Components/oscilloscope/subdir.mk
 -include Components/core/subdir.mk
 -include Components/console/subdir.mk
 -include subdir.mk

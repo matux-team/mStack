@@ -18,8 +18,8 @@ base.h:29:13:virtual core::Event::~Event()	16	static
 base.h:32:18:virtual void core::Event::execute()	16	static
 event-queue.h:15:10:core::EventQueue::~EventQueue()	16	static
 event-queue.h:15:10:virtual core::EventQueue::~EventQueue()	16	static
-event-queue.h:33:17:void core::EventQueue::post(core::container_t)	32	static
-event-queue.h:47:17:void core::EventQueue::push_(core::container_t)	24	static
+event-queue.h:33:17:void core::EventQueue::post(core::container_t)	32	static,ignoring_inline_asm
+event-queue.h:49:17:void core::EventQueue::push_(core::container_t)	24	static
 engine.h:18:5:core::Engine::~Engine()	16	static
 engine.h:18:5:virtual core::Engine::~Engine()	16	static
 engine.h:23:17:core::EventQueue& core::Engine::events()	16	static
@@ -47,15 +47,15 @@ hal.cpp:18:6:static bool console::HAL::txReady()	8	static
 hal.cpp:23:6:static void console::HAL::write(uint8_t)	16	static
 hal.cpp:28:1:void USART2_IRQHandler()	16	static
 event.h:54:5:core::FixedEvent<E>::FixedEvent(core::Component*, core::FixedEvent<E>::Handler) [with E = unsigned char]	32	static
-event.h:61:10:void core::FixedEvent<E>::post(const E&) [with E = unsigned char]	16	static,ignoring_inline_asm
+event.h:61:10:void core::FixedEvent<E>::post(const E&) [with E = unsigned char]	24	static
 machine.h:106:10:void core::ByteMachine<T>::execute_(const T&) [with T = unsigned char]	16	static
 machine.h:97:10:void core::ByteMachine<T>::post(T) [with T = unsigned char]	16	static
 mem-pool.h:33:5:MemPool<T>::MemPool(long unsigned int) [with T = unsigned char]	24	static
-mem-pool.h:63:8:T* MemPool<T>::Alloc() [with T = unsigned char]	24	static
+mem-pool.h:63:11:void* MemPool<T>::Alloc() [with T = unsigned char]	24	static
 event.h:50:7:core::FixedEvent<unsigned char>::~FixedEvent()	16	static
 event.h:50:7:virtual core::FixedEvent<unsigned char>::~FixedEvent()	16	static
 event.h:28:7:core::EmptyEvent::~EmptyEvent()	16	static
 event.h:28:7:virtual core::EmptyEvent::~EmptyEvent()	16	static
 machine.h:113:10:void core::ByteMachine<T>::start_(core::Machine::State) [with T = unsigned char]	24	static
-event.h:77:10:void core::FixedEvent<E>::execute() [with E = unsigned char]	24	static
+event.h:78:10:void core::FixedEvent<E>::execute() [with E = unsigned char]	24	static
 mem-pool.h:78:10:void MemPool<T>::Free(T*) [with T = unsigned char]	32	static

@@ -6,9 +6,8 @@
 #include <core/task.h>
 #include <core/machine.h>
 #include <core/signal.h>
-#include <oscilloscope/dual.h>
-#include <oscilloscope/quad.h>
 #include <console/controller.h>
+#include <oscilloscope/quad.h>
 
 MACHINE(ex, Test)
 
@@ -18,8 +17,7 @@ MACHINE(ex, Test)
 	M_EVENT(emptyEvent)
 	M_EVENT(fixedEvent, uint32_t)
 
-//	O_DUAL(dual,4,5)
-////	O_QUAD(quad,2,3,4,5)
+	O_QUAD(quad, 2,3,4,5)
 
 	M_SIGNAL(empty)
 	M_SIGNAL(fixed, uint16_t)

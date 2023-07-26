@@ -32,6 +32,7 @@ CPP_DEPS :=
 SUBDIRS := \
 Components/console \
 Components/core \
+Components/oscilloscope \
 Components/test/example \
 Core/Src \
 Core/Startup \

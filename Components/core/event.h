@@ -56,18 +56,19 @@ public:
     	component_ = component;
     	handler_ = handler;
 //    	Declare MemPool with correspond type here
-    	pool_ = new MemPool<E>(2);	//FIXME: 3 is constant
+    	pool_ = new MemPool<E>(3);	//FIXME: 2 is constant
     }
     void post(const E& e)
     {
-    	DISABLE_INTERRUPT;
-    	container_.payload_ = pool_->Alloc();
-    	ENABLE_INTERRUPT;
-
-    	if(container_.payload_ == nullptr)
+    	void* p = pool_->Alloc();
+    	if(p  == nullptr)
     	{
     		//TODO: Warning here
+//    		Error_Handler();
+//    		core::Engine::instance().events().post(container_);
+    		return;
     	}
+    	container_.payload_ = p;
 
     	memcpy(container_.payload_, &e, sizeof(E));
 
@@ -77,8 +78,8 @@ protected:
     void execute() override
     {
     	E* e = (E*)container_.payload_;
+    	pool_->Free(e);
         (component_->*handler_)(*e);
-        pool_->Free(e);
     }
 
     inline void execute_(E* e){(component_->*handler_)(*e);}

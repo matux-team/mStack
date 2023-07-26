@@ -1,0 +1,42 @@
+base.h:15:18:virtual void core::Component::init()	16	static
+base.h:16:13:core::Component::~Component()	16	static
+base.h:16:13:virtual core::Component::~Component()	16	static
+base.h:29:13:core::Event::~Event()	16	static
+base.h:29:13:virtual core::Event::~Event()	16	static
+base.h:32:18:virtual void core::Event::execute()	16	static
+event-queue.h:15:10:core::EventQueue::~EventQueue()	16	static
+event-queue.h:15:10:virtual core::EventQueue::~EventQueue()	16	static
+event-queue.h:33:17:void core::EventQueue::post(core::container_t)	32	static,ignoring_inline_asm
+event-queue.h:49:17:void core::EventQueue::push_(core::container_t)	24	static
+engine.h:18:5:core::Engine::~Engine()	16	static
+engine.h:18:5:virtual core::Engine::~Engine()	16	static
+engine.h:23:17:core::EventQueue& core::Engine::events()	16	static
+engine.h:26:23:void __tcf_0()	8	static
+engine.h:24:20:static core::Engine& core::Engine::instance()	8	static
+controller.h:9:1:void __tcf_1()	8	static
+controller.h:9:1:static console::Controller& console::Controller::instance()	8	static
+controller.h:9:1:console::Controller::~Controller()	16	static
+controller.h:9:1:virtual console::Controller::~Controller()	16	static
+base.h:12:7:constexpr core::Component::Component()	16	static
+controller.h:9:1:console::Controller::Controller()	24	static
+data.h:15:10:void osc::Data::reset(uint16_t)	16	static
+data.h:24:10:void osc::Data::add(uint16_t)	24	static
+data.h:41:10:bool osc::Data::flush()	40	static
+data.h:57:10:void osc::Data::prepareFlush()	16	static
+event.h:32:5:core::EmptyEvent::EmptyEvent(core::Component*, core::EmptyEvent::Handler)	24	static
+event.h:33:10:void core::EmptyEvent::post()	16	static
+event.h:38:10:virtual void core::EmptyEvent::execute()	16	static
+quad.h:27:10:void osc::Quad::idle_(uint16_t, uint16_t, uint16_t, uint16_t)	24	static
+quad.cpp:4:1:osc::Quad::Quad(uint8_t, uint16_t, uint16_t, uint16_t)	56	static
+quad.cpp:12:6:void osc::Quad::thresholding_(uint16_t, uint16_t, uint16_t, uint16_t)	24	static
+quad.cpp:34:6:void osc::Quad::probing_(uint16_t, uint16_t, uint16_t, uint16_t)	24	static
+quad.cpp:49:6:void osc::Quad::first_(uint16_t, uint16_t, uint16_t, uint16_t)	24	static
+quad.cpp:59:6:void osc::Quad::adding_(uint16_t, uint16_t, uint16_t, uint16_t)	24	static
+quad.cpp:79:6:void osc::Quad::c1Flush_()	16	static
+quad.cpp:91:6:void osc::Quad::c2Flush_()	16	static
+quad.cpp:103:6:void osc::Quad::c3Flush_()	16	static
+quad.cpp:115:6:void osc::Quad::c4Flush_()	16	static
+quad.h:12:7:osc::Quad::~Quad()	16	static
+quad.h:12:7:virtual osc::Quad::~Quad()	16	static
+event.h:28:7:core::EmptyEvent::~EmptyEvent()	16	static
+event.h:28:7:virtual core::EmptyEvent::~EmptyEvent()	16	static

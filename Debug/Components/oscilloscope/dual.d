@@ -1,9 +1,7 @@
-Components/test/example/example-sm.o: \
- ../Components/test/example/example-sm.cpp \
- D:/CubeIDE/workspace/mStack/Components/console/log.h \
- D:/CubeIDE/workspace/mStack/Components/console/controller.h \
- D:/CubeIDE/workspace/mStack/Components/core/queue.h \
+Components/oscilloscope/dual.o: ../Components/oscilloscope/dual.cpp \
+ ../Components/oscilloscope/dual.h \
  D:/CubeIDE/workspace/mStack/Components/core/engine.h \
+ D:/CubeIDE/workspace/mStack/Components/core/queue.h \
  D:/CubeIDE/workspace/mStack/Components/core/event-queue.h \
  D:/CubeIDE/workspace/mStack/Components/core/base.h ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
@@ -44,22 +42,17 @@ Components/test/example/example-sm.o: \
  D:/CubeIDE/workspace/mStack/Components/core/system.h \
  D:/CubeIDE/workspace/mStack/Components/core/utils.h \
  D:/CubeIDE/workspace/mStack/Components/core/task.h \
- D:/CubeIDE/workspace/mStack/Components/console/command.h \
- D:/CubeIDE/workspace/mStack/Components/test/example/example.h \
  D:/CubeIDE/workspace/mStack/Components/core/event.h \
  D:/CubeIDE/workspace/mStack/Components/core/mem-pool.h \
- D:/CubeIDE/workspace/mStack/Components/core/machine.h \
- D:/CubeIDE/workspace/mStack/Components/core/signal.h \
- D:/CubeIDE/workspace/mStack/Components/oscilloscope/quad.h \
+ D:/CubeIDE/workspace/mStack/Components/console/controller.h \
+ D:/CubeIDE/workspace/mStack/Components/console/command.h \
  D:/CubeIDE/workspace/mStack/Components/oscilloscope/data.h
 
-D:/CubeIDE/workspace/mStack/Components/console/log.h:
-
-D:/CubeIDE/workspace/mStack/Components/console/controller.h:
-
-D:/CubeIDE/workspace/mStack/Components/core/queue.h:
+../Components/oscilloscope/dual.h:
 
 D:/CubeIDE/workspace/mStack/Components/core/engine.h:
+
+D:/CubeIDE/workspace/mStack/Components/core/queue.h:
 
 D:/CubeIDE/workspace/mStack/Components/core/event-queue.h:
 
@@ -143,18 +136,12 @@ D:/CubeIDE/workspace/mStack/Components/core/utils.h:
 
 D:/CubeIDE/workspace/mStack/Components/core/task.h:
 
-D:/CubeIDE/workspace/mStack/Components/console/command.h:
-
-D:/CubeIDE/workspace/mStack/Components/test/example/example.h:
-
 D:/CubeIDE/workspace/mStack/Components/core/event.h:
 
 D:/CubeIDE/workspace/mStack/Components/core/mem-pool.h:
 
-D:/CubeIDE/workspace/mStack/Components/core/machine.h:
+D:/CubeIDE/workspace/mStack/Components/console/controller.h:
 
-D:/CubeIDE/workspace/mStack/Components/core/signal.h:
-
-D:/CubeIDE/workspace/mStack/Components/oscilloscope/quad.h:
+D:/CubeIDE/workspace/mStack/Components/console/command.h:
 
 D:/CubeIDE/workspace/mStack/Components/oscilloscope/data.h:

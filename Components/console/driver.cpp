@@ -64,7 +64,7 @@ bool console::Driver::sendPacket(uint16_t type, uint8_t length, const uint8_t* d
     uint8_t checksum = 0u;
     if (txQueue_.available() < length + 5)
     {
-    	sendEvent.post();
+    	//TODO: Warning here
     	return false;
     }
     txQueue_.push(HEADER_INDICATOR);

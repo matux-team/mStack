@@ -16,13 +16,13 @@ void ex::Test::init()
         cosine_[i] = cosine + 512;
     }
 
-    plotTask_.start(10); //100Hz
-//    oscilloscopeTask_.start(1);
+    plotTask_.start(1); //100Hz
+    oscilloscopeTask_.start(1);
 
     emptySignal.connect(&emptySignalReceivedEvent);
     fixedSignal.connect(&fixedSignalReceivedEvent);
 
-	timeoutTask_.start(500);
+	timeoutTask_.start(1);
 	SM_START(StartUp);
 }
 
@@ -35,10 +35,12 @@ M_TASK_HANDLER(ex::Test, plot)
 
 M_TASK_HANDLER(ex::Test, oscilloscope)
 {
+	static uint16_t angle;
     //singlePlot(sine_[angle] + rand()%10);
 //    dualPlot(sine_[angle_] + rand()%10, cosine_[angle_] + rand()%10);
     //triplePlot(sine_[angle] + rand()%10, cosine_[angle] + rand()%10, cosine_[angle]/2 + rand()%5);
-//    quadPlot(sine_[angle_] + rand()%10, cosine_[angle_] + rand()%10, cosine_[angle_]/2 + rand()%5, sine_[angle_]/2 + rand()%5);
+    quadPlot(sine_[angle] + rand()%10, cosine_[angle] + rand()%10, cosine_[angle]/2 + rand()%5, sine_[angle]/2 + rand()%5);
+    if (++angle>=400) angle=0;
 }
 
 M_TASK_HANDLER(ex::Test, timeout)
@@ -51,12 +53,12 @@ M_TASK_HANDLER(ex::Test, timeout)
 
 M_EVENT_HANDLER(ex::Test, emptyEvent)
 {
-	LOG_PRINTF("Empty Event Called");
+	LOG_PRINTF("EmptyEvent");
 }
 
 M_EVENT_HANDLER(ex::Test, fixedEvent, uint32_t)
 {
-	LOG_PRINTF("Fixed Event Called %d", event);
+	LOG_PRINTF("FixedEvent %d", event);
 }
 
 M_EVENT_HANDLER(ex::Test, emptySignalReceived)
