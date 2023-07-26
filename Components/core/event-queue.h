@@ -32,13 +32,12 @@ public:
 
     inline void post(container_t container)
     {
-        uint16_t avail = size_ + outPtr_ - inPtr_;
-        if (avail > size_) avail -= size_;
-        if (avail < 2)
-        {
-        	Error_Handler();
-        	return;
-        }
+//        uint16_t avail = size_ + outPtr_ - inPtr_;
+//        if (avail > size_) avail -= (size_-1);
+//        if (avail < 2)
+//        {
+//        	Error_Handler();
+//        }
 
         DISABLE_INTERRUPT;
         push_(container);
@@ -48,9 +47,20 @@ public:
 private:
     inline void push_(container_t val)
     {
-        *(inPtr_) = val;
-        inPtr_++;
-        if (inPtr_ == last_) inPtr_ = first_;
+    	container_t* next = inPtr_ + 1;
+    	if (next == last_) next = first_;
+		if (next!=outPtr_) //Queue not Full
+		{
+			*inPtr_ = val;
+			inPtr_ = next;
+		}
+		else	// Queue Full
+		{
+			Error_Handler();
+		}
+//        *(inPtr_) = val;
+//        inPtr_++;
+//        if (inPtr_ == last_) inPtr_ = first_;
     }
 
     inline container_t pop_()

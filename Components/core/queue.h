@@ -19,7 +19,7 @@ public:
     uint16_t available()
     {
     	uint16_t ret = size_+outPtr_-inPtr_;
-    	if (ret > size_) ret -= size_;
+    	if (ret > size_) ret -= (size_ - 1);
     	return ret;
     }
     bool notEmpty(){return (inPtr_ != outPtr_);}

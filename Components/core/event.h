@@ -65,7 +65,6 @@ public:
     	{
     		//TODO: Warning here
 //    		Error_Handler();
-//    		core::Engine::instance().events().post(container_);
     		return;
     	}
     	container_.payload_ = p;
@@ -78,8 +77,8 @@ protected:
     void execute() override
     {
     	E* e = (E*)container_.payload_;
-    	pool_->Free(e);
         (component_->*handler_)(*e);
+        pool_->Free(e);
     }
 
     inline void execute_(E* e){(component_->*handler_)(*e);}

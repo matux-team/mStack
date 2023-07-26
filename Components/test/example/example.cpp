@@ -16,13 +16,13 @@ void ex::Test::init()
         cosine_[i] = cosine + 512;
     }
 
-    plotTask_.start(1); //100Hz
+    plotTask_.start(2); //100Hz
     oscilloscopeTask_.start(1);
 
     emptySignal.connect(&emptySignalReceivedEvent);
     fixedSignal.connect(&fixedSignalReceivedEvent);
 
-	timeoutTask_.start(1);
+	timeoutTask_.start(10);
 	SM_START(StartUp);
 }
 
@@ -47,18 +47,18 @@ M_TASK_HANDLER(ex::Test, timeout)
 {
 	emptyEventEvent.post();
 	fixedEventEvent.post(count_++);
-	LL_GPIO_TogglePin(GPIOA, LL_GPIO_PIN_5);
+
 	SM_POST(Event::TIMEOUT);
 }
 
 M_EVENT_HANDLER(ex::Test, emptyEvent)
 {
-	LOG_PRINTF("EmptyEvent");
+//	LOG_PRINTF("EmptyEvent");
 }
 
 M_EVENT_HANDLER(ex::Test, fixedEvent, uint32_t)
 {
-	LOG_PRINTF("FixedEvent %d", event);
+//	LOG_PRINTF("FixedEvent %d", event);
 }
 
 M_EVENT_HANDLER(ex::Test, emptySignalReceived)
@@ -74,6 +74,7 @@ M_EVENT_HANDLER(ex::Test, fixedSignalReceived, uint16_t)
 U_ACTION_HANDLER(ex::Test, start)
 {
 	LOG_PRINTF("START");
+	LL_GPIO_TogglePin(GPIOA, LL_GPIO_PIN_5);
 }
 
 U_ACTION_HANDLER(ex::Test, stop)

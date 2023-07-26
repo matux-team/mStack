@@ -1,5 +1,4 @@
 Project{name:'Example'}
-Log{name:'example.log'}
 
 Section{name:'Blink'}
 IntField{name:'Interval', min: 10, max: 1000, readonly:false, command: 100}
