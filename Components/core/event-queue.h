@@ -4,7 +4,7 @@
 #include <core/system.h>
 
 #define EVENT_POOL_SIZE     128
-#define EVENT_QUEUE_SIZE	2048
+#define EVENT_QUEUE_SIZE	1024
 
 namespace core
 {
@@ -23,6 +23,10 @@ public:
             Event* e = events_[container_.index_];
             e->execute();
         }
+        else
+        {
+        	Error_Handler();
+        }
 		return true;
 	}
 
@@ -30,70 +34,14 @@ public:
     {
         uint16_t avail = size_ + outPtr_ - inPtr_;
         if (avail > size_) avail -= size_;
-        if (avail < 1) return;
+        if (avail < 1)
+        {
+        	Error_Handler();
+        	return;
+        }
 
         push_(container);
     }
-
-//    inline void postByte(uint8_t index, uint8_t c)
-//    {
-//        uint16_t avail = size_ + outPtr_ - inPtr_;
-//        if (avail > size_) avail -= size_;
-//        if (avail < 2) return;
-//
-//        DISABLE_INTERRUPT;
-//        push_(index);
-//        push_(c);
-//        ENABLE_INTERRUPT;
-//    }
-
-//    inline void pushFixed(uint8_t index, uint8_t* data, uint8_t size) override
-//    {
-//        uint16_t avail = size_ + outPtr_ - inPtr_;
-//        if (avail > size_) avail -= size_;
-//        if (avail < size+1) return;
-//
-//        DISABLE_INTERRUPT;
-//        push_(index);
-//        for (int i=0;i<size;i++)
-//        {
-//            push_(data[i]);
-//        }
-//        ENABLE_INTERRUPT;
-//    }
-//
-//    inline void popFixed(uint8_t* data, uint8_t size) override
-//    {
-//        for (int i=0;i<size;i++)
-//        {
-//            data[i] = pop_();
-//        }
-//    }
-//
-//    inline void pushBuffer(uint8_t index, uint8_t* data, uint8_t size) override
-//    {
-//        uint16_t avail = size_ + outPtr_ - inPtr_;
-//        if (avail > size_) avail -= size_;
-//        if (avail < size+2) return;
-//
-//        DISABLE_INTERRUPT;
-//        push_(index);
-//        push_(size);
-//        for (int i=0;i<size;i++)
-//        {
-//            push_(data[i]);
-//        }
-//        ENABLE_INTERRUPT;
-//    }
-//
-//    inline void popBuffer(uint8_t* data, uint8_t& size) override
-//    {
-//        size = pop_();
-//        for (int i=0;i<size;i++)
-//        {
-//            data[i] = pop_();
-//        }
-//    }
 
 private:
     inline void push_(container_t val)
@@ -127,7 +75,7 @@ private:
         events_[poolSize_] = event;
         if (poolSize_>= EVENT_POOL_SIZE)
         {
-            /*TODO: warning here*/
+            /*TODO: warning here. Over Event Pool*/
         	Error_Handler();
         }
         return poolSize_++;

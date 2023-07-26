@@ -9,34 +9,12 @@
 namespace core
 {
 
-//class AbstractEventQueue
-//{
-//public:
-//    virtual void pushFixed(uint8_t index, uint8_t* data, uint8_t size)=0;
-//    virtual void popFixed(uint8_t* data, uint8_t size)=0;
-//    virtual void pushBuffer(uint8_t index, uint8_t* data, uint8_t size)=0;
-//    virtual void popBuffer(uint8_t* data, uint8_t& size)=0;
-//};
-
 class Component
 {
 public:
     virtual void init(){/*empty*/}
     virtual ~Component(){}
 };
-
-//class Event
-//{
-//public:
-//    Event();
-//    virtual ~Event(){};
-//protected:
-//    virtual void execute(core::AbstractEventQueue* queue) = 0;
-//    Event(uint8_t index): index_(index){}
-//    uint8_t index_;
-//    friend class EventQueue;
-//    friend class Strand;
-//};
 
 typedef struct Container
 {

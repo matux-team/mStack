@@ -10,7 +10,7 @@
 //namespace core
 //{
 //
-//class Strand: public core::Component, public AbstractEventQueue
+//class Strand: public core::Component
 //{
 //public:
 //    Strand(core::Queue& queue): queue_(queue){}
@@ -100,21 +100,6 @@
 //        {
 //            data[i] = queue_.pop();
 //        }
-//    }
-//
-//    inline void pushFixed(uint8_t index, uint8_t* data, uint8_t size) override
-//    {
-//        /*TODO*/
-//    }
-//
-//    inline void pushBuffer(uint8_t index, uint8_t* data, uint8_t size)  override
-//    {
-//        /*TODO*/
-//    }
-//
-//    inline void popBuffer(uint8_t* data, uint8_t& size)  override
-//    {
-//        /*TODO*/
 //    }
 //
 //    enum EventType

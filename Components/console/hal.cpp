@@ -3,12 +3,12 @@
 #include <console/hal.h>
 #include "usart.h"
 
-#define UART_PORT			USART1
-#define UART_ISR_HANDLER()	extern "C" void USART1_IRQHandler(void)
+#define UART_PORT			USART2
+#define UART_ISR_HANDLER()	extern "C" void USART2_IRQHandler(void)
 
 void console::HAL::init()
 {
-	MX_USART1_UART_Init();
+	MX_USART2_UART_Init();
 	LL_USART_EnableIT_RXNE(UART_PORT);
 	LL_USART_EnableIT_ERROR(UART_PORT);
 	LL_USART_DisableIT_TC(UART_PORT);
@@ -34,6 +34,7 @@ UART_ISR_HANDLER()
 	}
 	else if(LL_USART_IsActiveFlag_TC(UART_PORT))
 	{
+		LL_USART_ClearFlag_TC(UART_PORT);
 		LL_USART_DisableIT_TC(UART_PORT);
 	}
 	else if(LL_USART_IsActiveFlag_TXE(UART_PORT))

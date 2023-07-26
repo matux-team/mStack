@@ -56,11 +56,19 @@ public:
     	component_ = component;
     	handler_ = handler;
 //    	Declare MemPool with correspond type here
-    	pool_ = new MemPool<E>(3);	//FIXME: 3 is constant
+    	pool_ = new MemPool<E>(2);	//FIXME: 3 is constant
     }
     void post(const E& e)
     {
+    	DISABLE_INTERRUPT;
     	container_.payload_ = pool_->Alloc();
+    	ENABLE_INTERRUPT;
+
+    	if(container_.payload_ == nullptr)
+    	{
+    		//TODO: Warning here
+    	}
+
     	memcpy(container_.payload_, &e, sizeof(E));
 
     	core::Engine::instance().events().post(container_);
@@ -70,6 +78,7 @@ protected:
     {
     	E* e = (E*)container_.payload_;
         (component_->*handler_)(*e);
+        pool_->Free(e);
     }
 
     inline void execute_(E* e){(component_->*handler_)(*e);}
@@ -79,33 +88,8 @@ protected:
     friend class Strand;
 };
 
-//template<typename E>
-//class ObjectEvent: public Event
-//{
-//public:
-//    typedef void (Component::*Handler) (const E&);
-//    ObjectEvent(Component* component, Handler handler): component_(component), handler_(handler){}
-//    void post(const E& e)
-//    {
-//        e.push(core::Engine::instance().events());
-//    }
-//protected:
-//    void execute(core::AbstractEventQueue* queue) override
-//    {
-//        E e;
-//        if (e.pop(core::Engine::instance().events()))
-//        {
-//            (component_->*handler_)(e);
-//        }
-//    }
-//
-//    Component *component_ = nullptr;
-//    Handler handler_;
-//    friend class Strand;
-//};
+typedef FixedEvent<uint8_t> ByteEvent;
 
-//typedef FixedEvent<uint8_t> ByteEvent;
-//
 }
 
 #define M_EVENT(...) _M_MACRO_2(__VA_ARGS__, _M_FIXED_EVENT, _M_EVENT)(__VA_ARGS__)

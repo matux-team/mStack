@@ -35,12 +35,12 @@ public:
             m_pAllocatedMemBlock(nullptr),
             m_pFreeMemBlock(nullptr)//,
     {
-        m_pMemBlock = malloc(sizeof(T)+sizeof(struct _Unit)); //Allocate a memory block.
+        m_pMemBlock = malloc(ulUnitNum * (sizeof(T) + sizeof(struct _Unit))); //Allocate a memory block.
         if(m_pMemBlock)
         {
             for(unsigned long i=0; i<ulUnitNum; i++)  //Link all mem unit . Create linked list.
             {
-                struct _Unit *pCurUnit = (struct _Unit *)( (char *)m_pMemBlock + i*(sizeof(T)+sizeof(struct _Unit)) );
+                struct _Unit *pCurUnit = (struct _Unit *)( (uint8_t*)m_pMemBlock + i*(sizeof(T)+sizeof(struct _Unit)) );
 
                 pCurUnit->pNext = m_pFreeMemBlock;    //Insert the new unit at head.
 

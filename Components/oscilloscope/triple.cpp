@@ -25,7 +25,7 @@ void osc::Triple::thresholding_(uint16_t v1, uint16_t v2, uint16_t v3)
         min_ = 65535;
         max_ = 0;
         total_ = 0;
-        console::Controller::instance().printf("Auto detect threshold:%d", threshold_);
+//        console::Controller::instance().printf("Auto detect threshold:%d", threshold_);
         state_ = &osc::Triple::probing_;
     }
 }

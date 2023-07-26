@@ -62,7 +62,11 @@ STATE_BODY(console::Driver::ReceiveFooter)
 bool console::Driver::sendPacket(uint16_t type, uint8_t length, const uint8_t* data)
 {
     uint8_t checksum = 0u;
-    if (txQueue_.available() < length + 5) return false;
+    if (txQueue_.available() < length + 5)
+    {
+    	sendEvent.post();
+    	return false;
+    }
     txQueue_.push(HEADER_INDICATOR);
     checksum += (uint8_t) HEADER_INDICATOR;
     txQueue_.push(length);
@@ -90,7 +94,11 @@ bool console::Driver::sendPacket(uint16_t type, uint8_t length, const uint8_t* d
 
 M_EVENT_HANDLER(console::Driver,send)
 {
-    if (txQueue_.empty()){sending_ = false;return;}
+    if (txQueue_.empty())
+    {
+    	sending_ = false;
+    	return;
+    }
     if (console::HAL::txReady()) console::HAL::write(txQueue_.pop());
     sendEvent.post();
 }

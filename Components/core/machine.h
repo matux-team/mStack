@@ -73,7 +73,7 @@ public:
 protected:
     uint8_t nextEvent_ = 0;
 protected:
-    core::FixedEvent<uint8_t> postEvent_ = core::FixedEvent<uint8_t>(this, (core::FixedEvent<uint8_t>::Handler)&SimpleMachine::execute);
+    core::ByteEvent postEvent_ = core::ByteEvent(this, (core::ByteEvent::Handler)&SimpleMachine::execute);
 
     bool check_(uint8_t input, State state) override
     {
@@ -151,11 +151,5 @@ private:\
     name(){}
 
 #define MACHINE_END };}
-
-//#define SM_SIGNAL(name)\
-//public:\
-//	core::SimpleMachine::SignalOne name##Signal;
-//
-//#define SM_BIND(signal, event) new core::SimpleMachine::Event((core::SimpleMachine*)this, &signal, (uint8_t)event);
 
 #endif // CORE_MACHINE_H

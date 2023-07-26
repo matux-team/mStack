@@ -6,6 +6,7 @@
 core::Event::Event()
 {
     container_.index_ = core::Engine::instance().events().registerEvent_(this);
+    container_.payload_ = nullptr;
 }
 
 core::Engine::Engine(): Event(0)

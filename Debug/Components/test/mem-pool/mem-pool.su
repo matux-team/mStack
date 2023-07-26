@@ -1,0 +1,71 @@
+stm32f4xx_ll_gpio.h:940:22:void LL_GPIO_TogglePin(GPIO_TypeDef*, uint32_t)	24	static
+base.h:15:18:virtual void core::Component::init()	16	static
+base.h:16:13:core::Component::~Component()	16	static
+base.h:16:13:virtual core::Component::~Component()	16	static
+base.h:29:13:core::Event::~Event()	16	static
+base.h:29:13:virtual core::Event::~Event()	16	static
+base.h:32:18:virtual void core::Event::execute()	16	static
+event-queue.h:15:10:core::EventQueue::~EventQueue()	16	static
+event-queue.h:15:10:virtual core::EventQueue::~EventQueue()	16	static
+event-queue.h:33:17:void core::EventQueue::post(core::container_t)	32	static
+event-queue.h:47:17:void core::EventQueue::push_(core::container_t)	24	static
+engine.h:18:5:core::Engine::~Engine()	16	static
+engine.h:18:5:virtual core::Engine::~Engine()	16	static
+engine.h:23:17:core::EventQueue& core::Engine::events()	16	static
+engine.h:26:23:void __tcf_0()	8	static
+engine.h:24:20:static core::Engine& core::Engine::instance()	8	static
+event.h:33:10:void core::EmptyEvent::post()	16	static
+event.h:38:10:virtual void core::EmptyEvent::execute()	16	static
+machine.h:16:18:virtual bool core::Machine::check_(uint8_t, core::Machine::State)	24	static
+machine.h:17:18:virtual void core::Machine::start_(core::Machine::State)	24	static
+machine.h:57:10:void core::SimpleMachine::postEvent(uint8_t)	16	static
+machine.h:78:10:virtual bool core::SimpleMachine::check_(uint8_t, core::Machine::State)	24	static
+machine.h:85:10:virtual void core::SimpleMachine::start_(core::Machine::State)	24	static
+signal.h:12:10:void core::EmptySignalOne::connect(core::EmptyEvent*)	16	static
+signal.h:14:17:void core::EmptySignalOne::emit()	16	static
+controller.h:9:1:void __tcf_2()	8	static
+controller.h:9:1:static console::Controller& console::Controller::instance()	8	static
+controller.h:9:1:console::Controller::~Controller()	16	static
+controller.h:9:1:virtual console::Controller::~Controller()	16	static
+base.h:12:7:constexpr core::Component::Component()	16	static
+controller.h:9:1:console::Controller::Controller()	24	static
+machine.h:8:7:core::Machine::~Machine()	16	static
+machine.h:8:7:virtual core::Machine::~Machine()	16	static
+machine.h:23:7:core::SimpleMachine::~SimpleMachine()	16	static
+machine.h:23:7:virtual core::SimpleMachine::~SimpleMachine()	16	static
+mem-pool.h:13:1:test::MemPool::~MemPool()	16	static
+mem-pool.h:13:1:virtual test::MemPool::~MemPool()	16	static
+mem-pool.cpp:8:6:virtual void test::MemPool::init()	48	static
+mem-pool.cpp:29:1:void test::MemPool::plotHandler_()	16	static
+mem-pool.cpp:36:1:void test::MemPool::oscilloscopeHandler_()	16	static
+mem-pool.cpp:44:1:void test::MemPool::timeoutHandler_()	24	static
+mem-pool.cpp:52:1:void test::MemPool::emptyEventHandler_()	16	static
+mem-pool.cpp:57:1:void test::MemPool::fixedEventHandler_(const uint32_t&)	16	static
+mem-pool.cpp:62:1:void test::MemPool::emptySignalReceivedHandler_()	16	static
+mem-pool.cpp:67:1:void test::MemPool::fixedSignalReceivedHandler_(const uint16_t&)	16	static
+mem-pool.cpp:72:1:void test::MemPool::startCommandHandler_()	16	static
+mem-pool.cpp:77:1:void test::MemPool::stopCommandHandler_()	16	static
+mem-pool.cpp:82:1:void test::MemPool::integerCommandHandler_(int32_t)	16	static
+mem-pool.cpp:87:1:void test::MemPool::nameCommandHandler_(uint8_t, uint8_t*)	32	static
+event.h:61:10:void core::FixedEvent<E>::post(const E&) [with E = unsigned char]	16	static,ignoring_inline_asm
+signal.h:23:10:void core::SignalOne<EV, E>::connect(EV*) [with EV = core::FixedEvent<short unsigned int>; E = short unsigned int]	16	static
+signal.h:25:17:void core::SignalOne<EV, E>::emit(E) [with EV = core::FixedEvent<short unsigned int>; E = short unsigned int]	16	static
+event.h:61:10:void core::FixedEvent<E>::post(const E&) [with E = long unsigned int]	16	static,ignoring_inline_asm
+mem-pool.h:63:8:T* MemPool<T>::Alloc() [with T = unsigned char]	24	static
+event.h:61:10:void core::FixedEvent<E>::post(const E&) [with E = short unsigned int]	16	static,ignoring_inline_asm
+mem-pool.h:63:8:T* MemPool<T>::Alloc() [with T = long unsigned int]	24	static
+mem-pool.h:63:8:T* MemPool<T>::Alloc() [with T = short unsigned int]	24	static
+event.h:50:7:core::FixedEvent<short unsigned int>::~FixedEvent()	16	static
+event.h:50:7:virtual core::FixedEvent<short unsigned int>::~FixedEvent()	16	static
+event.h:50:7:core::FixedEvent<long unsigned int>::~FixedEvent()	16	static
+event.h:50:7:virtual core::FixedEvent<long unsigned int>::~FixedEvent()	16	static
+event.h:50:7:core::FixedEvent<unsigned char>::~FixedEvent()	16	static
+event.h:50:7:virtual core::FixedEvent<unsigned char>::~FixedEvent()	16	static
+event.h:28:7:core::EmptyEvent::~EmptyEvent()	16	static
+event.h:28:7:virtual core::EmptyEvent::~EmptyEvent()	16	static
+event.h:77:10:void core::FixedEvent<E>::execute() [with E = short unsigned int]	24	static
+event.h:77:10:void core::FixedEvent<E>::execute() [with E = long unsigned int]	24	static
+event.h:77:10:void core::FixedEvent<E>::execute() [with E = unsigned char]	24	static
+mem-pool.h:78:10:void MemPool<T>::Free(T*) [with T = short unsigned int]	32	static
+mem-pool.h:78:10:void MemPool<T>::Free(T*) [with T = long unsigned int]	32	static
+mem-pool.h:78:10:void MemPool<T>::Free(T*) [with T = unsigned char]	32	static

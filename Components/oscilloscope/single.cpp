@@ -22,7 +22,7 @@ void osc::Single::thresholding_(uint16_t v)
         min_ = 65535;
         max_ = 0;
         index_ = 0;
-        console::Controller::instance().printf("Auto detect threshold:%d", threshold_);
+//        console::Controller::instance().printf("Auto detect threshold:%d", threshold_);
         state_ = &osc::Single::probing_;
     }
 }
