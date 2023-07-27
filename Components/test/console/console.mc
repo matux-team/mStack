@@ -1,5 +1,6 @@
 Project{name:'test-console'}
 Log{name:'console.log'}
+BaudRate{Bauds:115200}
 
 Section{name:'Blink'}
 IntField{name:'Interval', min: 10, max: 1000, readonly:false, command: 100}
