@@ -75,7 +75,7 @@ public:
         return (void *)((char *)pCurUnit + sizeof(struct _Unit) );
     }
 
-    void Free(T* p)
+    void Free(void* p)
     {
 		struct _Unit *pCurUnit = (struct _Unit *)((char *)p - sizeof(struct _Unit) );
 		struct _Unit* prev = nullptr;

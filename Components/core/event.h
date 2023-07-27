@@ -74,9 +74,8 @@ public:
 protected:
     void execute() override
     {
-    	E* e = (E*)container_.payload_;
-        (component_->*handler_)(*e);
-        pool_->Free(e);
+        (component_->*handler_)(*((E*)container_.payload_));
+        pool_->Free(container_.payload_);
     }
 
     inline void execute_(E* e){(component_->*handler_)(*e);}
