@@ -101,7 +101,7 @@ public:
 protected:
     T data_;
     typedef void (Component::*Handler) (const T&);
-    core::FixedEvent<T> postEvent_ = core::FixedEvent<T>(this, (Handler)&ByteMachine<T>::execute_, 5);
+    core::FixedEvent<T> postEvent_ = core::FixedEvent<T>(this, (Handler)&ByteMachine<T>::execute_);
 
     void execute_(const T& c)
     {

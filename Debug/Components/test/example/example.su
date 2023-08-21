@@ -49,12 +49,12 @@ example.cpp:94:1:void ex::Test::startCommandHandler_()	16	static
 example.cpp:100:1:void ex::Test::stopCommandHandler_()	16	static
 example.cpp:105:1:void ex::Test::integerCommandHandler_(int32_t)	16	static
 example.cpp:110:1:void ex::Test::nameCommandHandler_(uint8_t, uint8_t*)	32	static
-event.h:61:17:EventStatus core::FixedEvent<E>::post(const E&) [with E = unsigned char]	24	static
+event.h:61:17:EventStatus core::FixedEvent<E>::post(const E&) [with E = unsigned char]	24	static,ignoring_inline_asm
 signal.h:27:10:void core::SignalOne<EV, E>::connect(EV*) [with EV = core::FixedEvent<short unsigned int>; E = short unsigned int]	16	static
 signal.h:29:24:EventStatus core::SignalOne<EV, E>::emit(E&) [with EV = core::FixedEvent<short unsigned int>; E = short unsigned int]	16	static
-event.h:61:17:EventStatus core::FixedEvent<E>::post(const E&) [with E = long unsigned int]	24	static
+event.h:61:17:EventStatus core::FixedEvent<E>::post(const E&) [with E = long unsigned int]	24	static,ignoring_inline_asm
 mem-pool.h:63:11:void* MemPool<T>::Alloc() [with T = unsigned char]	24	static
-event.h:61:17:EventStatus core::FixedEvent<E>::post(const E&) [with E = short unsigned int]	24	static
+event.h:61:17:EventStatus core::FixedEvent<E>::post(const E&) [with E = short unsigned int]	24	static,ignoring_inline_asm
 mem-pool.h:63:11:void* MemPool<T>::Alloc() [with T = long unsigned int]	24	static
 mem-pool.h:63:11:void* MemPool<T>::Alloc() [with T = short unsigned int]	24	static
 event.h:50:7:core::FixedEvent<short unsigned int>::~FixedEvent()	16	static
@@ -67,9 +67,9 @@ event.h:50:7:core::FixedEvent<unsigned char>::~FixedEvent()	16	static
 event.h:50:7:virtual core::FixedEvent<unsigned char>::~FixedEvent()	16	static
 event.h:28:7:core::EmptyEvent::~EmptyEvent()	16	static
 event.h:28:7:virtual core::EmptyEvent::~EmptyEvent()	16	static
-event.h:75:10:void core::FixedEvent<E>::execute() [with E = short unsigned int]	16	static
-event.h:75:10:void core::FixedEvent<E>::execute() [with E = long unsigned int]	16	static
-event.h:75:10:void core::FixedEvent<E>::execute() [with E = unsigned char]	16	static
+event.h:78:10:void core::FixedEvent<E>::execute() [with E = short unsigned int]	16	static
+event.h:78:10:void core::FixedEvent<E>::execute() [with E = long unsigned int]	16	static
+event.h:78:10:void core::FixedEvent<E>::execute() [with E = unsigned char]	16	static
 mem-pool.h:78:10:void MemPool<T>::Free(void*) [with T = short unsigned int]	32	static
 mem-pool.h:78:10:void MemPool<T>::Free(void*) [with T = long unsigned int]	32	static
 mem-pool.h:78:10:void MemPool<T>::Free(void*) [with T = unsigned char]	32	static

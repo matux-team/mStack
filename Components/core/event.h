@@ -60,7 +60,10 @@ public:
     }
     EventStatus post(const E& e)
     {
+    	DISABLE_INTERRUPT;
     	void* p = pool_->Alloc();
+    	ENABLE_INTERRUPT;
+
     	if(p  == nullptr)	// Cannot Allocate, Pool Over
     	{
     		return EventStatus::ALLOCATION_FAILED;
@@ -74,8 +77,8 @@ public:
 protected:
     void execute() override
     {
-        (component_->*handler_)(*((E*)container_.payload_));
         pool_->Free(container_.payload_);
+        (component_->*handler_)(*((E*)container_.payload_));
     }
 
     inline void execute_(E* e){(component_->*handler_)(*e);}
