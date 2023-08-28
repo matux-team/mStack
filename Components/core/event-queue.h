@@ -3,7 +3,7 @@
 #include <core/base.h>
 #include <core/system.h>
 
-#define EVENT_POOL_SIZE     128
+#define EVENT_POOL_SIZE     64
 #define EVENT_QUEUE_SIZE	128
 
 namespace core
@@ -21,7 +21,7 @@ public:
         if (container_.index_ < poolSize_)
         {
             Event* e = events_[container_.index_];
-            e->execute();
+            e->execute(container_.payload_);
         }
         else
         {
@@ -30,7 +30,7 @@ public:
 		return true;
 	}
 
-    inline EventStatus post(container_t container)
+    inline EventStatus post(container_t& container)
     {
         uint16_t avail = size_ + outPtr_ - inPtr_; // maximum avail = size_ - 1;
         if (avail > size_) avail -= (size_);	// here we have to subtract 1 but we don't do that

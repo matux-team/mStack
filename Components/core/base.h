@@ -30,20 +30,10 @@ class Event
 public:
     Event();
     virtual ~Event(){};
-
 protected:
-    virtual void execute(){};
-    Event(uint8_t index)
-    {
-    	container_.index_ = index;
-    	container_.payload_ = nullptr;
-    }
-    Event(uint8_t index, void* func)
-    {
-    	container_.index_ = index;
-    	container_.payload_ = func;
-    }
-	container_t container_;
+    virtual void execute(void* func) = 0;
+    Event(uint8_t index): index_(index){}
+    uint8_t index_;
     friend class EventQueue;
     friend class Strand;
 };

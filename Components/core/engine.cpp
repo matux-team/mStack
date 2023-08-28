@@ -5,8 +5,8 @@
 
 core::Event::Event()
 {
-    container_.index_ = core::Engine::instance().events().registerEvent_(this);
-    container_.payload_ = nullptr;
+    index_ = core::Engine::instance().events().registerEvent_(this);
+//    container_.payload_ = nullptr;
 }
 
 core::Engine::Engine(): Event(0)
@@ -71,7 +71,7 @@ void core::Engine::delay(uint32_t t)
     while (tickCount_ < timeout){NO_OPERATION;}
 }
 
-void core::Engine::execute()
+void core::Engine::execute(void* func)
 {
     uint64_t min = LAST_TICK;
     Task* it = activeTasks_;

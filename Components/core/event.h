@@ -21,7 +21,7 @@ public:
         return &event;
     }
 private:
-    void execute(){/*empty*/}
+    void execute(void* func){/*empty*/}
     NullEvent(){};
 };
 
@@ -32,10 +32,14 @@ public:
     EmptyEvent(Component* component, Handler handler):component_(component), handler_(handler){}
     EventStatus post()
     {
-    	return core::Engine::instance().events().post(container_);
+    	container_t con = {
+    			.index_ = this->index_,
+    			.payload_ = nullptr,
+    	};
+    	return core::Engine::instance().events().post(con);
     }
 private:
-    void execute() override
+    void execute(void* func) override
     {
         (component_->*handler_)();
     }
@@ -68,17 +72,21 @@ public:
     	{
     		return EventStatus::ALLOCATION_FAILED;
     	}
-    	container_.payload_ = p;
 
-    	memcpy(container_.payload_, &e, sizeof(E));
+    	memcpy(p, &e, sizeof(E));
 
-    	return core::Engine::instance().events().post(container_);
+    	container_t con = {
+    			.index_ = this->index_,
+				.payload_ = p,
+    	};
+
+    	return core::Engine::instance().events().post(con);
     }
 protected:
-    void execute() override
+    void execute(void* func) override
     {
-        pool_->Free(container_.payload_);
-        (component_->*handler_)(*((E*)container_.payload_));
+        (component_->*handler_)(*((E*)func));
+        pool_->Free(func);
     }
 
     inline void execute_(E* e){(component_->*handler_)(*e);}

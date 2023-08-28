@@ -28,7 +28,7 @@ public:
     }
 
 private:
-    void execute() override;
+    void execute(void* func) override;
     Engine();
     EventQueue events_;
     Task* tasks_ = nullptr;
@@ -45,7 +45,11 @@ private:
 
 inline void core::Engine::tick()
 {
-    if (++tickCount_ >= nextTick_) events_.post(container_);
+	static container_t con = {
+			.index_ = this->index_,
+			.payload_ = nullptr,
+	};
+    if (++tickCount_ >= nextTick_) events_.post(con);
 }
 
 }

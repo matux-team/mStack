@@ -23,37 +23,6 @@ protected:
 class SimpleMachine: public core::Machine
 {
 public:
-	class SignalOne;
-	class Event: public core::Event
-	{
-	public:
-		Event(SimpleMachine* machine, SignalOne* signal, uint8_t event):machine_(machine),event_(event)
-		{
-			signal->connect(this);
-		}
-		void post()
-		{
-			core::Engine::instance().events().post(container_);
-		}
-	private:
-		void execute() override
-		{
-			machine_->postEvent(event_);
-		}
-		SimpleMachine* machine_;
-		uint8_t event_;
-	};
-
-	class SignalOne
-	{
-	public:
-		void connect(Event* event){this->event_ = event;}
-		void disconnect(){event_ = nullptr;}
-		inline void emit(){if (event_ != nullptr) event_->post();}
-	private:
-		Event* event_ = nullptr;
-	};
-
     void postEvent(uint8_t event)
     {
         postEvent_.post(event);
