@@ -98,7 +98,7 @@ public:
         for (auto it = this->connections_; it!=nullptr; it=it->next)
         {
 			EventStatus status;
-			status = it->event->post(e);;
+			status = it->event->post(e);
 			if( status != EventStatus::POST_SUCCESS) return status;
         }
         return EventStatus::POST_SUCCESS;
