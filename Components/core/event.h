@@ -59,7 +59,7 @@ public:
     {
     	component_ = component;
     	handler_ = handler;
-    	//Declare MemPool with correspond type here
+    	// Declare MemPool with correspond type here
     	pool_ = new MemPool<E>(numOfMem);
     }
     EventStatus post(const E& e)
