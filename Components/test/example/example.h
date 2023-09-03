@@ -15,7 +15,7 @@ MACHINE(ex, Test)
 	M_TASK(plot)
 	M_TASK(oscilloscope)
 	M_EVENT(emptyEvent)
-	M_EVENT(fixedEvent, uint32_t, 1)
+	M_EVENT(fixedEvent, uint32_t, 5)
 
 	O_QUAD(quad, 2,3,4,5)
 
@@ -34,7 +34,7 @@ public:
 	void init();
 
 private:
-	enum class Event{TIMEOUT = 0};
+	enum class Event{TIMEOUT = 0, TEST};
 private:
 	STATE_DEF(StartUp)
 	STATE_DEF(Running)
