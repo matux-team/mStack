@@ -62,11 +62,6 @@ M_TASK_HANDLER(ex::Test, timeout)
 	{
 		LOG_PRINTF("WRONG");
 	}
-	a = fixedEventEvent.post(count_++);
-	if(a != EventStatus::POST_SUCCESS)
-	{
-		LOG_PRINTF("WRONG");
-	}
 
 	SM_POST(Event::TIMEOUT);
 }
@@ -78,7 +73,7 @@ M_EVENT_HANDLER(ex::Test, emptyEvent)
 
 M_EVENT_HANDLER(ex::Test, fixedEvent, uint32_t)
 {
-//	LOG_PRINTF("FixedEvent %d", event);
+	LOG_PRINTF("FixedEvent %d", event);
 }
 
 M_EVENT_HANDLER(ex::Test, emptySignalReceived)

@@ -6,6 +6,7 @@ STATE_BODY(ex::Test::StartUp)
 	ENTER_()
 	{
 //		LOG_PRINTF("START UP");
+		timeoutTask_.start(1000, 1);
 	}
 	TRANSITION_(Event::TIMEOUT, Running){}
 //	EXIT_()
@@ -19,6 +20,29 @@ STATE_BODY(ex::Test::Running)
 	ENTER_()
 	{
 //		LOG_PRINTF("RUNNING");
+		SM_POST(Event::TEST);
+	}
+	TRANSITION_(Event::TEST)
+	{
+		EventStatus a;
+		a = fixedEventEvent.post(count_++);
+		if(a != EventStatus::POST_SUCCESS)
+		{
+			LOG_PRINTF("WRONG");
+		}
+
+		a = fixedEventEvent.post(count_++);
+		if(a != EventStatus::POST_SUCCESS)
+		{
+			LOG_PRINTF("WRONG");
+		}
+
+		a = fixedEventEvent.post(count_++);
+		if(a != EventStatus::POST_SUCCESS)
+		{
+			LOG_PRINTF("WRONG");
+		}
+		timeoutTask_.start(1000,1);
 	}
 	TRANSITION_(Event::TIMEOUT, Pause){}
 //	EXIT_()
