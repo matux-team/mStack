@@ -85,7 +85,6 @@ private:
 
     friend class Event;
     friend class Engine;
-    friend class Strand;
 };
 
 }

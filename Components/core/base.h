@@ -7,7 +7,7 @@
 #define _M_MACRO_3(_1,_2,_3,NAME,...) NAME
 #define _M_MACRO_4(_1,_2,_3,_4,NAME,...) NAME
 
-enum EventStatus : uint8_t {POST_FAILED = 0, POST_SUCCESS, ALLOCATION_FAILED};
+enum EventStatus : uint8_t {POST_FAILED = 0, POST_SUCCESS, ALLOCATION_FAILED, CONNECTION_NULL};
 
 namespace core
 {
@@ -35,7 +35,6 @@ protected:
     Event(uint8_t index): index_(index){}
     uint8_t index_;
     friend class EventQueue;
-    friend class Strand;
 };
 
 }

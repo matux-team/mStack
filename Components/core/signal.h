@@ -14,7 +14,7 @@ public:
     inline EventStatus emit()
     {
     	if (event_ != nullptr) return event_->post();
-    	return EventStatus::POST_FAILED;
+    	return EventStatus::CONNECTION_NULL;
     }
 private:
     EmptyEvent* event_ = nullptr;
@@ -29,7 +29,7 @@ public:
     inline EventStatus emit(E& e)
     {
     	if (event_ != nullptr) return event_->post(e);
-    	return EventStatus::POST_FAILED;
+    	return EventStatus::CONNECTION_NULL;
     }
 private:
     EV* event_ = nullptr;
