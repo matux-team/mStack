@@ -10,7 +10,6 @@ namespace core
 {
 
 class EventQueue;
-class Strand;
 
 class NullEvent: public Event
 {
@@ -47,7 +46,6 @@ private:
     void execute_(){(component_->*handler_)();}
     Component *component_ = nullptr;
     Handler handler_;
-    friend class Strand;
 };
 
 template <typename E>
@@ -109,7 +107,6 @@ protected:
     Component *component_ = nullptr;
     Handler handler_;
     MemPool<E>* pool_ = nullptr;
-    friend class Strand;
 };
 
 typedef FixedEvent<uint8_t> ByteEvent;

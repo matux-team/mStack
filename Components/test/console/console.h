@@ -7,7 +7,6 @@
 #include <oscilloscope/dual.h>
 #include <oscilloscope/triple.h>
 #include <oscilloscope/quad.h>
-#include <core/strand.h>
 
 COMPONENT(test, Console)
 	M_TASK(toggle);
@@ -24,10 +23,6 @@ COMPONENT(test, Console)
     //O_TRIPLE(triple,2,3,4)
     O_QUAD(quad,2,3,4,5)
 
-	M_TASK(strand)
-	M_EVENT(testStrand)
-	M_EVENT(finished, uint8_t)
-	M_STRAND(myStrand, 64);
 public:
     void init() override;
 private:

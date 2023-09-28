@@ -19,23 +19,6 @@ void test::Console::init()
 
     plotTask_.start(20); //50Hz
     oscilloscopeTask_.start(1);
-    strandTask_.start(1000);
-}
-
-M_EVENT_HANDLER(test::Console, testStrand)
-{
-	LOG_PRINT("This event is over Strand");
-	myStrandStrand.done(0);
-}
-
-M_TASK_HANDLER(test::Console, strand)
-{
-	myStrandStrand.post(&testStrandEvent, &finishedEvent);
-}
-
-M_EVENT_HANDLER(test::Console, finished, uint8_t)
-{
-	LOG_PRINT("Event Finished");
 }
 
 M_EVENT_HANDLER(test::Console,toggle)
