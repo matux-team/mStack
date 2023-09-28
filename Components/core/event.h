@@ -114,7 +114,7 @@ typedef FixedEvent<uint8_t> ByteEvent;
 }
 
 #define M_EVENT(...) _M_MACRO_3(__VA_ARGS__,_M_FIXED_NUM_EVENT, _M_FIXED_EVENT, _M_EVENT)(__VA_ARGS__)
-#define M_EVENT_HANDLER(...) _M_MACRO_4(__VA_ARGS__, _M_FIXED_NUM_EVENT, _M_FIXED_EVENT_HANDLER, _M_EVENT_HANDLER)(__VA_ARGS__)
+#define M_EVENT_HANDLER(...) _M_MACRO_3(__VA_ARGS__, _M_FIXED_EVENT_HANDLER, _M_EVENT_HANDLER)(__VA_ARGS__)
 
 #define _M_EVENT(name)\
 public:\

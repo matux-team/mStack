@@ -106,9 +106,17 @@ private:\
 #define ENTER_() if (nextEvent_ == ENTER)
 #define EXIT_() if (nextEvent_ == EXIT)
 
-#define SM_SWITCH(state) nextState_ = (core::Machine::State)&CLASS::state
-#define SM_START(state, numOfMem) postEvent_.allocate(numOfMem);\
+#define SM_START(...)  _M_MACRO_2(__VA_ARGS__,_SM_START_WITH_NUM, _SM_START)(__VA_ARGS__)
+#define _SM_START_WITH_NUM(state, numOfMem)\
+	postEvent_.allocate(numOfMem);\
 	this->start_((core::Machine::State)&CLASS::state)
+
+#define _SM_START(state)\
+	postEvent_.allocate(3);\
+	this->start_((core::Machine::State)&CLASS::state)
+
+
+#define SM_SWITCH(state) nextState_ = (core::Machine::State)&CLASS::state
 #define SM_POST(event) this->postEvent((uint8_t)event)
 #define SM_EXECUTE(event) {uint8_t e = (uint8_t)event; this->execute(e);}
 #define SM_CHECK(state) (currentState_ == (core::Machine::State)&CLASS::state)

@@ -5,7 +5,6 @@
 
 #define _M_MACRO_2(_1,_2,NAME,...) NAME
 #define _M_MACRO_3(_1,_2,_3,NAME,...) NAME
-#define _M_MACRO_4(_1,_2,_3,_4,NAME,...) NAME
 
 enum EventStatus : uint8_t {POST_FAILED = 0, POST_SUCCESS, ALLOCATION_FAILED, CONNECTION_NULL};
 
@@ -51,9 +50,9 @@ private:\
 #define COMPONENT_END };}
 #define COMPONENT_REG(module, name) module::name::instance().init()
 
-#define HAL_DEF(module)\
+#define HAL_DEF(module, name)\
 namespace module{\
-class HAL{\
+class name##_HAL{\
 public:
 
 #define HAL_END };}
