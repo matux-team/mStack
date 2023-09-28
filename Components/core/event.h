@@ -55,12 +55,15 @@ class FixedEvent: public Event
 {
 public:
     typedef void (Component::*Handler) (const E&);
-    FixedEvent(Component* component, Handler handler, uint8_t numOfMem = 3)	// 3 is just default value
+    FixedEvent(Component* component, Handler handler, uint8_t numOfMem = 0)	// 0 is just default value
     {
     	component_ = component;
     	handler_ = handler;
-    	// Declare MemPool with correspond type here
-    	pool_ = new MemPool<E>(numOfMem);
+    	if(numOfMem != 0)
+    	{
+        	// Declare MemPool with correspond type here
+        	pool_ = new MemPool<E>(numOfMem);
+    	}
     }
     EventStatus post(const E& e)
     {
@@ -82,6 +85,19 @@ public:
 
     	return core::Engine::instance().events().post(con);
     }
+
+    bool allocate(uint8_t size)
+    {
+    	if(pool_ == nullptr)
+    	{
+    		pool_ = new MemPool<E>(size);
+    		return true;
+    	}
+    	else
+    	{
+    		return false;
+    	}
+    }
 protected:
     void execute(void* func) override
     {
@@ -92,7 +108,7 @@ protected:
     inline void execute_(E* e){(component_->*handler_)(*e);}
     Component *component_ = nullptr;
     Handler handler_;
-    MemPool<E>* pool_;
+    MemPool<E>* pool_ = nullptr;
     friend class Strand;
 };
 
@@ -111,7 +127,7 @@ private:\
 
 #define _M_FIXED_EVENT(name, type)\
 public:\
-    core::FixedEvent<type> name##Event = core::FixedEvent<type>(this, (core::FixedEvent<type>::Handler)&CLASS::name##Handler##_);\
+    core::FixedEvent<type> name##Event = core::FixedEvent<type>(this, (core::FixedEvent<type>::Handler)&CLASS::name##Handler##_, 3);\
 private:\
     void name##Handler##_(const type& event);
 

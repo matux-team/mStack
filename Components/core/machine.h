@@ -107,7 +107,8 @@ private:\
 #define EXIT_() if (nextEvent_ == EXIT)
 
 #define SM_SWITCH(state) nextState_ = (core::Machine::State)&CLASS::state
-#define SM_START(state) this->start_((core::Machine::State)&CLASS::state)
+#define SM_START(state, numOfMem) postEvent_.allocate(numOfMem);\
+	this->start_((core::Machine::State)&CLASS::state)
 #define SM_POST(event) this->postEvent((uint8_t)event)
 #define SM_EXECUTE(event) {uint8_t e = (uint8_t)event; this->execute(e);}
 #define SM_CHECK(state) (currentState_ == (core::Machine::State)&CLASS::state)

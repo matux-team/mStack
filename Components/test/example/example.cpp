@@ -23,7 +23,7 @@ void ex::Test::init()
     fixedSignal.connect(&fixedSignalReceivedEvent);
 
 	timeoutTask_.start(100);
-	SM_START(StartUp);
+	SM_START(StartUp, 5);
 }
 
 M_TASK_HANDLER(ex::Test, plot)

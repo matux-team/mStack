@@ -5,7 +5,7 @@
 void console::Driver::init()
 {
     console::HAL::init();
-    SM_START(ReceiveHeader);
+    SM_START(ReceiveHeader, 5);
 }
 
 STATE_BODY(console::Driver::ReceiveHeader)
