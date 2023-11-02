@@ -20,7 +20,7 @@ public:
     {
     	uint16_t ret = size_+outPtr_-inPtr_;
     	if (ret > size_) ret -= size_;
-    	return ret;
+    	return ret - 1;
     }
     bool notEmpty(){return (inPtr_ != outPtr_);}
     bool empty(){return (inPtr_ == outPtr_);}

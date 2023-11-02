@@ -30,7 +30,7 @@ public:
     {
         uint16_t avail = size_ + outPtr_ - inPtr_;
         if (avail > size_) avail -= size_;
-        if (avail < 1) return;
+        if (avail < 2) return;
 
         DISABLE_INTERRUPT;
         push_(index);
@@ -41,7 +41,7 @@ public:
     {
         uint16_t avail = size_ + outPtr_ - inPtr_;
         if (avail > size_) avail -= size_;
-        if (avail < 2) return;
+        if (avail < 3) return;
 
         DISABLE_INTERRUPT;
         push_(index);
@@ -53,7 +53,7 @@ public:
     {
         uint16_t avail = size_ + outPtr_ - inPtr_;
         if (avail > size_) avail -= size_;
-        if (avail < size+1) return;
+        if (avail < size+2) return;
 
         DISABLE_INTERRUPT;
         push_(index);
@@ -76,7 +76,7 @@ public:
     {
         uint16_t avail = size_ + outPtr_ - inPtr_;
         if (avail > size_) avail -= size_;
-        if (avail < size+2) return;
+        if (avail < size+3) return;
 
         DISABLE_INTERRUPT;
         push_(index);
