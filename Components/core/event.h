@@ -65,6 +65,7 @@ public:
     }
     EventStatus post(const E& e)
     {
+    	if(pool_ == nullptr) return EventStatus::ALLOCATION_FAILED;
     	DISABLE_INTERRUPT;
     	void* p = pool_->Alloc();
     	ENABLE_INTERRUPT;
