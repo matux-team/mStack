@@ -30,22 +30,13 @@ public:
     {
         uint16_t avail = size_ + outPtr_ - inPtr_;
         if (avail > size_) avail -= size_;
+#ifndef RELEASE
+        if (avail < 2) Error_Handler();
+#else
         if (avail < 2) return;
-
+#endif
         DISABLE_INTERRUPT;
         push_(index);
-        ENABLE_INTERRUPT;
-    }
-
-    inline void postByte(uint8_t index, uint8_t c)
-    {
-        uint16_t avail = size_ + outPtr_ - inPtr_;
-        if (avail > size_) avail -= size_;
-        if (avail < 3) return;
-
-        DISABLE_INTERRUPT;
-        push_(index);
-        push_(c);
         ENABLE_INTERRUPT;
     }
 
@@ -53,8 +44,11 @@ public:
     {
         uint16_t avail = size_ + outPtr_ - inPtr_;
         if (avail > size_) avail -= size_;
+#ifndef RELEASE
+        if (avail < size+2) Error_Handler();
+#else
         if (avail < size+2) return;
-
+#endif
         DISABLE_INTERRUPT;
         push_(index);
         for (int i=0;i<size;i++)

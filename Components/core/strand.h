@@ -52,21 +52,6 @@ public:
         next_();
     }
 
-    template<typename E>
-    void post(ObjectEvent<E>* event, const E& e, ByteEvent* finished = nullptr)
-    {
-        if (queue_.available() < 3) return;
-        DISABLE_INTERRUPT;
-        if (finished!=nullptr)
-        {
-            queue_.push(CALLBACK);
-            queue_.push(finished->index_);
-        }
-        else queue_.push(VOID);
-        event->push(this);
-        ENABLE_INTERRUPT;
-    }
-
     void delay(uint32_t ms)
     {
         if (queue_.available()<5) return;

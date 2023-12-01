@@ -4,7 +4,7 @@
 
 void console::Driver::init()
 {
-    console::HAL::init();
+    console::_HAL::init();
     SM_START(ReceiveHeader);
 }
 
@@ -91,6 +91,6 @@ bool console::Driver::sendPacket(uint16_t type, uint8_t length, const uint8_t* d
 M_EVENT_HANDLER(console::Driver,send)
 {
     if (txQueue_.empty()){sending_ = false;return;}
-    if (console::HAL::txReady()) console::HAL::write(txQueue_.pop());
+    if (console::_HAL::txReady()) console::_HAL::write(txQueue_.pop());
     sendEvent.post();
 }

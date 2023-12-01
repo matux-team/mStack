@@ -71,31 +71,6 @@ protected:
     friend class Strand;
 };
 
-template<typename E>
-class ObjectEvent: public Event
-{
-public:
-    typedef void (Component::*Handler) (const E&);
-    ObjectEvent(Component* component, Handler handler): component_(component), handler_(handler){}
-    void post(const E& e)
-    {
-        e.push(core::Engine::instance().events());
-    }
-protected:
-    void execute(core::AbstractEventQueue* queue) override
-    {
-        E e;
-        if (e.pop(core::Engine::instance().events()))
-        {
-            (component_->*handler_)(e);
-        }
-    }
-
-    Component *component_ = nullptr;
-    Handler handler_;
-    friend class Strand;
-};
-
 typedef FixedEvent<uint8_t> ByteEvent;
 
 }

@@ -6,7 +6,7 @@
 #define UART_PORT			USART1
 #define UART_ISR_HANDLER()	extern "C" void USART1_IRQHandler(void)
 
-void console::HAL::init()
+void console::_HAL::init()
 {
 	MX_USART1_UART_Init();
 	LL_USART_EnableIT_RXNE(UART_PORT);
@@ -15,12 +15,12 @@ void console::HAL::init()
 	LL_USART_DisableIT_TXE(UART_PORT);
 }
 
-bool console::HAL::txReady()
+bool console::_HAL::txReady()
 {
 	return (LL_USART_IsActiveFlag_TXE(UART_PORT));
 }
 
-void console::HAL::write(uint8_t c)
+void console::_HAL::write(uint8_t c)
 {
 	LL_USART_TransmitData8(UART_PORT, c);
 }
