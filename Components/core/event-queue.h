@@ -133,7 +133,7 @@ private:
         events_[poolSize_] = event;
         if (poolSize_>= EVENT_POOL_SIZE)
         {
-            /*TODO: warning here*/
+            Error_Handler();
         }
         return poolSize_++;
     }
