@@ -14,6 +14,7 @@ class EventQueue: public AbstractEventQueue
 public:
 	virtual ~EventQueue(){}
     EventQueue(){}
+    inline uint16_t getMinAvail(){return this->minimumAvail_;}
 	inline bool next()
 	{
 		if (inPtr_ == outPtr_) return false;
@@ -31,6 +32,7 @@ public:
         uint16_t avail = size_ + outPtr_ - inPtr_;
         if (avail > size_) avail -= size_;
 #ifndef RELEASE
+        if (avail < minimumAvail_) minimumAvail_ = avail;
         if (avail < 2) Error_Handler();
 #else
         if (avail < 2) return;
@@ -45,6 +47,7 @@ public:
         uint16_t avail = size_ + outPtr_ - inPtr_;
         if (avail > size_) avail -= size_;
 #ifndef RELEASE
+        if (avail < minimumAvail_) minimumAvail_ = avail;
         if (avail < size+2) Error_Handler();
 #else
         if (avail < size+2) return;
@@ -70,7 +73,12 @@ public:
     {
         uint16_t avail = size_ + outPtr_ - inPtr_;
         if (avail > size_) avail -= size_;
+#ifndef RELEASE
+        if (avail < minimumAvail_) minimumAvail_ = avail;
+        if (avail < size+3) Error_Handler();
+#else
         if (avail < size+3) return;
+#endif
 
         DISABLE_INTERRUPT;
         push_(index);
@@ -108,12 +116,14 @@ private:
     }
 
 private:
+    uint16_t minimumAvail_ = EVENT_QUEUE_SIZE;
+    uint16_t size_ = EVENT_QUEUE_SIZE;
     uint8_t buffer_[EVENT_QUEUE_SIZE];
-    volatile uint16_t size_ = EVENT_QUEUE_SIZE;
-    volatile uint8_t* first_ = buffer_;
-    volatile uint8_t* last_ = buffer_ + EVENT_QUEUE_SIZE;
-    volatile uint8_t* inPtr_ = buffer_;
-    volatile uint8_t* outPtr_ = buffer_;
+    uint8_t* first_ = buffer_;
+    uint8_t* last_ = buffer_ + EVENT_QUEUE_SIZE;
+    uint8_t* inPtr_ = buffer_;
+    uint8_t* outPtr_ = buffer_;
+
 private:
     Event* events_[EVENT_POOL_SIZE];
     uint8_t poolSize_ = 0;
