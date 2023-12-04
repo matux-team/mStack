@@ -21,10 +21,7 @@ private:
 	STATE_DEF(ReceiveData)
 	STATE_DEF(ReceiveChecksum)
 	STATE_DEF(ReceiveFooter)
-private:
-	bool txReady_();
-	void write_(uint8_t c);
-    void receiveHandler_(const uint8_t& c);
+
 private:
     QUEUE_DEF(txQueue, TX_BUF_SIZE);
     bool sending_ = false;

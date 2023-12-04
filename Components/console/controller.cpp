@@ -8,7 +8,7 @@
 void console::Controller::init()
 {
     console::Driver::instance().init();
-    plotTask_.start(20);
+    plotTask_.start(5);
 }
 
 void console::Controller::print(const char* text)
