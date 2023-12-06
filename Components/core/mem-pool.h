@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "main.h"
+#include <core/engine.h>
 
 template <typename T>
 class MemPool
@@ -19,14 +20,14 @@ private:
     // The purpose of the structure`s definition is that we can operate linkedlist conveniently
     struct _Unit //The type of the node of linkedlist.
     {
-        struct _Unit *pNext;
+        struct _Unit *pNext = nullptr;
     };
 
-    void* m_pMemBlock;                //The address of memory pool.
+    void* m_pMemBlock = nullptr;                //The address of memory pool.
 
     // Manage all unit with two linkedlist.
-    struct _Unit*    m_pAllocatedMemBlock; //Head pointer to Allocated linkedlist.
-    struct _Unit*    m_pFreeMemBlock;      //Head pointer to Free linkedlist.
+    struct _Unit*    m_pAllocatedMemBlock = nullptr; //Head pointer to Allocated linkedlist.
+    struct _Unit*    m_pFreeMemBlock = nullptr;      //Head pointer to Free linkedlist.
 
 public:
 
@@ -35,7 +36,8 @@ public:
             m_pAllocatedMemBlock(nullptr),
             m_pFreeMemBlock(nullptr)//,
     {
-        m_pMemBlock = malloc(ulUnitNum * (sizeof(T) + sizeof(struct _Unit))); //Allocate a memory block.
+    	uint32_t size = ulUnitNum * (sizeof(T) + sizeof(struct _Unit));
+        m_pMemBlock = malloc(size); //Allocate a memory block.
         if(m_pMemBlock)
         {
             for(unsigned long i=0; i<ulUnitNum; i++)  //Link all mem unit . Create linked list.
@@ -46,6 +48,7 @@ public:
 
                 m_pFreeMemBlock = pCurUnit;
             }
+            core::Engine::instance().addNumOfByteHeap(size);
         }
         else
         {
@@ -62,7 +65,7 @@ public:
      // It will call system function.
     void* Alloc()
     {
-        if(nullptr == m_pMemBlock   || nullptr == m_pFreeMemBlock)	// Pool Full
+        if(m_pFreeMemBlock == nullptr)	// Pool Full
         {
 			return nullptr;
         }

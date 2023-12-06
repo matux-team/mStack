@@ -1,34 +1,58 @@
 #ifndef CONSOLE_DRIVER_H_
 #define CONSOLE_DRIVER_H_
 #include <core/machine.h>
+#include <string.h>
 
 #define TX_BUF_SIZE   		2048
 #define HEADER_INDICATOR	0xFE
 #define FOOTER_INDICATOR	0xFD
-#define MAX_PACKET_LENGTH	250
+#define MAX_PACKET_LENGTH	128
 
-MACHINE(console, Driver, uint8_t)
+MACHINE(console, Driver)
     M_EVENT(send);
+	M_EVENT(receive, uint8_t)
 public:
 	void init();
+    inline uint16_t getMinAvail(){return txMinAvail_;}
+    inline uint16_t txAvailable(){return txLast_ - txIndex_;}
+    uint8_t * txQueue(){return &txBufferDMA_[0];}
 	bool sendPacket(uint16_t type, uint8_t length, const uint8_t* data);
-    bool checkBeforeSend(uint8_t lenth){return (txQueue_.available()>lenth);}
 
 private:
-	STATE_DEF(ReceiveHeader)
-	STATE_DEF(ReceiveLength)
-	STATE_DEF(ReceiveType)
-	STATE_DEF(ReceiveData)
-	STATE_DEF(ReceiveChecksum)
-	STATE_DEF(ReceiveFooter)
+	typedef void (Driver::*RxState) (uint8_t);
+	void ReceiveHeader_(uint8_t data);
+	void ReceiveLength_(uint8_t data);
+	void ReceiveType_(uint8_t data);
+	void ReceiveData_(uint8_t data);
+	void ReceiveChecksum_(uint8_t data);
+	void ReceiveFooter_(uint8_t data);
+	RxState rxState_ = &Driver::ReceiveHeader_;
 
 private:
-    QUEUE_DEF(txQueue, TX_BUF_SIZE);
-    bool sending_ = false;
+	inline void transferDMA_()
+	{
+		uint16_t len = txIndex_ - txFirst_;
+    	memcpy(txBufferDMA_, txBuffer_, len);
+        LL_DMA_SetDataLength(DMA1, LL_DMA_STREAM_6, len);
+        LL_DMA_EnableStream(DMA1, LL_DMA_STREAM_6);
+        txIndex_ = txFirst_;
+	}
+
+private:
+	uint16_t rxType_;
+	uint16_t txMinAvail_= TX_BUF_SIZE;
+
     uint8_t rxBuffer_[MAX_PACKET_LENGTH];
     uint8_t rxLength_, checksum_;
     uint8_t rxIndex_;
-    uint16_t rxType_;
+
+    uint8_t txBuffer_[TX_BUF_SIZE];
+    uint8_t txBufferDMA_[TX_BUF_SIZE];
+    uint8_t* txFirst_ = txBuffer_;
+    uint8_t* txLast_ = txBuffer_ + TX_BUF_SIZE;
+    uint8_t* txIndex_ = txFirst_;
+
+    bool sending_ = false;
 MACHINE_END
 
 #endif

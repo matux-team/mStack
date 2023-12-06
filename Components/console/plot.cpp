@@ -46,5 +46,5 @@ M_TASK_HANDLER(console::Controller,plot)
     buf[0] = ((plotMask>>8) & 0xFF);
     buf[1] = (plotMask& 0xFF);
 
-    console::Driver::instance().sendPacket(PlotReceived,index,buf);
+    Driver::instance().sendPacket(PlotReceived,index,buf);
 }

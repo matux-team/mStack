@@ -112,7 +112,7 @@ private:\
 	this->start_((core::Machine::State)&CLASS::state)
 
 #define _SM_START(state)\
-	postEvent_.allocate(3);\
+	postEvent_.allocate(5);\
 	this->start_((core::Machine::State)&CLASS::state)
 
 

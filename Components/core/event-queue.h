@@ -3,8 +3,8 @@
 #include <core/base.h>
 #include <core/system.h>
 
-#define EVENT_POOL_SIZE     64
-#define EVENT_QUEUE_SIZE	128
+#define EVENT_POOL_SIZE     32
+#define EVENT_QUEUE_SIZE	512
 
 namespace core
 {
@@ -14,6 +14,7 @@ class EventQueue
 public:
 	virtual ~EventQueue(){}
     EventQueue(){}
+    inline uint16_t getMinAvail(){return this->minimumAvail_;}
 	inline bool next()
 	{
 		if (inPtr_ == outPtr_) return false;
@@ -23,22 +24,25 @@ public:
             Event* e = events_[container_.index_];
             e->execute(container_.payload_);
         }
+#ifndef RELEASE
         else
         {
         	Error_Handler();
         }
+#endif
 		return true;
 	}
 
     inline EventStatus post(container_t& container)
     {
-        uint16_t avail = size_ + outPtr_ - inPtr_; // maximum avail = size_ - 1;
-        if (avail > size_) avail -= (size_);	// here we have to subtract 1 but we don't do that
-        if (avail < 2)							// and here we compare with 2 instead of 1.
-        {
-        	return EventStatus::POST_FAILED;
-        }
-
+        uint16_t avail = size_ + outPtr_ - inPtr_; 	// maximum avail = size_ - 1;
+        if (avail > size_) avail -= (size_);		// here we have to subtract 1 but we don't do that
+#ifndef RELEASE
+        if (avail < minimumAvail_) minimumAvail_ = avail;
+        if (avail < 2)	Error_Handler();			// and here we compare with 2 instead of 1.
+#else
+		if (avail < 2) return EventStatus::POST_FAILED;
+#endif
         DISABLE_INTERRUPT;
         push_(container);
         ENABLE_INTERRUPT;
@@ -70,6 +74,7 @@ private:
     container_t* outPtr_ = buffer_;
 private:
     Event* events_[EVENT_POOL_SIZE];
+    uint16_t minimumAvail_ = EVENT_QUEUE_SIZE;
     uint8_t poolSize_ = 0;
 
     uint8_t registerEvent_(Event* event)

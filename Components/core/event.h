@@ -35,7 +35,7 @@ public:
     			.index_ = this->index_,
     			.payload_ = nullptr,
     	};
-    	return core::Engine::instance().events().post(con);
+    	return Engine::instance().events().post(con);
     }
 private:
     void execute(void* func) override
@@ -61,20 +61,27 @@ public:
     	{
         	// Declare MemPool with correspond type here
         	pool_ = new MemPool<E>(numOfMem);
+#ifndef RELEASE
+		if(pool_ == nullptr) Error_Handler();	// Cannot Allocating
+#endif
     	}
     }
     EventStatus post(const E& e)
     {
-    	if(pool_ == nullptr) return EventStatus::ALLOCATION_FAILED;
+#ifndef RELEASE
+		if(pool_ == nullptr) Error_Handler();	// Pool still not be allocated
+#else
+		if(pool_ == nullptr) return EventStatus::ALLOCATION_FAILED;
+#endif
     	DISABLE_INTERRUPT;
     	void* p = pool_->Alloc();
     	ENABLE_INTERRUPT;
 
-    	if(p  == nullptr)	// Cannot Allocate, Pool Over
-    	{
-    		return EventStatus::ALLOCATION_FAILED;
-    	}
-
+#ifndef RELEASE
+    		if(p  == nullptr) Error_Handler();	// Cannot Allocate, Pool Over
+#else
+    		if(p  == nullptr) return EventStatus::ALLOCATION_FAILED;
+#endif
     	memcpy(p, &e, sizeof(E));
 
     	container_t con = {
@@ -82,7 +89,7 @@ public:
 				.payload_ = p,
     	};
 
-    	return core::Engine::instance().events().post(con);
+    	return Engine::instance().events().post(con);
     }
 
     bool allocate(uint8_t size)

@@ -2,10 +2,14 @@
 #define CONSOLE_HAL_H
 #include <core/base.h>
 
-HAL_DEF(console)
+#define CONSOLE_PORT			USART2
+#define CONSOLE_INIT			MX_USART2_UART_Init()
+#define CONSOLE_ISR_HANDLER()	extern "C" void USART2_IRQHandler(void)
+
+HAL_DEF(console, )
     static void init();
-    static bool txReady();
-    static void write(uint8_t c);
+//    static bool txReady();
+//    static void write(uint8_t c);
 HAL_END
 
 #endif // HAL_H
