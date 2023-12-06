@@ -3,10 +3,10 @@
 #include <core/machine.h>
 #include <string.h>
 
-#define TX_BUF_SIZE   		4096
+#define TX_BUF_SIZE   		2048
 #define HEADER_INDICATOR	0xFE
 #define FOOTER_INDICATOR	0xFD
-#define MAX_PACKET_LENGTH	250
+#define MAX_PACKET_LENGTH	128
 
 MACHINE(console, Driver)
     M_EVENT(send);

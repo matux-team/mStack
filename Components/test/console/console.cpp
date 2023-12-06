@@ -30,7 +30,7 @@ M_EVENT_HANDLER(test::Console, testStrand)
 
 M_TASK_HANDLER(test::Console, strand)
 {
-	LOG_PRINT("ThanhNeymarStrandHelloKitty");
+	LOG_PRINT("Post to Strand");
 	myStrandStrand.post(&testStrandEvent, &finishedEvent);
 }
 
@@ -42,7 +42,7 @@ M_EVENT_HANDLER(test::Console, finished, uint8_t)
 U_ACTION_HANDLER(test::Console, start)
 {
     plotTask_.start(interval_);
-    LOG_PRINTF("TX max:%d", console::Driver::instance().getMinAvail());
+    LOG_PRINTF("Tx Queue Min Avail:%d", console::Driver::instance().getMinAvail());
     for(int i = 0; i< 50; i++)
     {
     	emptyEvent.post();
@@ -104,8 +104,8 @@ M_EVENT_HANDLER(test::Console, oscilloscope)
 {
     static uint32_t angle=0;
 //    singlePlot(sine_[angle] + rand()%10);
-    dualPlot(sine_[angle] + rand()%10, cosine_[angle] + rand()%10);
-    //triplePlot(sine_[angle] + rand()%10, cosine_[angle] + rand()%10, cosine_[angle]/2 + rand()%5);
+//    dualPlot(sine_[angle] + rand()%10, cosine_[angle] + rand()%10);
+//    triplePlot(sine_[angle] + rand()%10, cosine_[angle] + rand()%10, cosine_[angle]/2 + rand()%5);
 //    quadPlot(sine_[angle] + rand()%20, cosine_[angle] + rand()%20, cosine_[angle]/2 + rand()%10, sine_[angle]/2 + rand()%10);
     if (++angle>=400) angle=0;
 }

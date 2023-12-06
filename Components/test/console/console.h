@@ -3,10 +3,10 @@
 #include <core/engine.h>
 #include <console/controller.h>
 #include <core/queue.h>
-#include <oscilloscope/single.h>
-#include <oscilloscope/dual.h>
-#include <oscilloscope/triple.h>
-#include <oscilloscope/quad.h>
+//#include <oscilloscope/single.h>
+//#include <oscilloscope/dual.h>
+//#include <oscilloscope/triple.h>
+//#include <oscilloscope/quad.h>
 #include <core/strand.h>
 
 COMPONENT(test, Console)
@@ -21,8 +21,8 @@ COMPONENT(test, Console)
     U_ACTION(104,hello)
     M_TASK(oscilloscope)
 //    O_SINGLE(single,2)
-    O_DUAL(dual,2,3)
-    //O_TRIPLE(triple,2,3,4)
+//    O_DUAL(dual,2,3)
+//    O_TRIPLE(triple,2,3,4)
 //    O_QUAD(quad,2,3,4,5)
 
 

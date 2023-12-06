@@ -65,7 +65,6 @@ bool console::Driver::sendPacket(uint16_t type, uint8_t length, const uint8_t* d
     if(avail < txMinAvail_) txMinAvail_ = avail;
     if (avail < length + 6)
 	{
-//    	Error_Handler();
     	return false;
 	}
     (*txIndex_) = HEADER_INDICATOR; txIndex_++;
