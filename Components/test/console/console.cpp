@@ -7,7 +7,6 @@
 
 void test::Console::init()
 {
-
     for (int i=0;i<400;i++)
     {
         double v = ((double)i/200) * PI;
@@ -17,39 +16,48 @@ void test::Console::init()
         cosine_[i] = cosine + 512;
     }
 
-    plotTask_.start(20); //50Hz
+    plotTask_.start(10); //50Hz
     oscilloscopeTask_.start(1);
     strandTask_.start(1000);
 }
 
 M_EVENT_HANDLER(test::Console, testStrand)
 {
-	LOG_PRINT("This event is over Strand");
-	myStrandStrand.done(0);
+	static uint16_t count = 0;
+	LOG_PRINT("Handle Strand Event");
+	myStrandStrand.done(count++);
 }
 
 M_TASK_HANDLER(test::Console, strand)
 {
+	LOG_PRINT("ThanhNeymarStrandHelloKitty");
 	myStrandStrand.post(&testStrandEvent, &finishedEvent);
 }
 
 M_EVENT_HANDLER(test::Console, finished, uint8_t)
 {
-	LOG_PRINT("Event Finished");
-}
-
-M_EVENT_HANDLER(test::Console,toggle)
-{
-    /*TODO: led toggle here*/
+	LOG_PRINTF("Event Queue Min Avail: %d-%d", event, core::Engine::instance().events().getMinAvail());
 }
 
 U_ACTION_HANDLER(test::Console, start)
 {
-    plotTask_.start(20);
+    plotTask_.start(interval_);
+    LOG_PRINTF("TX max:%d", console::Driver::instance().getMinAvail());
+    for(int i = 0; i< 50; i++)
+    {
+    	emptyEvent.post();
+    	fixedEvent.post(sine_[i]);
+    }
+}
 
-    //toggleTask.start(interval_);
-    console::Driver::instance().sendPacket(test::Console::Started,0,nullptr);
-    console::Controller::instance().print("Blink Started");
+M_EVENT_HANDLER(test::Console, empty)
+{
+
+}
+
+M_EVENT_HANDLER(test::Console, fixed, uint16_t)
+{
+
 }
 
 U_ACTION_HANDLER(test::Console, stop)
@@ -57,28 +65,25 @@ U_ACTION_HANDLER(test::Console, stop)
     plotTask_.stop();
 	/* Test stick stuck with stick delay > timeout of WDT */
 	//core::Engine::instance().delay(1500);
-    //toggleTask.stop();
-    console::Driver::instance().sendPacket(test::Console::Started,0,nullptr);
     console::Controller::instance().print("Blink Stopped");
 }
 
 U_INTEGER_HANDLER(test::Console, interval)
 {
     interval_ = value;
-    toggleTask_.start(interval_);
-    console::Controller::instance().printf("Interval=%d", interval_);
+    LOG_PRINTF("Interval=%d", interval_);
 }
 
 U_TEXT_HANDLER(test::Console, name)
 {
     for (int i=0;i<length;i++) name_[i] = data[i];
     name_[length] = 0;
-    console::Controller::instance().printf("Name=%s", name_);
+    LOG_PRINTF("Name=%s", name_);
 }
 
 U_ACTION_HANDLER(test::Console, hello)
 {
-    console::Controller::instance().printf("Hello %s", name_);
+    LOG_PRINTF("Hello %s", name_);
 }
 
 U_ACTION_HANDLER(test::Console,sync)
@@ -90,17 +95,17 @@ U_ACTION_HANDLER(test::Console,sync)
 M_EVENT_HANDLER(test::Console, plot)
 {
     static uint32_t angle=0;
-    console::Controller::instance().plot(0, sine_[angle]);
-    console::Controller::instance().plot(1, cosine_[angle]);
+    MC_PLOT(0, sine_[angle]);
+    MC_PLOT(1, cosine_[angle]);
     if (++angle>=400) angle=0;
 }
 
 M_EVENT_HANDLER(test::Console, oscilloscope)
 {
     static uint32_t angle=0;
-    //singlePlot(sine_[angle] + rand()%10);
-    //dualPlot(sine_[angle] + rand()%10, cosine_[angle] + rand()%10);
+//    singlePlot(sine_[angle] + rand()%10);
+    dualPlot(sine_[angle] + rand()%10, cosine_[angle] + rand()%10);
     //triplePlot(sine_[angle] + rand()%10, cosine_[angle] + rand()%10, cosine_[angle]/2 + rand()%5);
-    quadPlot(sine_[angle] + rand()%10, cosine_[angle] + rand()%10, cosine_[angle]/2 + rand()%5, sine_[angle]/2 + rand()%5);
+//    quadPlot(sine_[angle] + rand()%20, cosine_[angle] + rand()%20, cosine_[angle]/2 + rand()%10, sine_[angle]/2 + rand()%10);
     if (++angle>=400) angle=0;
 }

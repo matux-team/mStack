@@ -1,5 +1,4 @@
 Project{name:'test-console'}
-Log{name:'console.log'}
 BaudRate{Bauds:115200}
 
 Section{name:'Blink'}

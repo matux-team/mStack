@@ -3,8 +3,8 @@
 #include <core/base.h>
 #include <core/system.h>
 
-#define EVENT_POOL_SIZE     128
-#define EVENT_QUEUE_SIZE	2048
+#define EVENT_POOL_SIZE     64
+#define EVENT_QUEUE_SIZE	1024
 
 namespace core
 {
@@ -116,16 +116,15 @@ private:
     }
 
 private:
-    uint16_t minimumAvail_ = EVENT_QUEUE_SIZE;
-    uint16_t size_ = EVENT_QUEUE_SIZE;
     uint8_t buffer_[EVENT_QUEUE_SIZE];
+    uint16_t size_ = EVENT_QUEUE_SIZE;
     uint8_t* first_ = buffer_;
     uint8_t* last_ = buffer_ + EVENT_QUEUE_SIZE;
     uint8_t* inPtr_ = buffer_;
     uint8_t* outPtr_ = buffer_;
-
 private:
     Event* events_[EVENT_POOL_SIZE];
+    uint16_t minimumAvail_ = EVENT_QUEUE_SIZE;
     uint8_t poolSize_ = 0;
 
     uint8_t registerEvent_(Event* event)
@@ -133,7 +132,7 @@ private:
         events_[poolSize_] = event;
         if (poolSize_>= EVENT_POOL_SIZE)
         {
-            Error_Handler();
+            /*TODO: warning here*/
         }
         return poolSize_++;
     }

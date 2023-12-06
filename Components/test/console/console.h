@@ -10,8 +10,9 @@
 #include <core/strand.h>
 
 COMPONENT(test, Console)
-	M_TASK(toggle);
 	M_TASK(plot)
+	M_TASK(strand)
+
     U_ACTION(console::Controller::CommandType::SyncFields, sync)
     U_ACTION(101, start)
     U_ACTION(102, stop)
@@ -19,13 +20,15 @@ COMPONENT(test, Console)
     U_TEXT(103,name)
     U_ACTION(104,hello)
     M_TASK(oscilloscope)
-    //O_SINGLE(single,2)
-    //O_DUAL(dual,2,3)
+//    O_SINGLE(single,2)
+    O_DUAL(dual,2,3)
     //O_TRIPLE(triple,2,3,4)
-    O_QUAD(quad,2,3,4,5)
+//    O_QUAD(quad,2,3,4,5)
 
-	M_TASK(strand)
+
 	M_EVENT(testStrand)
+	M_EVENT(empty)
+	M_EVENT(fixed, uint16_t)
 	M_EVENT(finished, uint8_t)
 	M_STRAND(myStrand, 64);
 public:
@@ -44,9 +47,6 @@ public:
         Stop,
         Name,
         Hello,
-        Started,
-        Stopped,
-
     };
 COMPONENT_END
 

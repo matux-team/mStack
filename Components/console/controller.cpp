@@ -8,7 +8,7 @@
 void console::Controller::init()
 {
     console::Driver::instance().init();
-    plotTask_.start(5);
+    plotTask_.start(10);
 }
 
 void console::Controller::print(const char* text)
@@ -19,7 +19,6 @@ void console::Controller::print(const char* text)
 
 bool console::Controller::sendOSC(uint8_t channel, uint8_t length, uint16_t index, const uint8_t* data)
 {
-    if (!console::Driver::instance().checkBeforeSend(length + 100)) return false;
     uint8_t buf[256];
     buf[0] = channel;
     buf[1] = (index >> 8) & 0xFF;

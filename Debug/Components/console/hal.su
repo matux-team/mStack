@@ -1,0 +1,76 @@
+stm32g4xx_ll_dma.h:540:22:void LL_DMA_DisableChannel(DMA_TypeDef*, uint32_t)	24	static
+stm32g4xx_ll_dma.h:656:26:uint32_t LL_DMA_GetDataTransferDirection(DMA_TypeDef*, uint32_t)	24	static
+stm32g4xx_ll_dma.h:1055:22:void LL_DMA_ConfigAddresses(DMA_TypeDef*, uint32_t, uint32_t, uint32_t, uint32_t)	32	static
+stm32g4xx_ll_dma.h:1664:26:uint32_t LL_DMA_IsActiveFlag_TC1(DMA_TypeDef*)	16	static
+stm32g4xx_ll_dma.h:1848:26:uint32_t LL_DMA_IsActiveFlag_TE1(DMA_TypeDef*)	16	static
+stm32g4xx_ll_dma.h:2064:22:void LL_DMA_ClearFlag_TC1(DMA_TypeDef*)	16	static
+stm32g4xx_ll_dma.h:2248:22:void LL_DMA_ClearFlag_TE1(DMA_TypeDef*)	16	static
+stm32g4xx_ll_dma.h:2357:22:void LL_DMA_EnableIT_TC(DMA_TypeDef*, uint32_t)	24	static
+stm32g4xx_ll_dma.h:2401:22:void LL_DMA_EnableIT_TE(DMA_TypeDef*, uint32_t)	24	static
+stm32g4xx_ll_usart.h:2993:26:uint32_t LL_USART_IsActiveFlag_RXNE_RXFNE(USART_TypeDef*)	16	static
+stm32g4xx_ll_usart.h:3004:26:uint32_t LL_USART_IsActiveFlag_TC(USART_TypeDef*)	16	static
+stm32g4xx_ll_usart.h:3020:26:uint32_t LL_USART_IsActiveFlag_TXE_TXFNF(USART_TypeDef*)	16	static
+stm32g4xx_ll_usart.h:3476:22:void LL_USART_EnableIT_RXNE_RXFNE(USART_TypeDef*)	16	static
+stm32g4xx_ll_usart.h:3601:22:void LL_USART_EnableIT_ERROR(USART_TypeDef*)	16	static
+stm32g4xx_ll_usart.h:3704:22:void LL_USART_DisableIT_TC(USART_TypeDef*)	16	static
+stm32g4xx_ll_usart.h:3720:22:void LL_USART_DisableIT_TXE_TXFNF(USART_TypeDef*)	16	static
+stm32g4xx_ll_usart.h:3912:26:uint32_t LL_USART_IsEnabledIT_RXNE_RXFNE(USART_TypeDef*)	16	static
+stm32g4xx_ll_usart.h:4152:22:void LL_USART_EnableDMAReq_TX(USART_TypeDef*)	16	static
+stm32g4xx_ll_usart.h:4222:26:uint32_t LL_USART_DMA_GetRegAddr(USART_TypeDef*, uint32_t)	24	static
+stm32g4xx_ll_usart.h:4254:25:uint8_t LL_USART_ReceiveData8(USART_TypeDef*)	16	static
+stm32g4xx_ll_usart.h:4277:22:void LL_USART_TransmitData8(USART_TypeDef*, uint8_t)	16	static
+base.h:24:18:virtual void core::Component::init()	16	static
+base.h:25:13:core::Component::~Component()	16	static
+base.h:25:13:virtual core::Component::~Component()	16	static
+base.h:32:13:core::Event::~Event()	16	static
+base.h:32:13:virtual core::Event::~Event()	16	static
+event-queue.h:15:10:core::EventQueue::~EventQueue()	16	static
+event-queue.h:15:10:virtual core::EventQueue::~EventQueue()	16	static
+event-queue.h:30:17:void core::EventQueue::post(uint8_t)	24	static,ignoring_inline_asm
+event-queue.h:45:17:virtual void core::EventQueue::pushFixed(uint8_t, uint8_t*, uint8_t)	32	static,ignoring_inline_asm
+event-queue.h:64:17:virtual void core::EventQueue::popFixed(uint8_t*, uint8_t)	40	static
+event-queue.h:72:17:virtual void core::EventQueue::pushBuffer(uint8_t, uint8_t*, uint8_t)	32	static,ignoring_inline_asm
+event-queue.h:93:17:virtual void core::EventQueue::popBuffer(uint8_t*, uint8_t&)	40	static
+event-queue.h:103:17:void core::EventQueue::push_(uint8_t)	16	static
+event-queue.h:110:20:uint8_t core::EventQueue::pop_()	24	static
+engine.h:18:5:core::Engine::~Engine()	16	static
+engine.h:18:5:virtual core::Engine::~Engine()	16	static
+engine.h:23:17:core::EventQueue& core::Engine::events()	16	static
+engine.h:27:23:void __tcf_0()	8	static
+engine.h:25:20:static core::Engine& core::Engine::instance()	8	static
+base.h:21:7:constexpr core::Component::Component()	16	static
+event.h:31:5:core::EmptyEvent::EmptyEvent(core::Component*, core::EmptyEvent::Handler)	24	static
+event.h:32:10:void core::EmptyEvent::post()	16	static
+event.h:37:10:virtual void core::EmptyEvent::execute(core::AbstractEventQueue*)	16	static
+machine.h:13:7:void core::Machine::NullState()	16	static
+machine.h:16:15:virtual bool core::Machine::check_(uint8_t, core::Machine::State)	24	static
+machine.h:17:15:virtual void core::Machine::start_(core::Machine::State)	24	static
+machine.h:31:7:void core::SimpleMachine::execute(uint8_t&)	16	static
+machine.h:47:7:virtual bool core::SimpleMachine::check_(uint8_t, core::Machine::State)	24	static
+machine.h:54:7:virtual void core::SimpleMachine::start_(core::Machine::State)	24	static
+driver.h:11:1:void __tcf_3()	8	static
+driver.h:11:1:static console::Driver& console::Driver::instance()	8	static
+machine.h:8:7:core::Machine::~Machine()	16	static
+machine.h:8:7:virtual core::Machine::~Machine()	16	static
+machine.h:23:7:core::SimpleMachine::~SimpleMachine()	16	static
+machine.h:23:7:virtual core::SimpleMachine::~SimpleMachine()	16	static
+driver.h:11:1:console::Driver::~Driver()	16	static
+driver.h:11:1:virtual console::Driver::~Driver()	16	static
+machine.h:8:7:constexpr core::Machine::Machine()	16	static
+machine.h:23:7:constexpr core::SimpleMachine::SimpleMachine()	24	static
+driver.h:11:1:console::Driver::Driver()	32	static
+driver.h:18:15:uint8_t* console::Driver::txQueue()	16	static
+hal.cpp:9:6:static void console::_HAL::init()	24	static
+hal.cpp:33:6:static bool console::_HAL::txReady()	8	static
+hal.cpp:38:6:static void console::_HAL::write(uint8_t)	16	static
+hal.cpp:43:1:void USART2_IRQHandler()	16	static
+hal.cpp:60:17:void DMA1_Channel1_IRQHandler()	8	static
+event.h:53:5:core::FixedEvent<E>::FixedEvent(core::Component*, core::FixedEvent<E>::Handler) [with E = unsigned char]	24	static
+event.h:54:10:void core::FixedEvent<E>::post(const E&) [with E = unsigned char]	32	static
+event.h:49:7:core::FixedEvent<unsigned char>::~FixedEvent()	16	static
+event.h:49:7:virtual core::FixedEvent<unsigned char>::~FixedEvent()	16	static
+event.h:27:7:core::EmptyEvent::~EmptyEvent()	16	static
+event.h:27:7:virtual core::EmptyEvent::~EmptyEvent()	16	static
+hal.cpp:73:1:void __static_initialization_and_destruction_0(int, int)	16	static
+event.h:60:10:void core::FixedEvent<E>::execute(core::AbstractEventQueue*) [with E = unsigned char]	24	static
+hal.cpp:73:1:cpp)	8	static
