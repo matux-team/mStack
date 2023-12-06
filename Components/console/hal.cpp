@@ -30,16 +30,6 @@ void console::_HAL::init()
 	LL_USART_DisableIT_TXE(UART_PORT);
 }
 
-bool console::_HAL::txReady()
-{
-	return (LL_USART_IsActiveFlag_TXE(UART_PORT));
-}
-
-void console::_HAL::write(uint8_t c)
-{
-	LL_USART_TransmitData8(UART_PORT, c);
-}
-
 UART_ISR_HANDLER()
 {
 	if(LL_USART_IsActiveFlag_RXNE(UART_PORT) && LL_USART_IsEnabledIT_RXNE(UART_PORT))
