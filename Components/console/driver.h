@@ -1,14 +1,10 @@
 #ifndef CONSOLE_DRIVER_H_
 #define CONSOLE_DRIVER_H_
-#include <core/machine.h>
+#include <core/event.h>
 #include <string.h>
+#include "console-def.h"
 
-#define TX_BUF_SIZE   		2048
-#define HEADER_INDICATOR	0xFE
-#define FOOTER_INDICATOR	0xFD
-#define MAX_PACKET_LENGTH	128
-
-MACHINE(console, Driver)
+COMPONENT(console, Driver)
     M_EVENT(send);
 	M_EVENT(receive, uint8_t)
 public:
@@ -33,8 +29,8 @@ private:
 	{
 		uint16_t len = txIndex_ - txFirst_;
     	memcpy(txBufferDMA_, txBuffer_, len);
-        LL_DMA_SetDataLength(DMA1, LL_DMA_CHANNEL_1, len);
-        LL_DMA_EnableChannel(DMA1, LL_DMA_CHANNEL_1);
+        LL_DMA_SetDataLength(DMA_MODULE, DMA_CHANNEL, len);
+        LL_DMA_EnableChannel(DMA_MODULE, DMA_CHANNEL);
         txIndex_ = txFirst_;
 	}
 
@@ -53,6 +49,6 @@ private:
     uint8_t* txIndex_ = txFirst_;
 
     bool sending_ = false;
-MACHINE_END
+COMPONENT_END
 
 #endif

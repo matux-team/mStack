@@ -16,9 +16,10 @@ void test::Console::init()
         cosine_[i] = cosine + 512;
     }
 
-    plotTask_.start(10); //50Hz
+    plotTask_.start(20); //50Hz
     oscilloscopeTask_.start(1);
-    strandTask_.start(1000);
+//    strandTask_.start(1000);
+    LOG_PRINTF("Total Event Used %d", core::Engine::instance().checkNumOfEvent());
 }
 
 M_EVENT_HANDLER(test::Console, testStrand)
@@ -42,12 +43,13 @@ M_EVENT_HANDLER(test::Console, finished, uint8_t)
 U_ACTION_HANDLER(test::Console, start)
 {
     plotTask_.start(interval_);
-    LOG_PRINTF("Tx Queue Min Avail:%d", console::Driver::instance().getMinAvail());
-    for(int i = 0; i< 50; i++)
-    {
-    	emptyEvent.post();
-    	fixedEvent.post(sine_[i]);
-    }
+    LOG_PRINTF("EVQ:%d", core::Engine::instance().events().getMinAvail());
+    LOG_PRINTF("TxQ:%d", console::Driver::instance().getMinAvail());
+//    for(int i = 0; i< 50; i++)
+//    {
+//    	emptyEvent.post();
+//    	fixedEvent.post(sine_[i]);
+//    }
 }
 
 M_EVENT_HANDLER(test::Console, empty)
@@ -104,7 +106,7 @@ M_EVENT_HANDLER(test::Console, oscilloscope)
 {
     static uint32_t angle=0;
 //    singlePlot(sine_[angle] + rand()%10);
-//    dualPlot(sine_[angle] + rand()%10, cosine_[angle] + rand()%10);
+    dualPlot(sine_[angle] + rand()%10, cosine_[angle] + rand()%10);
 //    triplePlot(sine_[angle] + rand()%10, cosine_[angle] + rand()%10, cosine_[angle]/2 + rand()%5);
 //    quadPlot(sine_[angle] + rand()%20, cosine_[angle] + rand()%20, cosine_[angle]/2 + rand()%10, sine_[angle]/2 + rand()%10);
     if (++angle>=400) angle=0;
