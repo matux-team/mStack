@@ -19,6 +19,8 @@ void test::Console::init()
 
     plotTask_.start(20); //50Hz
     oscilloscopeTask_.start(1);
+    LOG_PRINTF("Total Event Used %d", core::Engine::instance().checkNumOfEvent());
+    LOG_PRINTF("Total HeapSize Used %d", core::Engine::instance().checkNumOfByteHeap());
 }
 
 M_EVENT_HANDLER(test::Console,toggle)
@@ -32,7 +34,8 @@ U_ACTION_HANDLER(test::Console, start)
 
     //toggleTask.start(interval_);
     console::Driver::instance().sendPacket(test::Console::Started,0,nullptr);
-    console::Controller::instance().print("Blink Started");
+    LOG_PRINTF("EVQ:%d", core::Engine::instance().events().getMinAvail());
+    LOG_PRINTF("TxQ:%d", console::Driver::instance().getMinAvail());
 }
 
 U_ACTION_HANDLER(test::Console, stop)
@@ -42,26 +45,26 @@ U_ACTION_HANDLER(test::Console, stop)
 	//core::Engine::instance().delay(1500);
     //toggleTask.stop();
     console::Driver::instance().sendPacket(test::Console::Started,0,nullptr);
-    console::Controller::instance().print("Blink Stopped");
+    LOG_PRINT("Blink Stopped");
 }
 
 U_INTEGER_HANDLER(test::Console, interval)
 {
     interval_ = value;
     toggleTask_.start(interval_);
-    console::Controller::instance().printf("Interval=%d", interval_);
+    LOG_PRINTF("Interval=%d", interval_);
 }
 
 U_TEXT_HANDLER(test::Console, name)
 {
     for (int i=0;i<length;i++) name_[i] = data[i];
     name_[length] = 0;
-    console::Controller::instance().printf("Name=%s", name_);
+    LOG_PRINTF("Name=%s", name_);
 }
 
 U_ACTION_HANDLER(test::Console, hello)
 {
-    console::Controller::instance().printf("Hello %s", name_);
+    LOG_PRINTF("Hello %s", name_);
 }
 
 U_ACTION_HANDLER(test::Console,sync)
@@ -82,8 +85,8 @@ M_EVENT_HANDLER(test::Console, oscilloscope)
 {
     static uint32_t angle=0;
     //singlePlot(sine_[angle] + rand()%10);
-    //dualPlot(sine_[angle] + rand()%10, cosine_[angle] + rand()%10);
+    dualPlot(sine_[angle] + rand()%10, cosine_[angle] + rand()%10);
     //triplePlot(sine_[angle] + rand()%10, cosine_[angle] + rand()%10, cosine_[angle]/2 + rand()%5);
-    quadPlot(sine_[angle] + rand()%10, cosine_[angle] + rand()%10, cosine_[angle]/2 + rand()%5, sine_[angle]/2 + rand()%5);
+//    quadPlot(sine_[angle] + rand()%10, cosine_[angle] + rand()%10, cosine_[angle]/2 + rand()%5, sine_[angle]/2 + rand()%5);
     if (++angle>=400) angle=0;
 }

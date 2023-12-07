@@ -23,7 +23,7 @@ public:
     EventQueue& events(){return events_;}
     inline void addNumOfByteHeap(uint32_t value){numOfByteHeap_ += value;}
     inline uint32_t checkNumOfByteHeap(){return numOfByteHeap_;}
-    inline uint16_t checkNumOfEvent(){return events_.poolSize_ - 1;}
+    inline uint16_t checkNumOfEvent(){return events_.poolSize_;}
     static Engine& instance()
     {
         static Engine engine;

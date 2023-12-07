@@ -11,15 +11,15 @@ void console::_HAL::init()
 	MX_DMA_Init();
 	CONSOLE_INIT;
 
-	LL_DMA_ConfigAddresses(DMA1, LL_DMA_STREAM_6,
+	LL_DMA_ConfigAddresses(DMA_MODULE, DMA_CHANNEL,
 						 (uint32_t)Driver::instance().txQueue(),
 						 LL_USART_DMA_GetRegAddr(CONSOLE_PORT),
-						 LL_DMA_GetDataTransferDirection(DMA1, LL_DMA_STREAM_6));
-//	LL_DMA_SetDataLength(DMA1, LL_DMA_STREAM_6, TX_BUF_SIZE);
+						 LL_DMA_GetDataTransferDirection(DMA_MODULE, DMA_CHANNEL));
+//	LL_DMA_SetDataLength(DMA_MODULE, DMA_CHANNEL, TX_BUF_SIZE);
 
 	/* Enable DMA transfer complete/error interrupts  */
-	LL_DMA_EnableIT_TC(DMA1, LL_DMA_STREAM_6);
-	LL_DMA_EnableIT_TE(DMA1, LL_DMA_STREAM_6);
+	LL_DMA_EnableIT_TC(DMA_MODULE, DMA_CHANNEL);
+	LL_DMA_EnableIT_TE(DMA_MODULE, DMA_CHANNEL);
 
 	/* Enable DMA TX Interrupt */
 	LL_USART_EnableDMAReq_TX(CONSOLE_PORT);
@@ -57,17 +57,17 @@ CONSOLE_ISR_HANDLER()
 	}
 }
 
-extern "C" void DMA1_Stream6_IRQHandler(void)
+DMA_ISR_HANDLER()
 {
-	if (LL_DMA_IsActiveFlag_TC6(DMA1))
+	if (LL_DMA_IsActiveFlag_TC6(DMA_MODULE))
 	{
-		LL_DMA_ClearFlag_TC6(DMA1);
-		LL_DMA_DisableStream(DMA1, LL_DMA_STREAM_6);
+		LL_DMA_ClearFlag_TC6(DMA_MODULE);
+		LL_DMA_DisableStream(DMA_MODULE, DMA_CHANNEL);
 		console_.sendEvent.post();
 	}
-	else if (LL_DMA_IsActiveFlag_TE6(DMA1))
+	else if (LL_DMA_IsActiveFlag_TE6(DMA_MODULE))
 	{
 		/* Call Error function */
-		LL_DMA_ClearFlag_TE6(DMA1);
+		LL_DMA_ClearFlag_TE6(DMA_MODULE);
 	}
 }
