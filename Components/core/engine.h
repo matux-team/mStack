@@ -21,7 +21,7 @@ public:
     inline uint64_t tickCount(){return tickCount_;}
     void delay(uint32_t t); //t in ms, WARNING: this function is blocking, use in some limited context only
     EventQueue& events(){return events_;}
-    inline uint16_t checkNumOfEvent(){return events_.poolSize_ - 1;}
+    inline uint16_t checkNumOfEvent(){return events_.poolSize_;}
     static Engine& instance()
     {
         static Engine engine;
