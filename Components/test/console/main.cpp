@@ -1,7 +1,5 @@
-#include "core/engine.h"
 #include <console/controller.h>
-#include "console.h"
-#include <core/signal.h>
+#include <test/console/console.h>
 
 int main()
 {

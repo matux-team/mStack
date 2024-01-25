@@ -1,5 +1,5 @@
-#ifndef BLINK_CONTROLLER_H
-#define BLINK_CONTROLLER_H
+#ifndef TEST_CONSOLE_H
+#define TEST_CONSOLE_H
 #include <core/engine.h>
 #include <console/controller.h>
 #include <core/queue.h>
@@ -50,4 +50,4 @@ public:
     };
 COMPONENT_END
 
-#endif // CONTROLLER_H
+#endif // TEST_CONSOLE_H
