@@ -39,7 +39,7 @@ private:
         (component_->*handler_)();
     }
 
-    void execute_(){(component_->*handler_)();}
+    inline void execute_(){(component_->*handler_)();}
     Component *component_ = nullptr;
     Handler handler_;
     friend class Strand;

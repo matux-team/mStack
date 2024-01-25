@@ -14,8 +14,6 @@ class AbstractEventQueue
 public:
     virtual void pushFixed(uint8_t index, uint8_t* data, uint8_t size)=0;
     virtual void popFixed(uint8_t* data, uint8_t size)=0;
-    virtual void pushBuffer(uint8_t index, uint8_t* data, uint8_t size)=0;
-    virtual void popBuffer(uint8_t* data, uint8_t& size)=0;
 };
 
 class Component
