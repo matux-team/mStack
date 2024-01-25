@@ -19,11 +19,11 @@ public:
     void run();
     inline void tick(); /*must be called in timer interrupt or SysTick interrupt, 1ms usually*/
     inline uint64_t tickCount(){return tickCount_;}
+    void addNumOfByteHeap(uint32_t value){numOfByteHeap_ += value;}
     void delay(uint32_t t); //t in ms, WARNING: this function is blocking, use in some limited context only
     EventQueue& events(){return events_;}
-    inline void addNumOfByteHeap(uint32_t value){numOfByteHeap_ += value;}
-    inline uint32_t checkNumOfByteHeap(){return numOfByteHeap_;}
-    inline uint16_t checkNumOfEvent(){return events_.poolSize_;}
+    uint32_t checkNumOfByteHeap(){return numOfByteHeap_;}
+    uint16_t checkNumOfEvent(){return events_.poolSize_;}
     static Engine& instance()
     {
         static Engine engine;

@@ -43,7 +43,6 @@ private:
         (component_->*handler_)();
     }
 
-    void execute_(){(component_->*handler_)();}
     Component *component_ = nullptr;
     Handler handler_;
 };
@@ -111,7 +110,6 @@ protected:
         pool_->Free(func);
     }
 
-    inline void execute_(E* e){(component_->*handler_)(*e);}
     Component *component_ = nullptr;
     Handler handler_;
     MemPool<E>* pool_ = nullptr;

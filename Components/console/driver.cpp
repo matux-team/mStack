@@ -61,7 +61,7 @@ void console::Driver::ReceiveFooter_(uint8_t data)
 bool console::Driver::sendPacket(uint16_t type, uint8_t length, const uint8_t* data)
 {
     uint8_t checksum = 0u;
-    uint16_t avail = txAvailable();
+    uint16_t avail = txLast_ - txIndex_;
     if(avail < txMinAvail_) txMinAvail_ = avail;
     if (avail < length + 6)
 	{

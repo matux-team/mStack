@@ -11,7 +11,7 @@ class EventQueue
 public:
 	virtual ~EventQueue(){}
     EventQueue(){}
-    inline uint16_t getMinAvail(){return this->minimumAvail_;}
+    uint16_t getMinAvail(){return this->minimumAvail_;}
 	inline bool next()
 	{
 		if (inPtr_ == outPtr_) return false;
