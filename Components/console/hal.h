@@ -1,7 +1,7 @@
 #ifndef CONSOLE_HAL_H
 #define CONSOLE_HAL_H
+#include <console/define.h>
 #include <core/base.h>
-#include "console-def.h"
 
 HAL_DEF(console, )
     static void init();

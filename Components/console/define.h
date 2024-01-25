@@ -1,5 +1,8 @@
-#ifndef CONSOLE_CONSOLE_DEF_H_
-#define CONSOLE_CONSOLE_DEF_H_
+#ifndef CONSOLE_DEFINE_H_
+#define CONSOLE_DEFINE_H_
+
+/*CONTROLLER*/
+#define TIME_PLOT	10	//ms
 
 /*DRIVER*/
 #define TX_BUF_SIZE   		4096
@@ -17,4 +20,4 @@
 #define DMA_ISR_HANDLER()		extern "C" void DMA1_Channel6_IRQHandler(void)
 
 
-#endif /* CONSOLE_CONSOLE_DEF_H_ */
+#endif /* CONSOLE_DEFINE_H_ */

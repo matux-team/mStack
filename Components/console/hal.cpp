@@ -4,8 +4,6 @@
 #include "usart.h"
 #include "dma.h"
 
-console::Driver& console_ = console::Driver::instance();
-
 void console::_HAL::init()
 {
 	MX_DMA_Init();
@@ -44,7 +42,7 @@ CONSOLE_ISR_HANDLER()
 	if(LL_USART_IsActiveFlag_RXNE(CONSOLE_PORT) && LL_USART_IsEnabledIT_RXNE(CONSOLE_PORT))
 	{
 		uint8_t c = LL_USART_ReceiveData8(CONSOLE_PORT);
-		console_.receiveEvent.post(c);
+		console::Driver::instance().receiveEvent.post(c);
 	}
 	else if(LL_USART_IsActiveFlag_TC(CONSOLE_PORT))
 	{
@@ -62,7 +60,7 @@ DMA_ISR_HANDLER()
 	{
 		LL_DMA_ClearFlag_TC6(DMA_MODULE);
 		LL_DMA_DisableChannel(DMA_MODULE, DMA_CHANNEL);
-		console_.sendEvent.post();
+		console::Driver::instance().sendEvent.post();
 	}
 	else if (LL_DMA_IsActiveFlag_TE6(DMA_MODULE))
 	{

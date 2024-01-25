@@ -59,37 +59,9 @@ protected:
 	}
 };
 
-template <typename T>
-class ByteMachine: public core::Machine
-{
-public:
-	void post(T c)
-	{
-		postEvent_.post(c);
-	}
-protected:
-	T data_;
-	typedef void (Component::*Handler) (const T&);
-	core::FixedEvent<T> postEvent_ = core::FixedEvent<T>(this, (Handler)&ByteMachine<T>::execute_);
-
-	void execute_(const T& c)
-	{
-		data_ = c;
-		nextState_ = nullptr;
-		(this->*currentState_)();
-		if (nextState_ != nullptr) currentState_ = nextState_;
-	}
-	void start_(State s) override
-	{
-		currentState_ = s;
-	}
-};
-
 }
 
-#define MACHINE(...)  _M_MACRO_3(__VA_ARGS__, _MACHINE_2, _MACHINE_1)(__VA_ARGS__)
-
-#define _MACHINE_1(module, name) namespace module{class name: public core::SimpleMachine{\
+#define MACHINE(module, name) namespace module{class name: public core::SimpleMachine{\
 		using CLASS = module::name;\
 public: static name& instance(){static name instance;return instance;}\
 private:\
@@ -111,13 +83,6 @@ name(){}
 #define SM_POST(event) this->postEvent((uint8_t)event)
 #define SM_EXECUTE(event) {uint8_t e = (uint8_t)event; this->execute(e);}
 #define SM_CHECK(state) (currentState_ == (core::Machine::State)&CLASS::state)
-
-#define _MACHINE_2(module, name, type) namespace module{class name: public core::ByteMachine<type>{\
-		using CLASS = module::name;\
-public: static name& instance(){static name instance;return instance;}\
-private:\
-virtual ~name(){}\
-name(){}
 
 #define MACHINE_END };}
 

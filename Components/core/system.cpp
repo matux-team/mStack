@@ -6,7 +6,6 @@ extern "C" void SystemClock_Config(void);
 
 extern "C" void SysTick_Handler(void)
 {
-	HAL_IncTick();
 	core::Engine::instance().tick();
 }
 

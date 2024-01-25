@@ -1,4 +1,4 @@
-#include "quad.h"
+#include <oscilloscope/quad.h>
 #include <console/controller.h>
 
 osc::Quad::Quad(uint8_t c1, uint16_t c2, uint16_t c3, uint16_t c4)
