@@ -5,64 +5,66 @@
 void console::Driver::init()
 {
     console::_HAL::init();
-    SM_START(ReceiveHeader);
 }
 
-STATE_BODY(console::Driver::ReceiveHeader)
+void console::Driver::ReceiveHeader_(uint8_t data)
 {
-    if (data_ == HEADER_INDICATOR) SM_SWITCH(Driver::ReceiveLength);
+    if (data == HEADER_INDICATOR) rxState_ = &Driver::ReceiveLength_;
 }
 
-STATE_BODY(console::Driver::ReceiveLength)
+void console::Driver::ReceiveLength_(uint8_t data)
 {
-    rxLength_ = data_;
+    rxLength_ = data;
     if (rxLength_ < MAX_PACKET_LENGTH)
     {
         rxIndex_ = 2;
         rxType_ = 0;
         checksum_ = HEADER_INDICATOR + rxLength_;
-        SM_SWITCH(ReceiveType);
+        rxState_ = &Driver::ReceiveType_;
     }
-    else SM_SWITCH(ReceiveHeader);
+    else rxState_ = &Driver::ReceiveHeader_;
 }
 
-STATE_BODY(console::Driver::ReceiveType)
+void console::Driver::ReceiveType_(uint8_t data)
 {
-    checksum_ += data_;
+    checksum_ += data;
     rxType_ <<= 8;
-    rxType_+= data_;
+    rxType_+= data;
     if (--rxIndex_ == 0)
     {
-        if (rxLength_ > 0) SM_SWITCH(ReceiveData);
-        else SM_SWITCH(ReceiveChecksum);
+        if (rxLength_ > 0) rxState_ = &Driver::ReceiveData_;
+        else rxState_ = &Driver::ReceiveChecksum_;
     }
 }
 
-STATE_BODY(console::Driver::ReceiveData)
+void console::Driver::ReceiveData_(uint8_t data)
 {
-    checksum_ += data_;
-    rxBuffer_[rxIndex_++] = data_;
-    if (rxIndex_==rxLength_) SM_SWITCH(ReceiveChecksum);
-}
-STATE_BODY(console::Driver::ReceiveChecksum)
-{
-    if (data_ == checksum_) SM_SWITCH(ReceiveFooter);
-    else SM_SWITCH(ReceiveHeader);
+    checksum_ += data;
+    rxBuffer_[rxIndex_++] = data;
+    if (rxIndex_==rxLength_) rxState_ = &Driver::ReceiveChecksum_;
 }
 
-STATE_BODY(console::Driver::ReceiveFooter)
+void console::Driver::ReceiveChecksum_(uint8_t data)
 {
-    if (data_ == FOOTER_INDICATOR)
+    if (data == checksum_) rxState_ = &Driver::ReceiveFooter_;
+    else rxState_ = &Driver::ReceiveHeader_;
+}
+
+void console::Driver::ReceiveFooter_(uint8_t data)
+{
+    if (data == FOOTER_INDICATOR)
     {
         Controller::instance().processCommand(rxType_, rxLength_, rxBuffer_);
     }
-    SM_SWITCH(ReceiveHeader);
+    rxState_ = &Driver::ReceiveHeader_;
 }
 
 bool console::Driver::sendPacket(uint16_t type, uint8_t length, const uint8_t* data)
 {
     uint8_t checksum = 0u;
-    if (txQueue_.available() < length + 5) return false;
+    uint16_t avail = txQueue_.available();
+    if(avail < txMinAvail_) txMinAvail_ = avail;
+    if (avail < length + 5) return false;
     txQueue_.push(HEADER_INDICATOR);
     checksum += (uint8_t) HEADER_INDICATOR;
     txQueue_.push(length);
@@ -93,4 +95,9 @@ M_EVENT_HANDLER(console::Driver,send)
     if (txQueue_.empty()){sending_ = false;return;}
     if (console::_HAL::txReady()) console::_HAL::write(txQueue_.pop());
     sendEvent.post();
+}
+
+M_EVENT_HANDLER(console::Driver, receive, uint8_t)
+{
+	(this->*(rxState_))(event);
 }

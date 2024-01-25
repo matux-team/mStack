@@ -1,4 +1,4 @@
-#include "dual.h"
+#include <oscilloscope/dual.h>
 #include <console/controller.h>
 
 osc::Dual::Dual(uint8_t c1, uint16_t c2)
