@@ -92,16 +92,6 @@ private:
         /*TODO*/
     }
 
-    inline void pushBuffer(uint8_t index, uint8_t* data, uint8_t size)  override
-    {
-        /*TODO*/
-    }
-
-    inline void popBuffer(uint8_t* data, uint8_t& size)  override
-    {
-        /*TODO*/
-    }
-
     enum EventType
     {
         VOID=1, CALLBACK, DELAY
@@ -157,12 +147,12 @@ private:
         }
     }
 private:
-    core::Queue& queue_;
+    Queue& queue_;
     bool busy_ = false;
-    core::ByteEvent* finished_ = nullptr;
-    core::EmptyEvent executeEvent_ = core::EmptyEvent(this, (EmptyEvent::Handler)&Strand::execute_);
-    core::EventQueue& events_ = core::Engine::instance().events();
-    core::Task timer_ = core::Task(this,(core::Task::Handler)&Strand::timeout_);
+    ByteEvent* finished_ = nullptr;
+    EmptyEvent executeEvent_ = EmptyEvent(this, (EmptyEvent::Handler)&Strand::execute_);
+    EventQueue& events_ = Engine::instance().events();
+    Task timer_ = Task(this,(Task::Handler)&Strand::timeout_);
 };
 
 }

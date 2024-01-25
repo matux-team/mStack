@@ -11,7 +11,7 @@ class EventQueue: public AbstractEventQueue
 public:
 	virtual ~EventQueue(){}
     EventQueue(){}
-    inline uint16_t getMinAvail(){return this->minimumAvail_;}
+    uint16_t getMinAvail(){return this->minimumAvail_;}
 	inline bool next()
 	{
 		if (inPtr_ == outPtr_) return false;
@@ -60,36 +60,6 @@ public:
 
     inline void popFixed(uint8_t* data, uint8_t size) override
     {
-        for (int i=0;i<size;i++)
-        {
-            data[i] = pop_();
-        }
-    }
-
-    inline void pushBuffer(uint8_t index, uint8_t* data, uint8_t size) override
-    {
-        uint16_t avail = size_ + outPtr_ - inPtr_;
-        if (avail > size_) avail -= size_;
-#ifndef RELEASE
-        if (avail < minimumAvail_) minimumAvail_ = avail;
-        if (avail < size+3) Error_Handler();
-#else
-        if (avail < size+3) return;
-#endif
-
-        DISABLE_INTERRUPT;
-        push_(index);
-        push_(size);
-        for (int i=0;i<size;i++)
-        {
-            push_(data[i]);
-        }
-        ENABLE_INTERRUPT;
-    }
-
-    inline void popBuffer(uint8_t* data, uint8_t& size) override
-    {
-        size = pop_();
         for (int i=0;i<size;i++)
         {
             data[i] = pop_();
