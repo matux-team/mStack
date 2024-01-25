@@ -14,5 +14,4 @@ void systemInit()
 	HAL_Init();
 	SystemClock_Config();
 	MX_GPIO_Init();
-	LL_SYSTICK_EnableIT();
 }
