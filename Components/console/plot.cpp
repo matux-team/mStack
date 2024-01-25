@@ -1,4 +1,4 @@
-#include "controller.h"
+#include <console/controller.h>
 #include <console/driver.h>
 
 #define MAX_ONE (1<<7)

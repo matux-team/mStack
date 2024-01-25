@@ -1,43 +1,41 @@
 #include <console/controller.h>
 #include <console/driver.h>
 #include <console/hal.h>
+#include <console/define.h>
 #include "usart.h"
-
-#define UART_PORT			USART1
-#define UART_ISR_HANDLER()	extern "C" void USART1_IRQHandler(void)
 
 void console::_HAL::init()
 {
-	MX_USART1_UART_Init();
-	LL_USART_EnableIT_RXNE(UART_PORT);
-	LL_USART_EnableIT_ERROR(UART_PORT);
-	LL_USART_DisableIT_TC(UART_PORT);
-	LL_USART_DisableIT_TXE(UART_PORT);
+	CONSOLE_INIT;
+	LL_USART_EnableIT_RXNE (CONSOLE_PORT);
+	LL_USART_EnableIT_ERROR(CONSOLE_PORT);
+	LL_USART_DisableIT_TC(CONSOLE_PORT);
+	LL_USART_DisableIT_TXE(CONSOLE_PORT);
 }
 
 bool console::_HAL::txReady()
 {
-	return (LL_USART_IsActiveFlag_TXE(UART_PORT));
+	return (LL_USART_IsActiveFlag_TXE(CONSOLE_PORT));
 }
 
 void console::_HAL::write(uint8_t c)
 {
-	LL_USART_TransmitData8(UART_PORT, c);
+	LL_USART_TransmitData8(CONSOLE_PORT, c);
 }
 
-UART_ISR_HANDLER()
+CONSOLE_ISR_HANDLER()
 {
-	if(LL_USART_IsActiveFlag_RXNE(UART_PORT) && LL_USART_IsEnabledIT_RXNE(UART_PORT))
+	if(LL_USART_IsActiveFlag_RXNE(CONSOLE_PORT) && LL_USART_IsEnabledIT_RXNE(CONSOLE_PORT))
 	{
-		uint8_t c = LL_USART_ReceiveData8(UART_PORT);
+		uint8_t c = LL_USART_ReceiveData8(CONSOLE_PORT);
 		console::Driver::instance().post(c);
 	}
-	else if(LL_USART_IsActiveFlag_TC(UART_PORT))
+	else if(LL_USART_IsActiveFlag_TC(CONSOLE_PORT))
 	{
-		LL_USART_DisableIT_TC(UART_PORT);
+		LL_USART_DisableIT_TC(CONSOLE_PORT);
 	}
-	else if(LL_USART_IsActiveFlag_TXE(UART_PORT))
+	else if(LL_USART_IsActiveFlag_TXE(CONSOLE_PORT))
 	{
-		LL_USART_DisableIT_TXE(UART_PORT);
+		LL_USART_DisableIT_TXE(CONSOLE_PORT);
 	}
 }

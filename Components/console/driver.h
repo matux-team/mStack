@@ -1,11 +1,7 @@
 #ifndef CONSOLE_DRIVER_H_
 #define CONSOLE_DRIVER_H_
 #include <core/machine.h>
-
-#define TX_BUF_SIZE   		2048
-#define HEADER_INDICATOR	0xFE
-#define FOOTER_INDICATOR	0xFD
-#define MAX_PACKET_LENGTH	128
+#include <console/define.h>
 
 MACHINE(console, Driver, uint8_t)
     M_EVENT(send);

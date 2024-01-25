@@ -4,7 +4,7 @@
 #include <core/queue.h>
 #include <core/engine.h>
 #include <core/task.h>
-#include "command.h"
+#include <console/command.h>
 
 COMPONENT(console, Controller)
     M_TASK(plot)

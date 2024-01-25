@@ -1,0 +1,18 @@
+#ifndef CONSOLE_DEFINE_H_
+#define CONSOLE_DEFINE_H_
+
+/*CONTROLLER*/
+#define TIME_PLOT	10	//ms
+
+/*DRIVER*/
+#define TX_BUF_SIZE   		1024
+#define HEADER_INDICATOR	0xFE
+#define FOOTER_INDICATOR	0xFD
+#define MAX_PACKET_LENGTH	128
+
+/*HAL*/
+#define CONSOLE_PORT			USART1
+#define CONSOLE_INIT			MX_USART1_UART_Init()
+#define CONSOLE_ISR_HANDLER()	extern "C" void USART1_IRQHandler(void)
+
+#endif /* CONSOLE_DEFINE_H_ */
