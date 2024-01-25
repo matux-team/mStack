@@ -3,9 +3,6 @@
 #include <core/base.h>
 #include <core/system.h>
 
-#define EVENT_POOL_SIZE     32
-#define EVENT_QUEUE_SIZE	512
-
 namespace core
 {
 

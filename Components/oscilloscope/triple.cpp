@@ -1,4 +1,4 @@
-#include "triple.h"
+#include <oscilloscope/triple.h>
 #include <console/controller.h>
 
 osc::Triple::Triple(uint8_t c1, uint16_t c2, uint16_t c3)

@@ -1,5 +1,5 @@
-#include "controller.h"
-#include "core/engine.h"
+#include <console/controller.h>
+#include <core/engine.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -8,7 +8,7 @@
 void console::Controller::init()
 {
     Driver::instance().init();
-    plotTask_.start(10);
+    plotTask_.start(TIME_PLOT);
 }
 
 void console::Controller::print(const char* text)

@@ -1,8 +1,8 @@
 #ifndef CONSOLE_DRIVER_H_
 #define CONSOLE_DRIVER_H_
+#include <console/define.h>
 #include <core/event.h>
 #include <string.h>
-#include "console-def.h"
 
 COMPONENT(console, Driver)
     M_EVENT(send);
