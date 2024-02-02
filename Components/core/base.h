@@ -48,7 +48,7 @@ private:\
     name(){}
 
 #define COMPONENT_END };}
-#define COMPONENT_REG(module, name) module::name::instance().init();
+#define COMPONENT_REG(module, name) module::name::instance().init()
 
 #define HAL_DEF(module, name)\
 namespace module{\

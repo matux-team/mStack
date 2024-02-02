@@ -43,6 +43,8 @@ private:
     Component *component_ = nullptr;
     Handler handler_;
     friend class Strand;
+    friend class EmptySignalOne;
+    friend class EmptySignalMany;
 };
 
 template <typename E>
@@ -69,6 +71,11 @@ protected:
     Component *component_ = nullptr;
     Handler handler_;
     friend class Strand;
+    // Add this friend declaration for SignalOne
+    template <typename EV, typename EventE>
+    friend class SignalOne;
+    template <typename EV, typename EventE>
+    friend class SignalMany;
 };
 
 typedef FixedEvent<uint8_t> ByteEvent;
