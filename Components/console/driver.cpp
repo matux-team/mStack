@@ -58,6 +58,17 @@ void console::Driver::ReceiveFooter_(uint8_t data)
     rxState_ = &Driver::ReceiveHeader_;
 }
 
+void console::Driver::errorRx()
+{
+	rxState_ = &Driver::ReceiveHeader_;
+	//TODO:
+}
+
+void console::Driver::errorDma()
+{
+	//TODO:
+}
+
 bool console::Driver::sendPacket(uint16_t type, uint8_t length, const uint8_t* data)
 {
     uint8_t checksum = 0u;

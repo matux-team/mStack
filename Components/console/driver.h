@@ -12,6 +12,8 @@ public:
     uint16_t getMinAvail(){return txMinAvail_;}
     uint8_t * txQueue(){return &txBufferDMA_[0];}
 	bool sendPacket(uint16_t type, uint8_t length, const uint8_t* data);
+	void errorRx();
+	void errorDma();
 
 private:
 	typedef void (Driver::*RxState) (uint8_t);

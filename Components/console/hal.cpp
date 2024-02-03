@@ -4,6 +4,8 @@
 #include "usart.h"
 #include "dma.h"
 
+console::Driver& console_ = console::Driver::instance();
+
 void console::_HAL::init()
 {
 	MX_DMA_Init();
@@ -42,15 +44,23 @@ CONSOLE_ISR_HANDLER()
 	if(LL_USART_IsActiveFlag_RXNE(CONSOLE_PORT) && LL_USART_IsEnabledIT_RXNE(CONSOLE_PORT))
 	{
 		uint8_t c = LL_USART_ReceiveData8(CONSOLE_PORT);
-		console::Driver::instance().receiveEvent.post(c);
+		console_.receiveEvent.post(c);
 	}
-	else if(LL_USART_IsActiveFlag_TC(CONSOLE_PORT))
+	else	// Error
 	{
-		LL_USART_DisableIT_TC(CONSOLE_PORT);
-	}
-	else if(LL_USART_IsActiveFlag_TXE(CONSOLE_PORT))
-	{
-		LL_USART_DisableIT_TXE(CONSOLE_PORT);
+		if(LL_USART_IsActiveFlag_FE(CONSOLE_PORT))
+		{
+			LL_USART_ClearFlag_FE(CONSOLE_PORT);
+		}
+		else if(LL_USART_IsActiveFlag_ORE(CONSOLE_PORT))
+		{
+			LL_USART_ClearFlag_ORE(CONSOLE_PORT);
+		}
+		else if(LL_USART_IsActiveFlag_NE(CONSOLE_PORT))
+		{
+			LL_USART_ClearFlag_NE(CONSOLE_PORT);
+		}
+		console_.errorRx();
 	}
 }
 
@@ -60,11 +70,12 @@ DMA_ISR_HANDLER()
 	{
 		LL_DMA_ClearFlag_TC6(DMA_MODULE);
 		LL_DMA_DisableChannel(DMA_MODULE, DMA_CHANNEL);
-		console::Driver::instance().sendEvent.post();
+		console_.sendEvent.post();
 	}
 	else if (LL_DMA_IsActiveFlag_TE6(DMA_MODULE))
 	{
 		/* Call Error function */
 		LL_DMA_ClearFlag_TE6(DMA_MODULE);
+		console_.errorDma();
 	}
 }
