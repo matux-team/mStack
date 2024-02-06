@@ -6,7 +6,7 @@
 #define _M_MACRO_2(_1,_2,NAME,...) NAME
 #define _M_MACRO_3(_1,_2,_3,NAME,...) NAME
 
-enum EventStatus : uint8_t {POST_FAILED = 0, POST_SUCCESS, ALLOCATION_FAILED, CONNECTION_NULL};
+//enum EventStatus : uint8_t {POST_FAILED = 0, POST_SUCCESS, ALLOCATION_FAILED, CONNECTION_NULL};
 
 namespace core
 {
@@ -18,19 +18,19 @@ public:
     virtual ~Component(){}
 };
 
-typedef struct Container
+class AbstractEventQueue
 {
-	uint8_t index_;
-	void* payload_;
-}container_t;
-
+public:
+    virtual void pushFixed(uint8_t index, void* payloadAddr)=0;
+    virtual void popFixed(uint8_t* data)=0;
+};
 class Event
 {
 public:
     Event();
     virtual ~Event(){};
 protected:
-    virtual void execute(void* func) = 0;
+    virtual void execute(core::AbstractEventQueue* queue) = 0;
     Event(uint8_t index): index_(index){}
     uint8_t index_;
     friend class EventQueue;

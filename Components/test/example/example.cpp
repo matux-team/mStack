@@ -28,18 +28,9 @@ void ex::Test::init()
 
 M_TASK_HANDLER(ex::Test, plot)
 {
-	EventStatus a;
-	a = emptySignal.emit();
-	if(a != EventStatus::POST_SUCCESS)
-	{
-		LOG_PRINTF("WRONG");
-	}
 
-	a = fixedSignal.emit(cosine_[angle_]);
-	if(a != EventStatus::POST_SUCCESS)
-	{
-		LOG_PRINTF("WRONG");
-	}
+	emptySignal.emit();
+	fixedSignal.emit(cosine_[angle_]);
 
 	if (++angle_>=400) angle_=0;
 }
@@ -56,12 +47,7 @@ M_TASK_HANDLER(ex::Test, oscilloscope)
 
 M_TASK_HANDLER(ex::Test, timeout)
 {
-	EventStatus a;
-	a = emptyEventEvent.post();
-	if(a != EventStatus::POST_SUCCESS)
-	{
-		LOG_PRINTF("WRONG");
-	}
+	emptyEventEvent.post();
 
 	SM_POST(Event::TIMEOUT);
 }

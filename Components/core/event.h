@@ -20,7 +20,7 @@ public:
         return &event;
     }
 private:
-    void execute(void* func){/*empty*/}
+    void execute(core::AbstractEventQueue* queue){/*empty*/}
     NullEvent(){};
 };
 
@@ -29,22 +29,23 @@ class EmptyEvent: public Event
 public:
     typedef void (Component::*Handler) ();
     EmptyEvent(Component* component, Handler handler):component_(component), handler_(handler){}
-    EventStatus post()
+    inline void post()
     {
-    	container_t con = {
-    			.index_ = this->index_,
-    			.payload_ = nullptr,
-    	};
-    	return Engine::instance().events().post(con);
+    	Engine::instance().events().post(index_);
     }
 private:
-    void execute(void* func) override
+    inline void execute(core::AbstractEventQueue* queue) override
     {
         (component_->*handler_)();
     }
 
+    inline void execute_(){(component_->*handler_)();}
+
     Component *component_ = nullptr;
     Handler handler_;
+    friend class Strand;
+    friend class EmptySignalOne;
+    friend class EmptySignalMany;
 };
 
 template <typename E>
@@ -61,16 +62,17 @@ public:
         	// Declare MemPool with correspond type here
         	pool_ = new MemPool<E>(numOfMem);
 #ifndef RELEASE
-		if(pool_ == nullptr) Error_Handler();	// Cannot Allocating
+        	if(pool_ == nullptr) Error_Handler();	// Cannot Allocating
 #endif
     	}
     }
-    EventStatus post(const E& e)
+
+    void post(const E& e)
     {
 #ifndef RELEASE
 		if(pool_ == nullptr) Error_Handler();	// Pool still not be allocated
 #else
-		if(pool_ == nullptr) return EventStatus::ALLOCATION_FAILED;
+		if(pool_ == nullptr) return;
 #endif
     	DISABLE_INTERRUPT;
     	void* p = pool_->Alloc();
@@ -79,16 +81,11 @@ public:
 #ifndef RELEASE
     		if(p  == nullptr) Error_Handler();	// Cannot Allocate, Pool Over
 #else
-    		if(p  == nullptr) return EventStatus::ALLOCATION_FAILED;
+    		if(p  == nullptr) return;
 #endif
     	memcpy(p, &e, sizeof(E));
 
-    	container_t con = {
-    			.index_ = this->index_,
-				.payload_ = p,
-    	};
-
-    	return Engine::instance().events().post(con);
+    	Engine::instance().events().pushFixed(index_, data, size)
     }
 
     bool allocate(uint8_t size)
@@ -104,15 +101,24 @@ public:
     	}
     }
 protected:
-    void execute(void* func) override
+    inline void execute(void* func) override
     {
         (component_->*handler_)(*((E*)func));
         pool_->Free(func);
     }
 
+    inline void execute_(E* e){(component_->*handler_)(*e);}
+
+    void* payload_;
     Component *component_ = nullptr;
-    Handler handler_;
+    Handler handler_ = nullptr;
     MemPool<E>* pool_ = nullptr;
+    friend class Strand;
+    // Add this friend declaration for SignalOne
+    template <typename EV, typename EventE>
+    friend class SignalOne;
+    template <typename EV, typename EventE>
+    friend class SignalMany;
 };
 
 typedef FixedEvent<uint8_t> ByteEvent;

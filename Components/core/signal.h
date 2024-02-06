@@ -11,10 +11,13 @@ class EmptySignalOne
 public:
     void connect(EmptyEvent* event){this->event_ = event;}
     void disconnect(){event_ = nullptr;}
-    inline EventStatus emit()
+    inline void emit(bool immediately = false)
     {
-    	if (event_ != nullptr) return event_->post();
-    	return EventStatus::CONNECTION_NULL;
+        if (event_ != nullptr)
+        {
+            if (!immediately) event_->post();
+            else event_->execute_();
+        }
     }
 private:
     EmptyEvent* event_ = nullptr;
@@ -26,10 +29,13 @@ class SignalOne
 public:
     void connect(EV* event){this->event_ = event;}
     void disconnect(){event_ = nullptr;}
-    inline EventStatus emit(E& e)
+    inline void emit(E e, bool immediately = false)
     {
-    	if (event_ != nullptr) return event_->post(e);
-    	return EventStatus::CONNECTION_NULL;
+    	if (event_ != nullptr)
+		{
+            if (!immediately) event_->post(e);
+            else event_->execute_(&e);
+		}
     }
 private:
     EV* event_ = nullptr;
@@ -79,13 +85,16 @@ protected:
 class EmptySignalMany: public BaseSignalMany<EmptyEvent>
 {
 public:
-    inline EventStatus emit()
+    inline void emit(bool immediately = false)
     {
         for (Connection* it = connections_; it!=nullptr; it=it->next)
         {
-        	if( it->event->post() != EventStatus::POST_SUCCESS) return EventStatus::POST_FAILED;
+            if (it->event != nullptr)
+            {
+                if (!immediately) it->event->post();
+                else it->event->execute_();
+            }
         }
-        return EventStatus::POST_SUCCESS;
     }
 };
 
@@ -93,15 +102,16 @@ template <typename EV, typename E>
 class SignalMany: public BaseSignalMany<EV>
 {
 public:
-    inline EventStatus emit(E e)
+    inline void emit(E e, bool immediately = false)
     {
         for (auto it = this->connections_; it!=nullptr; it=it->next)
         {
-			EventStatus status;
-			status = it->event->post(e);
-			if( status != EventStatus::POST_SUCCESS) return status;
+            if (it->event != nullptr)
+            {
+                if (!immediately) it->event->post(e);
+                else it->event->execute_(&e);
+            }
         }
-        return EventStatus::POST_SUCCESS;
     }
 };
 

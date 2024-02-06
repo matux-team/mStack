@@ -63,7 +63,7 @@ public:
 
      // Allocate memory unit If memory pool can`t provide proper memory unit,
      // It will call system function.
-    void* Alloc()
+    inline void* Alloc()
     {
         if(m_pFreeMemBlock == nullptr)	// Pool Full
         {
@@ -78,7 +78,7 @@ public:
         return (void *)((char *)pCurUnit + sizeof(struct _Unit) );
     }
 
-    void Free(void* p)
+    inline void Free(void* p)
     {
 		struct _Unit *pCurUnit = (struct _Unit *)((char *)p - sizeof(struct _Unit) );
 		struct _Unit* prev = nullptr;

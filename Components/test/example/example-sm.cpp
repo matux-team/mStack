@@ -24,24 +24,7 @@ STATE_BODY(ex::Test::Running)
 	}
 	TRANSITION_(Event::TEST)
 	{
-		EventStatus a;
-		a = fixedEventEvent.post(count_++);
-		if(a != EventStatus::POST_SUCCESS)
-		{
-			LOG_PRINTF("WRONG");
-		}
-
-		a = fixedEventEvent.post(count_++);
-		if(a != EventStatus::POST_SUCCESS)
-		{
-			LOG_PRINTF("WRONG");
-		}
-
-		a = fixedEventEvent.post(count_++);
-		if(a != EventStatus::POST_SUCCESS)
-		{
-			LOG_PRINTF("WRONG");
-		}
+		fixedEventEvent.post(count_++);
 		timeoutTask_.start(1000,1);
 	}
 	TRANSITION_(Event::TIMEOUT, Pause){}

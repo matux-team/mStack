@@ -6,7 +6,7 @@
 namespace core
 {
 
-class EventQueue
+class EventQueue: public AbstractEventQueue
 {
 public:
 	virtual ~EventQueue(){}
@@ -15,11 +15,11 @@ public:
 	inline bool next()
 	{
 		if (inPtr_ == outPtr_) return false;
-        container_t container_ = pop_();
-        if (container_.index_ < poolSize_)
+        static uint8_t index = pop_();
+        if (index < poolSize_)
         {
-            Event* e = events_[container_.index_];
-            e->execute(container_.payload_);
+            Event* e = events_[index];
+            e->execute();
         }
 #ifndef RELEASE
         else
@@ -30,7 +30,7 @@ public:
 		return true;
 	}
 
-    inline EventStatus post(container_t& container)
+    inline void post(uint8_t index)
     {
         uint16_t avail = size_ + outPtr_ - inPtr_; 	// maximum avail = size_ - 1;
         if (avail > size_) avail -= (size_);		// here we have to subtract 1 but we don't do that
@@ -38,37 +38,65 @@ public:
         if (avail < minimumAvail_) minimumAvail_ = avail;
         if (avail < 2)	Error_Handler();			// and here we compare with 2 instead of 1.
 #else
-		if (avail < 2) return EventStatus::POST_FAILED;
+		if (avail < 2) return;
 #endif
         DISABLE_INTERRUPT;
-        push_(container);
+        push_(index);
         ENABLE_INTERRUPT;
-        return EventStatus::POST_SUCCESS;
+    }
+
+    inline void pushFixed(uint8_t index, void* payloadAddr) override
+    {
+    	static uint8_t size = sizeof(payloadAddr);
+    	uint8_t* ptr = (uint8_t*)payloadAddr;
+        uint16_t avail = size_ + outPtr_ - inPtr_;
+        if (avail > size_) avail -= size_;
+#ifndef RELEASE
+        if (avail < minimumAvail_) minimumAvail_ = avail;
+        if (avail < 2 + size) Error_Handler();
+#else
+        if (avail < size + 2) return;
+#endif
+        DISABLE_INTERRUPT;
+        push_(index);
+        for (int i=0;i<size;i++)
+        {
+            push_(ptr[i]);
+        }
+        ENABLE_INTERRUPT;
+    }
+
+    inline void popFixed(uint8_t* data) override
+    {
+        for (uint16_t i = 0; i < sizeof(void*); i++)
+        {
+            data[i] = pop_();
+        }
     }
 
 private:
-    inline void push_(container_t val)
+    inline void push_(uint8_t val)
     {
         *(inPtr_) = val;
         inPtr_++;
         if (inPtr_ == last_) inPtr_ = first_;
     }
 
-    inline container_t pop_()
+    inline uint8_t pop_()
     {
-    	container_t ret = *(outPtr_);
+    	uint8_t ret = *(outPtr_);
 		outPtr_++;
 		if (outPtr_ == last_) outPtr_ = first_;
 		return ret;
     }
 
 private:
-    container_t buffer_[EVENT_QUEUE_SIZE];
+    uint8_t buffer_[EVENT_QUEUE_SIZE];
     uint16_t size_ = EVENT_QUEUE_SIZE;
-    container_t* first_ = buffer_;
-    container_t* last_ = buffer_ + EVENT_QUEUE_SIZE;
-    container_t* inPtr_ = buffer_;
-    container_t* outPtr_ = buffer_;
+    uint8_t* first_ = buffer_;
+    uint8_t* last_ = buffer_ + EVENT_QUEUE_SIZE;
+    uint8_t* inPtr_ = buffer_;
+    uint8_t* outPtr_ = buffer_;
 private:
     Event* events_[EVENT_POOL_SIZE];
     uint16_t minimumAvail_ = EVENT_QUEUE_SIZE;

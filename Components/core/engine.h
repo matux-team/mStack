@@ -49,11 +49,7 @@ private:
 
 inline void core::Engine::tick()
 {
-	static container_t con = {
-			.index_ = this->index_,
-			.payload_ = nullptr,
-	};
-    if (++tickCount_ >= nextTick_) events_.post(con);
+    if (++tickCount_ >= nextTick_) events_.post(index_);
 }
 
 }
