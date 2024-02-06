@@ -70,7 +70,7 @@ void core::Engine::delay(uint32_t t)
     while (tickCount_ < timeout){NO_OPERATION;}
 }
 
-void core::Engine::execute(void* func)
+void core::Engine::execute()
 {
     uint64_t min = LAST_TICK;
     Task* it = activeTasks_;

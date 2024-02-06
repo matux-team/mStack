@@ -6,22 +6,29 @@
 namespace core
 {
 
-class EventQueue: public AbstractEventQueue
+class EventQueue
 {
 public:
-	virtual ~EventQueue(){}
-    EventQueue(){}
+	~EventQueue()
+	{
+		delete[] payBuf_;
+	}
+    EventQueue()
+    {
+    	payBuf_ = new void*[DATA_QUEUE_SIZE];
+    }
     uint16_t getMinAvail(){return this->minimumAvail_;}
 	inline bool next()
 	{
-		if (inPtr_ == outPtr_) return false;
-        static uint8_t index = pop_();
+		if (size_ == 0) return false;
+        uint8_t index = pop_();
         if (index < poolSize_)
         {
             Event* e = events_[index];
             e->execute();
         }
-#ifndef RELEASE
+#ifdef RELEASE
+#else
         else
         {
         	Error_Handler();
@@ -30,73 +37,65 @@ public:
 		return true;
 	}
 
-    inline void post(uint8_t index)
+    inline void post(uint8_t index, void* payloadAddr = nullptr)
     {
-        uint16_t avail = size_ + outPtr_ - inPtr_; 	// maximum avail = size_ - 1;
-        if (avail > size_) avail -= (size_);		// here we have to subtract 1 but we don't do that
-#ifndef RELEASE
-        if (avail < minimumAvail_) minimumAvail_ = avail;
-        if (avail < 2)	Error_Handler();			// and here we compare with 2 instead of 1.
-#else
-		if (avail < 2) return;
-#endif
+    	if (size_ == capacity_ || paySize_ == payCapacity_)	Error_Handler();	// 1 of 2 Queues Full
         DISABLE_INTERRUPT;
         push_(index);
+        if(payloadAddr != nullptr) pushPay_(payloadAddr);
         ENABLE_INTERRUPT;
     }
 
-    inline void pushFixed(uint8_t index, void* payloadAddr) override
+    inline void* popPayload()
     {
-    	static uint8_t size = sizeof(payloadAddr);
-    	uint8_t* ptr = (uint8_t*)payloadAddr;
-        uint16_t avail = size_ + outPtr_ - inPtr_;
-        if (avail > size_) avail -= size_;
-#ifndef RELEASE
-        if (avail < minimumAvail_) minimumAvail_ = avail;
-        if (avail < 2 + size) Error_Handler();
-#else
-        if (avail < size + 2) return;
-#endif
-        DISABLE_INTERRUPT;
-        push_(index);
-        for (int i=0;i<size;i++)
-        {
-            push_(ptr[i]);
-        }
-        ENABLE_INTERRUPT;
-    }
-
-    inline void popFixed(uint8_t* data) override
-    {
-        for (uint16_t i = 0; i < sizeof(void*); i++)
-        {
-            data[i] = pop_();
-        }
+    	if (paySize_ == 0)	Error_Handler();	// Payload Queue Empty
+    	return popPay_();
     }
 
 private:
     inline void push_(uint8_t val)
     {
-        *(inPtr_) = val;
-        inPtr_++;
-        if (inPtr_ == last_) inPtr_ = first_;
+		buffer_[rear_] = val;
+		rear_ = (rear_ + 1) == capacity_ ? 0 : (rear_ + 1);
+		size_++;
     }
 
     inline uint8_t pop_()
     {
-    	uint8_t ret = *(outPtr_);
-		outPtr_++;
-		if (outPtr_ == last_) outPtr_ = first_;
-		return ret;
+		uint8_t data = buffer_[front_];
+		front_ = (front_ + 1) == capacity_ ? 0 : (front_ + 1);
+		size_--;
+		return data;
+    }
+
+    inline void pushPay_(void* val)
+    {
+		payBuf_[payRear_] = val;
+		payRear_ = (payRear_ + 1) == payCapacity_ ? 0 : (payRear_ + 1);
+		paySize_++;
+	}
+
+    inline void* popPay_()
+    {
+		void* data = payBuf_[payFront_];
+		payFront_ = (payFront_ + 1) == payCapacity_ ? 0 : (payFront_ + 1);
+		paySize_--;
+		return data;
     }
 
 private:
+    void** payBuf_ = nullptr;
+    uint8_t payCapacity_ = DATA_QUEUE_SIZE;
+    uint8_t payFront_ = 0;
+    uint8_t payRear_ = 0;
+    uint8_t paySize_ = 0;
+
     uint8_t buffer_[EVENT_QUEUE_SIZE];
-    uint16_t size_ = EVENT_QUEUE_SIZE;
-    uint8_t* first_ = buffer_;
-    uint8_t* last_ = buffer_ + EVENT_QUEUE_SIZE;
-    uint8_t* inPtr_ = buffer_;
-    uint8_t* outPtr_ = buffer_;
+    uint8_t capacity_ = EVENT_QUEUE_SIZE;
+    uint8_t front_ = 0;
+    uint8_t rear_ = 0;
+    uint8_t size_ = 0;
+
 private:
     Event* events_[EVENT_POOL_SIZE];
     uint16_t minimumAvail_ = EVENT_QUEUE_SIZE;

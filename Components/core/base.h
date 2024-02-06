@@ -18,22 +18,17 @@ public:
     virtual ~Component(){}
 };
 
-class AbstractEventQueue
-{
-public:
-    virtual void pushFixed(uint8_t index, void* payloadAddr)=0;
-    virtual void popFixed(uint8_t* data)=0;
-};
 class Event
 {
 public:
     Event();
     virtual ~Event(){};
 protected:
-    virtual void execute(core::AbstractEventQueue* queue) = 0;
+    virtual void execute() = 0;
     Event(uint8_t index): index_(index){}
     uint8_t index_;
     friend class EventQueue;
+    friend class Strand;
 };
 
 }

@@ -9,6 +9,7 @@
 
 #define EVENT_POOL_SIZE     24
 #define EVENT_QUEUE_SIZE	64
+#define DATA_QUEUE_SIZE		12
 
 void systemInit();
 

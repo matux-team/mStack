@@ -5,10 +5,10 @@
 #define TIME_PLOT	10	//ms
 
 /*DRIVER*/
-#define TX_BUF_SIZE   		1024
+#define TX_BUF_SIZE   		256
 #define HEADER_INDICATOR	0xFE
 #define FOOTER_INDICATOR	0xFD
-#define MAX_PACKET_LENGTH	128
+#define MAX_PACKET_LENGTH	64
 
 /*HAL*/
 #define CONSOLE_PORT			USART2

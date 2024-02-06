@@ -20,7 +20,7 @@ public:
         return &event;
     }
 private:
-    void execute(core::AbstractEventQueue* queue){/*empty*/}
+    void execute(){/*empty*/}
     NullEvent(){};
 };
 
@@ -34,7 +34,7 @@ public:
     	Engine::instance().events().post(index_);
     }
 private:
-    inline void execute(core::AbstractEventQueue* queue) override
+    inline void execute() override
     {
         (component_->*handler_)();
     }
@@ -60,32 +60,27 @@ public:
     	if(numOfMem != 0)
     	{
         	// Declare MemPool with correspond type here
-        	pool_ = new MemPool<E>(numOfMem);
-#ifndef RELEASE
-        	if(pool_ == nullptr) Error_Handler();	// Cannot Allocating
-#endif
+    		pool_ = new MemPool<E>(numOfMem);
+    		if(pool_ == nullptr) Error_Handler();	// Cannot Allocating
     	}
     }
 
     void post(const E& e)
     {
-#ifndef RELEASE
 		if(pool_ == nullptr) Error_Handler();	// Pool still not be allocated
-#else
-		if(pool_ == nullptr) return;
-#endif
+
     	DISABLE_INTERRUPT;
     	void* p = pool_->Alloc();
     	ENABLE_INTERRUPT;
 
-#ifndef RELEASE
-    		if(p  == nullptr) Error_Handler();	// Cannot Allocate, Pool Over
+#ifdef RELEASE
+		if(p  == nullptr) return;
 #else
-    		if(p  == nullptr) return;
+    	if(p  == nullptr) Error_Handler();	// Cannot Allocate, Pool Over
 #endif
     	memcpy(p, &e, sizeof(E));
 
-    	Engine::instance().events().pushFixed(index_, data, size)
+    	Engine::instance().events().post(index_, p);
     }
 
     bool allocate(uint8_t size)
@@ -101,15 +96,15 @@ public:
     	}
     }
 protected:
-    inline void execute(void* func) override
+    inline void execute() override
     {
-        (component_->*handler_)(*((E*)func));
-        pool_->Free(func);
+    	void* payload = Engine::instance().events().popPayload();
+        (component_->*handler_)(*((E*)payload));
+        pool_->Free(payload);
     }
 
     inline void execute_(E* e){(component_->*handler_)(*e);}
 
-    void* payload_;
     Component *component_ = nullptr;
     Handler handler_ = nullptr;
     MemPool<E>* pool_ = nullptr;

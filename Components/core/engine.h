@@ -31,7 +31,7 @@ public:
     }
 
 private:
-    void execute(void* func) override;
+    void execute() override;
     Engine();
     EventQueue events_;
     Task* tasks_ = nullptr;

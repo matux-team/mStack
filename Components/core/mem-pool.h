@@ -13,6 +13,8 @@
 #include "main.h"
 #include <core/engine.h>
 
+namespace core
+{
 template <typename T>
 class MemPool
 {
@@ -48,7 +50,7 @@ public:
 
                 m_pFreeMemBlock = pCurUnit;
             }
-            core::Engine::instance().addNumOfByteHeap(size);
+            Engine::instance().addNumOfByteHeap(size);
         }
         else
         {
@@ -96,5 +98,7 @@ public:
 		}
     }
 };
+
+}
 
 #endif /* CORE_MEM_POOL_H_ */
