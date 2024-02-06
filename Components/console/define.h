@@ -16,7 +16,7 @@
 #define CONSOLE_ISR_HANDLER()	extern "C" void USART2_IRQHandler(void)
 
 #define DMA_MODULE				DMA1
-#define DMA_CHANNEL				LL_DMA_CHANNEL_6
+#define DMA_CHANNEL				LL_DMA_STREAM_6
 #define DMA_ISR_HANDLER()		extern "C" void DMA1_Stream6_IRQHandler(void)
 
 

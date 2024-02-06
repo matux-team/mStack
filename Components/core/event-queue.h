@@ -17,7 +17,8 @@ public:
     {
     	payBuf_ = new void*[DATA_QUEUE_SIZE];
     }
-    uint16_t getMinAvail(){return this->minimumAvail_;}
+    uint16_t getMaxSizeEv(){return this->maxSizeEv_;}
+    uint16_t getMaxSizePay(){return this->maxSizePay_;}
 	inline bool next()
 	{
 		if (size_ == 0) return false;
@@ -27,8 +28,7 @@ public:
             Event* e = events_[index];
             e->execute();
         }
-#ifdef RELEASE
-#else
+#ifndef RELEASE
         else
         {
         	Error_Handler();
@@ -40,6 +40,10 @@ public:
     inline void post(uint8_t index, void* payloadAddr = nullptr)
     {
     	if (size_ == capacity_ || paySize_ == payCapacity_)	Error_Handler();	// 1 of 2 Queues Full
+#ifndef RELEASE
+    	if(size_ > maxSizeEv_)maxSizeEv_ = size_;
+    	if(paySize_ > maxSizePay_)maxSizePay_ = paySize_;
+#endif
         DISABLE_INTERRUPT;
         push_(index);
         if(payloadAddr != nullptr) pushPay_(payloadAddr);
@@ -98,7 +102,8 @@ private:
 
 private:
     Event* events_[EVENT_POOL_SIZE];
-    uint16_t minimumAvail_ = EVENT_QUEUE_SIZE;
+    uint8_t maxSizeEv_ = 0;
+    uint8_t maxSizePay_ = 0;
     uint8_t poolSize_ = 0;
 
     uint8_t registerEvent_(Event* event)

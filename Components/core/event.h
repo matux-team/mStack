@@ -73,10 +73,10 @@ public:
     	void* p = pool_->Alloc();
     	ENABLE_INTERRUPT;
 
-#ifdef RELEASE
-		if(p  == nullptr) return;
-#else
+#ifndef RELEASE
     	if(p  == nullptr) Error_Handler();	// Cannot Allocate, Pool Over
+#else
+    	if(p  == nullptr) return;
 #endif
     	memcpy(p, &e, sizeof(E));
 
