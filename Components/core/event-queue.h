@@ -16,6 +16,9 @@ public:
     EventQueue()
     {
     	payBuf_ = new void*[DATA_QUEUE_SIZE];
+#ifndef RELEASE
+    	if(payBuf_ == nullptr)Error_Handler();
+#endif
     }
     uint16_t getMaxSizeEv(){return this->maxSizeEv_;}
     uint16_t getMaxSizePay(){return this->maxSizePay_;}
@@ -119,6 +122,7 @@ private:
 
     friend class Event;
     friend class Engine;
+    friend class Strand;
 };
 
 }

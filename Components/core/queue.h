@@ -16,14 +16,16 @@ public:
         inPtr_ = first_;
         outPtr_ = first_;
     }
-    uint16_t available()
-    {
-    	uint16_t ret = size_+outPtr_-inPtr_;
-    	if (ret > size_) ret -= (size_ - 1);
-    	return ret;
+    uint16_t available() const {
+        if (inPtr_ >= outPtr_) {
+            return size_ - (inPtr_ - outPtr_) - 1;
+        } else {
+            return (outPtr_ - inPtr_) - 1;
+        }
     }
-    bool notEmpty(){return (inPtr_ != outPtr_);}
-    bool empty(){return (inPtr_ == outPtr_);}
+
+    bool isFull() const {return (inPtr_ == outPtr_ - 1) || (inPtr_ == last_ - 1 && outPtr_ == first_);}
+    bool isEmpty() const {return (inPtr_ == outPtr_);}
 
     void reset()
     {
@@ -33,18 +35,14 @@ public:
 
     void push(uint8_t val)
     {
-    	uint8_t* next = inPtr_ + 1;
-    	if (next == last_) next = first_;
-		if (next!=outPtr_) //queue not full
-		{
-			*inPtr_ = val;
-			inPtr_ = next;
-		}
+    	if((inPtr_ == outPtr_ - 1) || (inPtr_ == last_ - 1 && outPtr_ == first_)) return;
+		*inPtr_ = val;
+		inPtr_ = (inPtr_ == last_ - 1) ? first_ : inPtr_ + 1;
     }
 
     uint8_t pop()
     {
-    	if (outPtr_ != inPtr_)
+    	if (outPtr_ != inPtr_)	//Queue not empty
 		{
 			uint8_t ret = *outPtr_;
 			outPtr_++;

@@ -16,7 +16,7 @@ public:
         if (event_ != nullptr)
         {
             if (!immediately) event_->post();
-            else event_->execute_();
+            else event_->execute();
         }
     }
 private:
@@ -92,7 +92,7 @@ public:
             if (it->event != nullptr)
             {
                 if (!immediately) it->event->post();
-                else it->event->execute_();
+                else it->event->execute();
             }
         }
     }

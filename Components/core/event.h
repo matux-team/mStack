@@ -39,8 +39,6 @@ private:
         (component_->*handler_)();
     }
 
-    inline void execute_(){(component_->*handler_)();}
-
     Component *component_ = nullptr;
     Handler handler_;
     friend class Strand;
@@ -95,7 +93,7 @@ public:
     		return false;
     	}
     }
-protected:
+private:
     inline void execute() override
     {
     	void* payload = Engine::instance().events().popPayload();
@@ -103,7 +101,11 @@ protected:
         pool_->Free(payload);
     }
 
-    inline void execute_(E* e){(component_->*handler_)(*e);}
+    inline void execute_(void* payload, bool free = false) override
+    {
+    	(component_->*handler_)(*((E*)payload));
+    	if(free) pool_->Free(payload);
+    }
 
     Component *component_ = nullptr;
     Handler handler_ = nullptr;

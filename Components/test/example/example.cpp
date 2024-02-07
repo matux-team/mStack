@@ -22,8 +22,17 @@ void ex::Test::init()
     emptySignal.connect(&emptySignalReceivedEvent);
     fixedSignal.connect(&fixedSignalReceivedEvent);
 
-	timeoutTask_.start(100);
 	SM_START(StartUp, 5);
+}
+
+M_EVENT_HANDLER(ex::Test, strandEmpty)
+{
+	LOG_PRINT("STRAND Empty");
+}
+
+M_EVENT_HANDLER(ex::Test, strandFixed, uint32_t)
+{
+	LOG_PRINTF("STRAND Fixed: %d", event);
 }
 
 M_TASK_HANDLER(ex::Test, plot)

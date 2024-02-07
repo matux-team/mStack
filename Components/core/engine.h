@@ -22,7 +22,7 @@ public:
     void addNumOfByteHeap(uint32_t value){numOfByteHeap_ += value;}
     void delay(uint32_t t); //t in ms, WARNING: this function is blocking, use in some limited context only
     EventQueue& events(){return events_;}
-    uint32_t checkNumOfByteHeap(){return numOfByteHeap_;}
+    uint32_t checkNumOfByteHeap(){return (numOfByteHeap_ + sizeof(void*)*DATA_QUEUE_SIZE);} // numOfByteHeap + Heap Allocate for payLoad Queue
     uint16_t checkNumOfEvent(){return events_.poolSize_;}
     static Engine& instance()
     {

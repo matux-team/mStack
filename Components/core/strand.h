@@ -18,41 +18,52 @@
 namespace core
 {
 
-class Strand: public core::Component, public AbstractEventQueue
+class Strand: public core::Component
 {
 public:
     Strand(core::Queue& queue): queue_(queue){}
 
-    void post(Event* event, ByteEvent* finished = nullptr)
+    void post(EmptyEvent* event, ByteEvent* finished = nullptr)
     {
-        if (queue_.available() < 3) return;
+    	if (queue_.available() < 3) return;
 
-        DISABLE_INTERRUPT;
-        if (finished!=nullptr)
-        {
-            queue_.push(CALLBACK);
-            queue_.push(finished->index_);
-        }
-        else queue_.push(VOID);
-        queue_.push(event->index_);
-        ENABLE_INTERRUPT;
-        next_();
+		DISABLE_INTERRUPT;
+		if (finished == nullptr) queue_.push(VOID_EMPTY);
+		else
+		{
+			queue_.push(CALLBACK_EMPTY);
+			queue_.push(finished->index_);
+		}
+		queue_.push(event->index_);
+		ENABLE_INTERRUPT;
+		next_();
+
     }
 
     template<typename E>
     void post(FixedEvent<E>* event, const E& e, ByteEvent* finished = nullptr)
     {
-        if (queue_.available() < sizeof(E) + 3) return;
+    	static uint8_t min = 3 + sizeof(void*);
+        if (queue_.available() < min) return;
         DISABLE_INTERRUPT;
-        if (finished!=nullptr)
+        if (finished == nullptr)	queue_.push(VOID_FIXED);
+        else
         {
-            queue_.push(CALLBACK);
+            queue_.push(CALLBACK_FIXED);
             queue_.push(finished->index_);
         }
-        else queue_.push(VOID);
         queue_.push(event->index_);
-        uint8_t* ptr = (uint8_t*)&e;
-        for (size_t i=0; i<sizeof(E); i++)
+        //Allocate
+        void *p = event->pool_->Alloc();
+#ifndef RELEASE
+    	if(p  == nullptr) Error_Handler();	// Cannot Allocate, Pool Over
+#else
+    	if(p  == nullptr) return;
+#endif
+    	memcpy(p, &e, sizeof(E));
+        //Push Payload to queue
+        uint8_t* ptr = (uint8_t*)((uint32_t)&p);
+        for (size_t i = 0; i < sizeof(void*); i++)
         {
             queue_.push(ptr[i]);
         }
@@ -86,28 +97,17 @@ public:
         if (finished_ != nullptr) finished_->execute_(&error);
         next_();
     }
-private:
-    inline void popFixed(uint8_t* data, uint8_t size)
-    {
-        for (int i=0;i<size;i++)
-        {
-            data[i] = queue_.pop();
-        }
-    }
-
-    inline void pushFixed(uint8_t index, uint8_t* data, uint8_t size)
-    {
-        /*TODO*/
-    }
 
     enum EventType
     {
-        VOID=1, CALLBACK, DELAY
+        VOID_EMPTY=1, CALLBACK_EMPTY,
+		VOID_FIXED, CALLBACK_FIXED,
+		DELAY
     };
 
     void next_()
     {
-        if (busy_ || queue_.empty()) return;
+        if (busy_ || queue_.isEmpty()) return;
         executeEvent_.post();
         busy_ = true;
     }
@@ -130,32 +130,70 @@ private:
             timer_.start(time,1);
             finished_ = nullptr;
         }
-        else if (type == VOID)
+        else if (type == VOID_EMPTY)
         {
             finished_ = nullptr;
             uint8_t index = queue_.pop();
             if (index < events_.poolSize_)
             {
-                Event* e = events_.events_[index];
-                e->execute(this);
+            	Event* e = events_.events_[index];
+                e->execute();
             }
         }
-        else if (type == CALLBACK)
+        else if (type == CALLBACK_EMPTY)
+        {
+            uint8_t index = queue_.pop();
+            if (index < events_.poolSize_) finished_ = (ByteEvent*)events_.events_[index];
+            else finished_ = nullptr;
+            index = queue_.pop();
+            if (index < events_.poolSize_)
+            {
+            	Event* e = events_.events_[index];
+                e->execute();
+            }
+        }
+        else if (type == VOID_FIXED)
+        {
+            finished_ = nullptr;
+            uint8_t index = queue_.pop();
+
+            uint32_t payload = 0;
+            uint8_t* ptr = (uint8_t*)&payload;
+
+            for(uint8_t i = 0; i < sizeof(void*); i++)
+            {
+            	ptr[i] = queue_.pop();
+            }
+
+            if (index < events_.poolSize_)
+            {
+                Event* e = events_.events_[index];
+                e->execute_((void*)payload, true);
+            }
+        }
+        else if (type == CALLBACK_FIXED)
         {
             uint8_t index = queue_.pop();
             if (index < events_.poolSize_) finished_ = (ByteEvent*)events_.events_[index];
             else finished_ = nullptr;
 
+            uint32_t payload = 0;
+            uint8_t* ptr = (uint8_t*)&payload;
+
+            for(uint8_t i = 0; i < sizeof(void*); i++)
+            {
+            	ptr[i] = queue_.pop();
+            }
             index = queue_.pop();
             if (index < events_.poolSize_)
             {
                 Event* e = events_.events_[index];
-                e->execute(this);
+                e->execute_((void*)payload, true);
             }
         }
     }
 private:
-    Queue<>& queue_;
+    Queue& queue_;
     bool busy_ = false;
     ByteEvent* finished_ = nullptr;
     EmptyEvent executeEvent_ = EmptyEvent(this, (EmptyEvent::Handler)&Strand::execute_);

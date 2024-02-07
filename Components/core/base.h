@@ -25,12 +25,12 @@ public:
     virtual ~Event(){};
 protected:
     virtual void execute() = 0;
+    virtual void execute_(void* payload, bool free = false){};
     Event(uint8_t index): index_(index){}
     uint8_t index_;
     friend class EventQueue;
     friend class Strand;
 };
-
 }
 
 #define COMPONENT(module, name)\

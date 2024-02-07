@@ -6,6 +6,7 @@
 #include <core/task.h>
 #include <core/machine.h>
 #include <core/signal.h>
+#include <core/strand.h>
 #include <console/controller.h>
 #include <oscilloscope/quad.h>
 
@@ -30,6 +31,10 @@ MACHINE(ex, Test)
 	U_INTEGER(100, integer)
 	U_TEXT(103, name)
 
+	M_EVENT(strandEmpty)
+	M_EVENT(strandFixed, uint32_t)
+	M_STRAND(command, 64)
+
 public:
 	void init();
 
@@ -42,6 +47,7 @@ private:
 
 private:
 	uint32_t count_;
+	uint32_t strandCount_;
 
 	uint32_t angle_ = 0;
     uint16_t sine_[400];
